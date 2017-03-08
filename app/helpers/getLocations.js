@@ -1,4 +1,4 @@
-/*var Locations = require('../models/locations');
+var Locations = require('../models/locations');
 
 exports.getLocations = function() {
   var locArray = [];
@@ -9,4 +9,3 @@ exports.getLocations = function() {
   });
   return locArray;
 };
-*/
