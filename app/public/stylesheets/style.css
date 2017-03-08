@@ -1,0 +1,71 @@
+body {
+  /*padding: 50px;*/
+  background-color: #222;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+a:hover {
+  color: #0074bb;
+}
+
+#logo {
+  max-width: 140px;
+}
+#top-nav {
+  height: 150px;
+}
+.top-nav {
+  color: #222;
+  font-size: 3em;
+}
+
+#error-panel li {
+  padding: 5px 10px;
+}
+
+.icon-text {
+  margin-left: 5px;
+}
+#main-content {
+  padding: 10px 50px;
+}
+
+#edit-location {
+  background: #aee;
+  text-align: center;
+}
+
+.edit-column {
+  background-color: #f5f5f5;
+}
+.delete {
+  color: red;
+}
+.delete-title {
+  background-color: #fda;
+}
+
+#table-content table {
+  background: #fff;
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
+}
+
+#table-content table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.edit-column {
+  width: 80px;
+  text-align: center;
+}
+
+.list-image {
+  max-width: 80px;
+}

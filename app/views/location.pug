@@ -1,0 +1,95 @@
+extends layout
+
+block content
+  if errors
+    ul.card-panel.red.white-text#error-panel
+      for error in errors
+        li= error.msg
+  if dbErr
+    ul.card-panel.red.white-text
+      li= dbErr
+
+  if results
+    - var action = 'edit'
+    - var placeID = results.id
+    - var placeName = results.name
+    - var description = results.description
+    - var address = results.address
+    - var access = results.access
+    - var hours = results.hours
+    - var address = results.address
+    - var latlong = results.latlong
+    - var website = results.website
+    - var email = results.email
+    - var phone = results.phone
+    - var picture = results.picture
+    if results.visible
+      - var visibleness = 'checked'
+    h1#edit-location #{placeName}
+  else
+    - var action = 'add'
+    - var placeID = ''
+    h1#edit-location Add new place
+
+  if (action == 'edit')
+    #location-image
+      img.responsive-img(src='/uploads/' + picture)
+  .row#location-form
+    form(action='/locations/edit/' + placeID, method='post' enctype='multipart/form-data')
+      .row#form-fields
+        .col.s12.m6
+          div.input-field(data-role='fieldcontain')
+            label(for='placeName') Place Name
+            input.validate#placeName(type='text' placeholder='(required)' name='placeName' value=placeName)
+          div.input-field(data-role='fieldcontain')
+            label.active(for='description') Description
+            input.validate#description(type='text' placeholder='(required)' name='description' value=description)
+          div.input-field(data-role='fieldcontain')
+            label.active(for='address') Address
+            input.validate#address(type='text' name='address' value=address)
+          div.input-field(data-role='fieldcontain')
+            label(for='access') Access
+            input.validate#access(type='text' name='access' value=access)
+          div.input-field(data-role='fieldcontain')
+            label(for='hours') Hours
+            input.validate#hours(type='text' name='hours' value=hours)
+        .col.s12.m6
+          div.input-field(data-role='fieldcontain')
+            label.active(for='latlong') Lat/Long
+            input.validate#latlong(type='text' name='latlong' value=latlong)
+          div.input-field(data-role='fieldcontain')
+            label.active(for='website') Website
+            input.validate#website(type='text' name='website' value=website)
+          div.input-field(data-role='fieldcontain')
+            label.active(for='email') Email
+            input.validate#email(type='text' name='email' value=email)
+          div.input-field(data-role='fieldcontain')
+            label.active(for='phone') Phone
+            input.validate#phone(type='text' name='phone' value=phone)
+          div.input-field.file-field(data-role='fieldcontain')
+            .btn
+              if (action == 'add')
+                span Add Picture
+              else 
+                span New Picture
+              input.validate#loc_image(type='file' name='loc_image')
+            .file-path-wrapper
+              input.file-path.validate(type='text')
+      .row#visible-box
+        .col.s5
+          div.input-field(data-role='fieldcontain')
+            input#isVisible(type='checkbox' name='visible' checked=visibleness)
+            label(for='isVisible') Visible
+      .row#form-buttons
+        .col.s5
+          input.validate.btn.waves-effect.waves-light.green.left#submit(type='submit' name='submit' value='Save')
+          if (action == 'edit')
+            a.modal-action.modal-close.btn.waves-effect.waves-light.red(href='#delete-' + placeID) Delete
+            div(class='modal', id='delete-' + placeID)
+              .modal-content
+                h4 Delete 
+                  span.delete-title= placeName
+                p Are you sure you want to delete this item?
+              .modal-footer
+                a.modal-action.modal-close.btn.green.left(href='#!') Cancel
+                a.modal-action.modal-close.btn.red(href='/locations/delete/' + placeID) Delete

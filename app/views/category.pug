@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  if errors
+    ul.card-panel.red.white-text#error-panel
+      for error in errors
+        li= error.msg
+  if dbErr
+    ul.card-panel.red.white-text
+      li= dbErr
+
+  if results
+    - var action = 'edit'
+    - var categoryID = results.id
+    - var categoryName = results.name
+    h1#edit-category #{categoryName}
+  else
+    - var action = 'add'
+    - var categoryID = ''
+    h1#edit-category Add New Category
+
+  .row#category-form
+    form(action='/categories/edit/' + categoryID, method='post')
+      .row#form-fields
+        .col.s12.m6
+          div.input-field(data-role='fieldcontain')
+            label(for='categoryName') Category Name
+            input.validate#categoryName(type='text' placeholder='(required)' name='categoryName' value=categoryName)
+      .row#form-buttons
+        .col.s5
+          input.validate.btn.waves-effect.waves-light.green.left#submit(type='submit' name='submit' value='Save')
+          - if (action == 'edit')
+            a.modal-action.modal-close.btn.waves-effect.waves-light.red(href='#delete-' + categoryID) Delete
+            div(class='modal', id='delete-' + categoryID)
+              .modal-content
+                h4 Delete 
+                  span.delete-title= categoryName
+                p Are you sure you want to delete this item?
+              .modal-footer
+                a.modal-action.modal-close.btn.green.left(href='#!') Cancel
+                a.modal-action.modal-close.btn.red(href='/categories/delete/' + categoryID) Delete

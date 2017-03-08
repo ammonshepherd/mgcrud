@@ -1,0 +1,82 @@
+extends layout
+
+block content
+  if errors
+    ul.card-panel.red.white-text#error-panel
+      for error in errors
+        li= error.msg
+  if dbErr
+    ul.card-panel.red.white-text
+      li= dbErr
+
+  if results
+    - var action = 'edit'
+    - var toolID = results.id
+    - var toolName = results.name
+    - var make = results.make
+    - var model = results.model
+    - var picture = results.picture
+    - var quantity = results.quantity
+    - var category = results.category
+    - var location = results.location
+    - console.log(loc)
+    h1#edit-tool #{toolName}
+  else
+    - var action = 'add'
+    - var toolID = ''
+    h1#edit-tool Add New Tool
+
+  .row#tool-form
+    form(action='/tools/edit/' + toolID, method='post' enctype='multipart/form-data')
+      .row#form-fields
+        .col.s6
+          div.input-field(data-role='fieldcontain')
+            label(for='toolName') Tool Name
+            input.validate#toolName(type='text' placeholder='(required)' name='toolName' value=toolName)
+          div.input-field(data-role='fieldcontain')
+            label.active(for='make') Make
+            input.validate#make(type='text' placeholder='(required)' name='make' value=make)
+          div.input-field(data-role='fieldcontain')
+            label.active(for='model') Model
+            input.validate#model(type='text' name='model' value=model)
+          div.input-field(data-role='fieldcontain')
+            label.active(for='quantity') Quantity
+            input.validate#quantity(type='text' name='quantity' value=quantity)
+          div(data-role='fieldcontain')
+            label(for='category') Category
+            select.browser-default(name='category')
+              each catOption in categories
+                if (category == catOption)
+                  option(value=catOption, selected)= catOption
+                else
+                  option(value=catOption)= catOption
+          div(data-role='fieldcontain')
+            label(for='location') Location
+            select.browser-default(name='location')
+              each locOption in locations
+                if (location == locOption)
+                  option(value=locOption, selected)= locOption
+                else
+                  option(value=locOption)= locOption
+          div.input-field.file-field(data-role='fieldcontain')
+            .btn
+              span Add Picture
+              input.validate#tool_image(type='file' name='tool_image')
+            .file-path-wrapper
+              input.file-path.validate(type='text')
+        .col.s6
+          if (picture)
+            img.responsive-img(src='/uploads/' + picture)
+      .row#form-buttons
+        .col.s5
+          input.validate.btn.waves-effect.waves-light.green.left#submit(type='submit' name='submit' value='Save')
+          if (action == 'edit')
+            a.modal-action.modal-close.btn.waves-effect.waves-light.red(href='#delete-' + toolID) Delete
+            div(class='modal', id='delete-' + toolID)
+              .modal-content
+                h4 Delete 
+                  span.delete-title= toolName
+                p Are you sure you want to delete this item?
+              .modal-footer
+                a.modal-action.modal-close.btn.green.left(href='#!') Cancel
+                a.modal-action.modal-close.btn.red(href='/tools/delete/' + toolID) Delete
