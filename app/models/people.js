@@ -1,13 +1,13 @@
 var Database = require('../config/db');
 
-var Locations = require('../models/Locations');
+require('./locations');
 
 var People = Database.Model.extend({
   tableName: 'People',
   hasTimestamps: true,
   locations: function() {
-    return this.belongsTo(Locations);
+    return this.belongsTo('Locations');
   }
 });
 
-module.exports = People;
+module.exports = Database.model('People', People);

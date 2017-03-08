@@ -1,6 +1,6 @@
 var Database = require('../config/db');
 
-var Tools = require('../models/tools');
+require('./tools');
 
 var Categories = Database.Model.extend({
   tableName: 'Categories',
@@ -10,4 +10,4 @@ var Categories = Database.Model.extend({
   }
 });
 
-module.exports = Categories;
+module.exports = Database.model('Categories', Categories);

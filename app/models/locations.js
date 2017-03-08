@@ -1,4 +1,4 @@
-let Database = require('../config/db');
+var Database = require('../config/db');
 
 require('./tools');
 require('./people');

@@ -1,7 +1,7 @@
-let Database = require('../config/db');
+var Database = require('../config/db');
 
-require('./categories');
 require('./locations');
+require('./categories');
 
 var Tools = Database.Model.extend({
   tableName: 'Tools',
