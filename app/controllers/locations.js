@@ -52,9 +52,6 @@ module.exports = {
     } else {
       visibleness = false;
     }
-    if (req.file) {
-      var pic = req.file.filename;
-    }
     // SQL sanitizing happens in Postgres and knex level
     var values = {
       name: req.body.placeName,
@@ -66,9 +63,12 @@ module.exports = {
       website: req.body.website,
       email: req.body.email,
       phone: req.body.phone,
-      picture: pic,
       visible: visibleness
     };
+
+    if (req.file) {
+      values.picture = req.file.filename;
+    }
 
     // Validation results
     req.getValidationResult().then(function(result) {
