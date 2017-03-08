@@ -7,10 +7,10 @@ var Tools = Database.Model.extend({
   tableName: 'Tools',
   hasTimestamps: true,
   categories: function() {
-    return this.belongsTo('Categories');
+    return this.belongsTo('Categories', 'category_id');
   },
   locations: function() {
-    return this.belongsTo('Locations');
+    return this.belongsTo('Locations', 'location_id');
   }
 });
 

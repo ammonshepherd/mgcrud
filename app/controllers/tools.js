@@ -16,7 +16,7 @@ module.exports = {
     var allCats = cats.getCategories();
     var allLocs = locs.getLocations();
     if (req.params.id) {
-      return Tools.forge({id: req.params.id}).fetch().then(function(tool) {
+      return Tools.forge({id: req.params.id}).fetch({withRelated: ['locations']}).then(function(tool) {
         res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs, loc: tool.related('locations'), kind: 'tools'});
       });
     } else {

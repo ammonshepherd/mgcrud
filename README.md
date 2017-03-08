@@ -5,10 +5,10 @@
 - Install npm
 
 - Clone files
-  `git clone https://github.com/mossiso/mgcrud.git`
+  - `git clone https://github.com/mossiso/mgcrud.git`
 
 - Install dependencies
-  `npm install`
+  - `npm install`
 
 - Run
-  `npm start`
+  - `npm start`
