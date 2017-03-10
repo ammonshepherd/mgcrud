@@ -42,14 +42,6 @@ block content
             label.active(for='quantity') Quantity
             input.validate#quantity(type='text' name='quantity' value=quantity)
           div(data-role='fieldcontain')
-            label(for='category') Category
-            select.browser-default(name='category')
-              each catOption in categories
-                if (category == catOption.id)
-                  option(value=catOption.id, selected)= catOption.name
-                else
-                  option(value=catOption.id)= catOption.name
-          div(data-role='fieldcontain')
             label(for='location') Location
             select.browser-default(name='location')
               each locOption in locations
@@ -57,6 +49,14 @@ block content
                   option(value=locOption.id, selected)= locOption.name
                 else
                   option(value=locOption.id)= locOption.name
+          div(data-role='fieldcontain')
+            label(for='category') Category
+            select.browser-default(name='category')
+              each catOption in categories
+                if (category == catOption.id)
+                  option(value=catOption.id, selected)= catOption.name
+                else
+                  option(value=catOption.id)= catOption.name
           div.input-field.file-field(data-role='fieldcontain')
             .btn
               span Add Picture

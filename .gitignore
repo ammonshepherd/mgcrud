@@ -35,3 +35,4 @@ app/public/uploads
 .DS_Store
 .env
 .jshintrc
+.changes.md
