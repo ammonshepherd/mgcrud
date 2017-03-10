@@ -6,7 +6,7 @@ var People = Database.Model.extend({
   tableName: 'People',
   hasTimestamps: true,
   locations: function() {
-    return this.belongsTo('Locations');
+    return this.belongsTo('Locations', 'location_id');
   }
 });
 

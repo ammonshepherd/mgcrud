@@ -6,10 +6,10 @@ require('./categories');
 var Tools = Database.Model.extend({
   tableName: 'Tools',
   hasTimestamps: true,
-  categories: function() {
+  category: function() {
     return this.belongsTo('Categories', 'category_id');
   },
-  locations: function() {
+  location: function() {
     return this.belongsTo('Locations', 'location_id');
   }
 });

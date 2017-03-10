@@ -17,9 +17,8 @@ block content
     - var model = results.model
     - var picture = results.picture
     - var quantity = results.quantity
-    - var category = results.category
-    - var location = results.location
-    - console.log(loc)
+    - var category = results.category_id
+    - var location = results.location_id
     h1#edit-tool #{toolName}
   else
     - var action = 'add'
@@ -29,7 +28,7 @@ block content
   .row#tool-form
     form(action='/tools/edit/' + toolID, method='post' enctype='multipart/form-data')
       .row#form-fields
-        .col.s6
+        .col.s12.m6
           div.input-field(data-role='fieldcontain')
             label(for='toolName') Tool Name
             input.validate#toolName(type='text' placeholder='(required)' name='toolName' value=toolName)
@@ -46,32 +45,33 @@ block content
             label(for='category') Category
             select.browser-default(name='category')
               each catOption in categories
-                if (category == catOption)
-                  option(value=catOption, selected)= catOption
+                if (category == catOption.id)
+                  option(value=catOption.id, selected)= catOption.name
                 else
-                  option(value=catOption)= catOption
+                  option(value=catOption.id)= catOption.name
           div(data-role='fieldcontain')
             label(for='location') Location
             select.browser-default(name='location')
               each locOption in locations
-                if (location == locOption)
-                  option(value=locOption, selected)= locOption
+                if (location == locOption.id)
+                  option(value=locOption.id, selected)= locOption.name
                 else
-                  option(value=locOption)= locOption
+                  option(value=locOption.id)= locOption.name
           div.input-field.file-field(data-role='fieldcontain')
             .btn
               span Add Picture
               input.validate#tool_image(type='file' name='tool_image')
             .file-path-wrapper
               input.file-path.validate(type='text')
-        .col.s6
+        .col.s12.m6
           if (picture)
             img.responsive-img(src='/uploads/' + picture)
       .row#form-buttons
-        .col.s5
+        .col.s12.m6
           input.validate.btn.waves-effect.waves-light.green.left#submit(type='submit' name='submit' value='Save')
           if (action == 'edit')
             a.modal-action.modal-close.btn.waves-effect.waves-light.red(href='#delete-' + toolID) Delete
+
             div(class='modal', id='delete-' + toolID)
               .modal-content
                 h4 Delete 

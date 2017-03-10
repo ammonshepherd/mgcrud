@@ -1,7 +1,10 @@
+var Database = require('../config/db');
 var Tools = require('../models/tools');
 
 var cats = require('../helpers/getCategories');
 var locs = require('../helpers/getLocations');
+var allCats = cats.getCategories();
+var allLocs = locs.getLocations();
 
 module.exports = {
   add(req, res) {
@@ -13,19 +16,18 @@ module.exports = {
     });
   },
   edit(req, res) {
-    var allCats = cats.getCategories();
-    var allLocs = locs.getLocations();
     if (req.params.id) {
-      return Tools.forge({id: req.params.id}).fetch({withRelated: ['locations']}).then(function(tool) {
-        res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs, loc: tool.related('locations'), kind: 'tools'});
+      return Tools.forge({id: req.params.id}).fetch().then(function(tool) {
+        res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs, kind: 'tools'});
       });
     } else {
       res.render('tool', {kind: 'tools', locations: allLocs, categories: allCats });
     }
   },
   listAll(req, res) {
-    return Tools.forge().orderBy('name', 'ASC').fetchAll().then(function(tools) {
-      res.render('list', {results: tools.models, kind: 'tools', skipFields: ['id', 'created_at', 'updated_at', 'location_id']});
+    var allTools = Database.Collection.extend({ model: Tools });
+    return allTools.forge().orderBy('name', 'ASC').fetch({withRelated: ['location', 'category']}).then(function(tools) {
+      res.render('list', { results: tools.models, kind: 'tools', skipFields: ['id', 'created_at', 'updated_at', 'location_id', 'category_id'] });
     })
     .catch( function(error){console.log(error);} );
   },
@@ -53,7 +55,8 @@ module.exports = {
       name: req.body.toolName,
       make: req.body.make,
       model: req.body.model,
-      category: req.body.category,
+      category_id: req.body.category,
+      location_id: req.body.location,
       quantity: req.body.quantity,
     };
 

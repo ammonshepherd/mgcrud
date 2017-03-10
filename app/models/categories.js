@@ -6,7 +6,7 @@ var Categories = Database.Model.extend({
   tableName: 'Categories',
   hasTimestamps: true,
   tools: function() {
-    return this.hasMany(Tools);
+    return this.hasMany('Tools', 'category_id');
   }
 });
 
