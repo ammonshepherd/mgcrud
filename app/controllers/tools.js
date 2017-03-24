@@ -18,10 +18,10 @@ module.exports = {
   edit(req, res) {
     if (req.params.id) {
       return Tools.forge({id: req.params.id}).fetch().then(function(tool) {
-        res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs, kind: 'tools'});
+        res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs});
       });
     } else {
-      res.render('tool', {kind: 'tools', locations: allLocs, categories: allCats });
+      res.render('tool', {locations: allLocs, categories: allCats });
     }
   },
   listAll(req, res) {
@@ -39,12 +39,16 @@ module.exports = {
   upsert(req, res) {
     var options = {};
     var toolID = '';
-    if (!req.params.id) {
+    /*if (!req.params.id) {
       options.method = 'insert';
     } else {
       toolID = {id: req.params.id};
       options.method = 'update';
       options.patch = 'true';
+    }
+    */
+    if (req.params.id) {
+      toolID = {id: req.params.id};
     }
 
     // Validate the input fields
@@ -62,18 +66,16 @@ module.exports = {
 
     if (req.file) {
       values.picture = req.file.filename;
+    } else {
+      values.picture = req.body.pic_name;
     }
-
 
     // Validation results
     req.getValidationResult().then(function(result) {
       if ( result.isEmpty() ) {
-        return Tools.forge(toolID).save(values, options).then(function(ret) {
-          if (!toolID) {
-            toolID = {id: ret.id};
-          }
-          // After successful update/insert, grab the updated/new data and display the page
-          res.redirect('/tools/edit/' + toolID.id);
+        return Tools.forge(toolID).save(values, options).then(function(tool) {
+          console.log(tool.attributes);
+          res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs, message: 'Updated sucessfully'});
         });
       } else {
         return Tools.forge(toolID).fetch().then(function(tool) {

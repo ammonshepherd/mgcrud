@@ -23,7 +23,7 @@ a:hover {
   font-size: 3em;
 }
 
-#error-panel li {
+#error-panel li, #success-panel li {
   padding: 5px 10px;
 }
 

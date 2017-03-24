@@ -1,6 +1,9 @@
 extends layout
 
 block content
+  if message
+    ul.card-panel.green.white-text#success-panel
+      li= message
   if errors
     ul.card-panel.red.white-text#error-panel
       for error in errors
@@ -66,6 +69,7 @@ block content
         .col.s12.m6
           if (picture)
             img.responsive-img(src='/uploads/' + picture)
+            input(type='hidden' name='pic_name' value=picture)
       .row#form-buttons
         .col.s12.m6
           input.validate.btn.waves-effect.waves-light.green.left#submit(type='submit' name='submit' value='Save')
