@@ -74,13 +74,16 @@ module.exports = {
     req.getValidationResult().then(function(result) {
       if ( result.isEmpty() ) {
         return Tools.forge(toolID).save(values, options).then(function(tool) {
-          console.log(tool.attributes);
           res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs, message: 'Updated sucessfully'});
         });
       } else {
-        return Tools.forge(toolID).fetch().then(function(tool) {
-          res.render('tool', {results: tool.attributes, errors: result.array()});
-        });
+        if (placeID !== '') {
+          return Tools.forge(toolID).fetch().then(function(tool) {
+            res.render('tool', {results: tool.attributes, errors: result.array()});
+          });
+        } else {
+          res.render('tool', { errors: result.array() });
+        }
 
       }
     });  

@@ -9,7 +9,7 @@ var toolsController = require('../controllers/tools');
 router.get('/', toolsController.listAll );
 
 router.get('/edit/', toolsController.edit);
-router.post('/edit/', toolsController.upsert);
+router.post('/edit/', upload.single('tool_image'), toolsController.upsert);
 
 router.get('/edit/:id', toolsController.edit);
 router.post('/edit/:id', upload.single('tool_image'), toolsController.upsert);

@@ -73,17 +73,17 @@ module.exports = {
     // Validation results
     req.getValidationResult().then(function(result) {
       if ( result.isEmpty() ) {
-        return Locations.forge(placeID).save(values, options).then(function(ret) {
-          if (!placeID) {
-            placeID = {id: ret.id};
-          }
-          // After successful update/insert, grab the updated/new data and display the page
-          res.redirect('/locations/edit/' + placeID.id);
+        return Locations.forge(placeID).save(values, options).then(function(location) {
+          res.render('location', {results: location.attributes});
         });
       } else {
-        return Locations.forge(placeID).fetch().then(function(location) {
-          res.render('location', {results: location.attributes, errors: result.array()});
-        });
+        if (placeID !== '') {
+          return Locations.forge(placeID).fetch().then(function(location) {
+            res.render('location', {results: location.attributes, errors: result.array()});
+          });
+        } else {
+          res.render('location', { errors: result.array() });
+        }
 
       }
     });  
