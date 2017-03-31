@@ -39,16 +39,15 @@ module.exports = {
   upsert(req, res) {
     var options = {};
     var toolID = '';
-    /*if (!req.params.id) {
+    var message = '';
+    if (!req.params.id) {
       options.method = 'insert';
+      message = 'Created Successfully!';
     } else {
       toolID = {id: req.params.id};
       options.method = 'update';
       options.patch = 'true';
-    }
-    */
-    if (req.params.id) {
-      toolID = {id: req.params.id};
+      message = 'Updated Successfully!';
     }
 
     // Validate the input fields
@@ -74,7 +73,7 @@ module.exports = {
     req.getValidationResult().then(function(result) {
       if ( result.isEmpty() ) {
         return Tools.forge(toolID).save(values, options).then(function(tool) {
-          res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs, message: 'Updated sucessfully'});
+          res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs, message: message});
         });
       } else {
         if (placeID !== '') {
