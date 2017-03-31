@@ -1,6 +1,9 @@
 extends layout
 
 block content
+  if message
+    ul.card-panel.green.white-text#success-panel
+      li= message
   if errors
     ul.card-panel.red.white-text#error-panel
       for error in errors

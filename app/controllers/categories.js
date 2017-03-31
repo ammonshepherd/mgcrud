@@ -35,10 +35,12 @@ module.exports = {
     var categoryID = '';
     if (!req.params.id) {
       options.method = 'insert';
+      message = "Successfully Created!";
     } else {
       categoryID = {id: req.params.id};
       options.method = 'update';
       options.patch = 'true';
+      message = "Updated Successfully!";
     }
 
     // Validate the input fields
@@ -52,18 +54,17 @@ module.exports = {
     // Validation results
     req.getValidationResult().then(function(result) {
       if ( result.isEmpty() ) {
-        return Categories.forge(categoryID).save(values, options).then(function(ret) {
-          if (!categoryID) {
-            categoryID = {id: ret.id};
-          }
-          // After successful update/insert, grab the updated/new data and display the page
-          res.redirect('/categories/edit/' + categoryID.id);
+        return Categories.forge(categoryID).save(values, options).then(function(category) {
+          res.render('category', {results: category.attributes, message: message});
         });
       } else {
-        return Categories.forge(categoryID).fetch().then(function(category) {
-          res.render('category', {results: category.attributes, errors: result.array()});
-        });
-
+        if (placeID !== '') {
+          return Categories.forge(categoryID).fetch().then(function(category) {
+            res.render('category', {results: category.attributes, errors: result.array()});
+          });
+        } else {
+          res.render('category', { errors: result.array() });
+        }
       }
     });  
   },
