@@ -33,12 +33,15 @@ module.exports = {
   upsert(req, res) {
     var options = {};
     var placeID = '';
+    var message = '';
     if (!req.params.id) {
       options.method = 'insert';
+      message = "Created Successfully!";
     } else {
       placeID = {id: req.params.id};
       options.method = 'update';
       options.patch = 'true';
+      message = 'Updated Successfully!';
     }
 
     // Validate the input fields
@@ -74,7 +77,7 @@ module.exports = {
     req.getValidationResult().then(function(result) {
       if ( result.isEmpty() ) {
         return Locations.forge(placeID).save(values, options).then(function(location) {
-          res.render('location', {results: location.attributes});
+          res.render('location', {results: location.attributes, message: message});
         });
       } else {
         if (placeID !== '') {

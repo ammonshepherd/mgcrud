@@ -1,6 +1,10 @@
 extends layout
 
 block content
+  - console.log(message)
+  if message
+    ul.card-panel.green.white-text#success-panel
+      li= message
   if errors
     ul.card-panel.red.white-text#error-panel
       for error in errors
@@ -29,9 +33,9 @@ block content
   else
     - var action = 'add'
     - var placeID = ''
-    h1#edit-location Add new place
+    h1#edit-location Add New Location
 
-  if (action == 'edit')
+  if (picture)
     #location-image
       img.responsive-img(src='/uploads/' + picture)
   .row#location-form
