@@ -15,7 +15,7 @@ module.exports = {
   edit(req, res) {
     if (req.params.id) {
       return Locations.forge({id: req.params.id}).fetch().then(function(location) {
-        res.render('location', {results: location.attributes, errors: false});
+        res.render('location', {results: location.attributes, errors: false, message: false});
       })
       .catch( function(error){
         res.render('error', {error: error});
