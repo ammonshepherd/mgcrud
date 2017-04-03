@@ -22,11 +22,11 @@ block content
     - var quantity = results.quantity
     - var category = results.category_id
     - var location = results.location_id
-    h1#edit-tool #{toolName}
+    h1#item-edit-title #{toolName}
   else
     - var action = 'add'
     - var toolID = ''
-    h1#edit-tool Add New Tool
+    h1#item-edit-title Add New Tool
 
   .row#tool-form
     form(action='/tools/edit/' + toolID, method='post' enctype='multipart/form-data')

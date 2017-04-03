@@ -28,11 +28,11 @@ block content
     - var picture = results.picture
     if results.visible
       - var visibleness = 'checked'
-    h1#edit-location #{placeName}
+    h1#item-edit-title #{placeName}
   else
     - var action = 'add'
     - var placeID = ''
-    h1#edit-location Add New Location
+    h1#item-edit-title Add New Location
 
   if (picture)
     #location-image

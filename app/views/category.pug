@@ -16,11 +16,11 @@ block content
     - var action = 'edit'
     - var categoryID = results.id
     - var categoryName = results.name
-    h1#edit-category #{categoryName}
+    h1#item-edit-title #{categoryName}
   else
     - var action = 'add'
     - var categoryID = ''
-    h1#edit-category Add New Category
+    h1#item-edit-title Add New Category
 
   .row#category-form
     form(action='/categories/edit/' + categoryID, method='post')
