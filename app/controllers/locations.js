@@ -7,6 +7,9 @@ module.exports = {
   delete(req, res) {
     return Locations.forge({id: req.params.id}).destroy().then(function(model) {
       res.redirect('/locations/');
+    })
+    .catch(function(error) {
+      res.render('error', {error: error, message: 'Can not delete.'});
     });
   },
   edit(req, res) {
@@ -14,7 +17,9 @@ module.exports = {
       return Locations.forge({id: req.params.id}).fetch().then(function(location) {
         res.render('location', {results: location.attributes, errors: false});
       })
-      .catch( function(error){console.log(error);} );
+      .catch( function(error){
+        res.render('error', {error: error});
+      });
     } else {
       res.render('location');
     }
@@ -23,7 +28,9 @@ module.exports = {
     return Locations.forge().orderBy('name', 'ASC').fetchAll().then(function(locations) {
       res.render('list', {results: locations.models, kind: 'locations', skipFields: ['id', 'phone', 'access', 'hours', 'email', 'latlong', 'created_at', 'updated_at']});
     })
-    .catch( function(error){console.log(error);} );
+    .catch( function(error){
+      res.render('error', {error: error});
+    });
   },
   single(req, res) {
     return Locations.forge({id: req.params.id}).fetch().then(function(location) {

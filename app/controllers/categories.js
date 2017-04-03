@@ -7,6 +7,9 @@ module.exports = {
   delete(req, res) {
     return Categories.forge({id: req.params.id}).destroy().then(function(model) {
       res.redirect('/categories/');
+    })
+    .catch(function(error) {
+      res.render('error', {error: error, message: 'Can not delete.'});
     });
   },
   edit(req, res) {
@@ -14,7 +17,9 @@ module.exports = {
       return Categories.forge({id: req.params.id}).fetch().then(function(category) {
         res.render('category', {results: category.attributes, kind: 'categories', errors: false});
       })
-      .catch( function(error){console.log(error);} );
+      .catch( function(error){
+        res.render('error', {error: error});
+      });
     } else {
       res.render('category');
     }
@@ -23,7 +28,9 @@ module.exports = {
     return Categories.forge().orderBy('name', 'ASC').fetchAll().then(function(categories) {
       res.render('list', {results: categories.models, kind: 'categories', skipFields: ['id', 'created_at', 'updated_at', 'location_id']});
     })
-    .catch( function(error){console.log(error);} );
+    .catch( function(error){
+      res.render('error', {error: error});
+    });
   },
   single(req, res) {
     return Categories.forge({id: req.params.id}).fetch().then(function(category) {
