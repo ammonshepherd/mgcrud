@@ -28,9 +28,10 @@ module.exports = {
 
   createUser (req) {
     if(req.body.password === req.body.confirmpassword) {
+      console.log('passwords match');
       var username = req.body.username;
       bcrypt.hash(req.body.password, 10, function(err, hash) {
-        console.log(req.body);
+        console.log('create user in db');
         return Users.forge({username: username, password: hash}).save();
       });
     } else {
@@ -41,11 +42,9 @@ module.exports = {
   isLoggedIn(req, res, next) {
     if (req.user) {
       console.log('already logged in as ' + req.user);
-      res.local.loggedin = true;
       next();
     }
     console.log('not logged in ' + req.body.username);
-    res.local.loggedin = false;
     next();
   },
 
@@ -60,7 +59,7 @@ module.exports = {
 
   register(req, res, next) {
     console.log('register form submitted');
-    return createUser(req, res)
+    return this.createUser(req, res)
     .then(function(response) {
       passport.authenticate('local', function(err, user, info) {
         console.log('success from register user form');
