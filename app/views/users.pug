@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  if values
+    - var email = values.email
+    - var username = values.username
+  section.registerform
+  form(name="register" action="/auth/register/" method="post" accept-charset="utf-8")
+    ul
+      li 
+        label(for="email") Email
+        input(type="email" id="email" name='email' value=email autofocus required)
+      li 
+        if taken
+          .red-text.text-darken-2= 'Please choose another username. ' + username + ' is already taken'
+        label(for="username") Username
+        input(type="text" id="username" name='username' value=username required)
+      li
+        label(for="password") Password
+        input(type="password" id="password" name='password' required)
+      li
+        label(for="password") Confirm Password
+        input(type="password" id="confirmpassword" name='confirmpassword' required)
+      li
+        input.btn.green.waves-effect.waves-light(type="submit" value="Register")

@@ -7,7 +7,7 @@ var auth = require('../controllers/auth');
 /* Routes with individual route files */
 router.use('/auth', require('./auth'));
 router.use('/admin', require('./admin'));
-router.use('/user', require('./users'));
+router.use('/users', require('./users'));
 
 router.use('/locations', auth.loginRequired, require('./locations'));
 router.use('/tools', require('./tools'));
