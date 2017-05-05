@@ -5,7 +5,8 @@ var auth = require('../controllers/auth');
 
 /* GET users listing. */
 router.use('/', auth.loginRequired, function(req, res, next) {
-  res.render('users', {values: req.body});
+  console.log(req.user);
+  res.render('users', {values: req.user.attributes});
 });
 
 module.exports = router;
