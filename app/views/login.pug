@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  section.loginform
+  form(name="login" action="login" method="post" accept-charset="utf-8")
+    ul
+      li 
+        label(for="username") Username
+        input(type="text" name="username" required)
+      li
+        label(for="password") Password
+        input(type="password" name="password" required)
+      li
+        input.btn.green.waves-effect.waves-light(type="submit" value="Login")

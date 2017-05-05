@@ -3,9 +3,8 @@ var router = express.Router();
 
 var auth = require('../controllers/auth');
 
-/* GET users listing. */
-router.get('/', auth.loginRequired, function(req, res, next) {
-  res.send('users page');
-});
+router.get('/', auth.adminRequired, function(res, req, next) {
+  res.send('admin page');
+} );
 
 module.exports = router;

@@ -7,7 +7,11 @@ var bodyParser = require('body-parser');
 var routes = require('./app/routes/index');
 var expressValidator = require('express-validator');
 
+var db = require('./db');
+var passport = require('passport');
+
 require('dotenv').config();
+
 
 var app = express();
 
@@ -24,8 +28,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'app/public')));
+app.use(require('express-session')({ secret: 'big brown bear', resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 
+// Call in the routes
 app.use('/', routes);
+
 
 
 // catch 404 and forward to error handler
