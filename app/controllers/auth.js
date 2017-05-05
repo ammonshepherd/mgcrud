@@ -26,19 +26,6 @@ module.exports = {
     return bcrypt.compareSync(userPassword, databasePassword);
   },
 
-  createUser (req) {
-    if(req.body.password === req.body.confirmpassword) {
-      console.log('passwords match');
-      var username = req.body.username;
-      bcrypt.hash(req.body.password, 10, function(err, hash) {
-        console.log('create user in db');
-        return Users.forge({username: username, password: hash}).save();
-      });
-    } else {
-      console.log("passwords DON'T mAtch");
-    }
-  },
-
   isLoggedIn(req, res, next) {
     if (req.user) {
       console.log('already logged in as ' + req.user);
@@ -58,14 +45,22 @@ module.exports = {
   },
 
   register(req, res, next) {
-    console.log('register form submitted');
-    return this.createUser(req, res)
-    .then(function(response) {
-      passport.authenticate('local', function(err, user, info) {
-        console.log('success from register user form');
-      })(req, res, next);
-    })
-    .catch(function(err) { console.log('error from register form: ' + err ); });
+    if(req.body.password === req.body.confirmpassword) {
+      console.log('passwords match');
+      var username = req.body.username;
+      bcrypt.hash(req.body.password, 10, function(err, hash) {
+        return Users.forge({username: username, password: hash}).save().then(function(user) {
+          console.log('create user in db');
+          req.login(user, function(err) {
+            if (err) { return next(err); }
+            console.log('set the user as logged in ');
+            return res.redirect('/users/' + req.user.attributes.username);
+          });
+        });
+      });
+    } else {
+      console.log("passwords DON'T mAtch");
+    }
   },
 
   userExists(req, res, next) {
