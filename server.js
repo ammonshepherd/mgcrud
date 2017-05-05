@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var routes = require('./app/routes/index');
 var expressValidator = require('express-validator');
 
-var db = require('./db');
 var passport = require('passport');
 
 require('dotenv').config();
