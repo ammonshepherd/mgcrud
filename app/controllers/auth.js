@@ -41,9 +41,11 @@ module.exports = {
   isLoggedIn(req, res, next) {
     if (req.user) {
       console.log('already logged in as ' + req.user);
-      return res.status(401);
+      res.local.loggedin = true;
+      next();
     }
     console.log('not logged in ' + req.body.username);
+    res.local.loggedin = false;
     next();
   },
 
@@ -69,16 +71,16 @@ module.exports = {
 
   userExists(req, res, next) {
     console.log('check if user exists ' + req.body.username);
-    // search the database for the user name, if it exists return error, if not
-    // pass next
     return Users.where({username: req.body.username}).fetch().then(function(user) {
-      console.log('username taken ' + user);
-      //redirect to register page
-      res.render('register', {values: req.body, taken: 'Username is taken'});
+      if(user){
+        console.log('username taken ' + user);
+        res.render('register', {values: req.body, taken: 'Username is taken'});
+      } else {
+        console.log('username not taken ' + req.body.username);
+        next();
+      }
     })
     .catch(function(err) {
-      console.log('username not taken ' + req.body.username);
-      next();
     });
   }
 
