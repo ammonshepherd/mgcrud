@@ -1,3 +1,4 @@
+var bcrypt = require('bcrypt');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -11,21 +12,29 @@ var options = {};
 init();
 
 passport.use(new LocalStrategy(options, function(username, password, done) {
+  console.log('pull info from DB if user exists');
   Users.forge({username: username}).fetch()
   .then(function(user) {
     if (!user) {
-      return done(null, false);
+      console.log('username does not exist');
+      return done(null, false, {message: "Incorrect Username"});
     }
 
-    if (!auth.comparePass(password, user.password)) {
-      return done(null, false);
+    console.log('check passwords');
+    if (!comparePass(password, user.attributes.password)) {
+      return done(null, false, {message: "Incorrect Password"});
     } else {
       return done(null, user);
     }
   })
   .catch(function(err) {
-    return done(null, false);
+    console.log('database error on login');
+    return done(err);
   });
 }));
+
+function comparePass(userPassword, databasePassword) {
+    return bcrypt.compareSync(userPassword, databasePassword);
+  }
 
 module.exports = passport;

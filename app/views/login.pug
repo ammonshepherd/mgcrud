@@ -2,7 +2,9 @@ extends layout
 
 block content
   section.loginform
-  form(name="login" action="login" method="post" accept-charset="utf-8")
+  form(name="login" action="/auth/login" method="post" accept-charset="utf-8")
+    if message
+      h2= message
     ul
       li 
         label(for="username") Username

@@ -7,8 +7,14 @@
         li: a.top-nav(href="/locations/") Locations
         li: a.top-nav(href="/tools/") Tools
         li: a.top-nav(href="/categories/") Categories
-    .nav-wrapper
-      ul#left
-        li: a.bottom-nav(href="/login/") Login
-        li: a.bottom-nav(href="/logout/") Logout
-        li: a.bottom-nav(href="/register/") Register
+    nav.green
+      .nav-wrapper
+        ul#left
+          if userinfo
+            li: a.bottom-nav(href="/logout/") Logout
+          else
+            li: a.bottom-nav(href="/login/") Login
+            li: a.bottom-nav(href="/register/") Register
+        if userinfo
+          .right
+            #user= 'Logged in as ' + userinfo.username

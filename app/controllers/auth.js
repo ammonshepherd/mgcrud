@@ -22,10 +22,6 @@ module.exports = {
     });
   },
 
-  comparePass(userPassword, databasePassword) {
-    return bcrypt.compareSync(userPassword, databasePassword);
-  },
-
   isLoggedIn(req, res, next) {
     if (req.user) {
       console.log('already logged in as ' + req.user);

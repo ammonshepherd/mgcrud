@@ -15,7 +15,7 @@ router.use('/categories', require('./categories'));
 
 /* Routes of domain name http://domainname.com/xyz */
   // Home page
-router.get('/', function(req, res, next) { res.render('index', { title: 'Express' }); });
+router.get('/', function(req, res, next) { res.render('index', { userinfo: req.user.attributes }); });
 router.get('/login', function(req, res, next) { res.render('login'); });
 router.get('logout', function(req, res, next) { 
   res.logout(); 

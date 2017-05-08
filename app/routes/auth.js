@@ -9,8 +9,9 @@ router.get('/logout', auth.loginRequired, function(req, res, next) {
   console.log('logout');
 });
 
-router.post('/register', [auth.isLoggedIn, auth.userExists], auth.register);
+router.post('/register', auth.isLoggedIn, auth.userExists, auth.register);
 
+/*
 router.post('/login', auth.isLoggedIn, function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) { console.log('error from login: ' + err); }
@@ -22,6 +23,11 @@ router.post('/login', auth.isLoggedIn, function(req, res, next) {
       });
     }
   });
+});
+*/
+
+router.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login', failureFlash: 'Incorrect user or pass.'}), function(req, res) {
+  res.redirect('/user/' + res.user.username);
 });
 
 module.exports = router;
