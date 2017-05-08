@@ -40,16 +40,20 @@ module.exports = {
       console.log(req.user + ' not logged in');
       res.redirect('/login');
     }  
-    console.log(req.user + ' is logged in');
+    console.log(req.user);
+    console.log(' is logged in');
     return next();
   },
 
   register(req, res, next) {
     if(req.body.password === req.body.confirmpassword) {
       console.log('passwords match');
+      // Should run some validation on these
       var username = req.body.username;
+      var email = req.body.email;
+
       bcrypt.hash(req.body.password, 10, function(err, hash) {
-        return Users.forge({username: username, password: hash}).save().then(function(user) {
+        return Users.forge({email: email, username: username, password: hash}).save().then(function(user) {
           console.log('create user in db');
           req.login(user, function(err) {
             if (err) { return next(err); }
