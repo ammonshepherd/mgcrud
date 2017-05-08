@@ -10,11 +10,11 @@
     nav.green
       .nav-wrapper
         ul#left
-          if userinfo
+          if userInfo
             li: a.bottom-nav(href="/logout/") Logout
           else
             li: a.bottom-nav(href="/login/") Login
             li: a.bottom-nav(href="/register/") Register
-        if userinfo
+        if userInfo
           .right
-            #user= 'Logged in as ' + userinfo.username
+            #user= 'Logged in as ' + userInfo.username

@@ -12,15 +12,12 @@ var options = {};
 init();
 
 passport.use(new LocalStrategy(options, function(username, password, done) {
-  console.log('pull info from DB if user exists');
   Users.forge({username: username}).fetch()
   .then(function(user) {
     if (!user) {
-      console.log('username does not exist');
       return done(null, false, {message: "Incorrect Username"});
     }
 
-    console.log('check passwords');
     if (!comparePass(password, user.attributes.password)) {
       return done(null, false, {message: "Incorrect Password"});
     } else {
@@ -28,7 +25,6 @@ passport.use(new LocalStrategy(options, function(username, password, done) {
     }
   })
   .catch(function(err) {
-    console.log('database error on login');
     return done(err);
   });
 }));

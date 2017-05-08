@@ -4,8 +4,7 @@ var router = express.Router();
 var auth = require('../controllers/auth');
 
 /* GET users listing. */
-router.use('/*', auth.loginRequired, function(req, res, next) {
-  console.log(req.user);
+router.use('/*', function(req, res, next) {
   res.render('users', {userInfo: req.user.attributes});
 });
 
