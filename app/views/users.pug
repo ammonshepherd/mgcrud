@@ -4,11 +4,12 @@ block content
   if values
     - var email = values.email
     - var username = values.username
-  section.registerform
-  ul
-    li 
-      h2 Username
+  ul.collection
+    li.collection-item.avatar
+      i.material-icons.circle perm_identity
+      span.title Username
       p= username
-    li 
-      h2 Email
+    li.collection-item.avatar
+      i.material-icons.circle email
+      span.title Email
       p= email
