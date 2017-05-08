@@ -1,9 +1,9 @@
 extends layout
 
 block content
-  if values
-    - var email = values.email
-    - var username = values.username
+  if userInfo
+    - var email = userInfo.email
+    - var username = userInfo.username
   ul.collection
     li.collection-item.avatar
       i.material-icons.circle perm_identity
