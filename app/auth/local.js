@@ -7,11 +7,9 @@ var Users = require('../models/users');
 var init = require('./passport');
 var auth = require('../controllers/auth');
 
-var options = {};
-
 init();
 
-passport.use(new LocalStrategy(options, function(username, password, done) {
+passport.use(new LocalStrategy(function(username, password, done) {
   Users.forge({username: username}).fetch()
   .then(function(user) {
     if (!user) {

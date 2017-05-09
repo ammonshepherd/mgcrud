@@ -15,13 +15,8 @@ router.use('/categories', require('./categories'));
 
 /* Routes of domain name http://domainname.com/xyz */
   // Home page
-router.get('/', auth.isLoggedIn, function(req, res, next) { 
-  console.log('home page' + req.local.user);
-  var userObj = '';
-  if (req.local.user) {
-    userObj = req.local.user.attributes;
-  }
-  res.render('index', { userInfo: userObj }); 
+router.get('/', function(req, res, next) { 
+  res.render('index', {userInfo: req.user.attributes}); 
 });
 
 router.get('/login', function(req, res, next) { res.render('login'); });

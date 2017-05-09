@@ -20,12 +20,10 @@ module.exports = {
   },
 
   isLoggedIn(req, res, next) {
-    if (req.user) {
-      console.log('already logged in as ' + req.user.attributes.username);
-      req.locals.user = req.user.attributes;
-      next();
+    if (!req.user) {
+      return next();
     }
-    console.log('not logged in ' + req.body.username);
+    req.locals.user = req.user.attributes;
     next();
   },
 
