@@ -20,11 +20,11 @@ module.exports = {
   },
 
   isLoggedIn(req, res, next) {
-    if (!req.user) {
-      return next();
+    if ( req.isAuthenticated() ) {
+      next();
+    } else {
+      res.redirect('/login');
     }
-    req.locals.user = req.user.attributes;
-    next();
   },
 
   loginRequired(req, res, next) {

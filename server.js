@@ -31,6 +31,12 @@ app.use(require('express-session')({ secret: 'big brown bear', resave: false, sa
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(function(req, res, next) {
+  // put user into res.locals for easy access from templates
+  res.locals.userInfo = req.user || null;
+  next();
+});
+
 // Call in the routes
 app.use('/', routes);
 

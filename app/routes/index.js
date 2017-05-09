@@ -9,15 +9,14 @@ router.use('/auth', require('./auth'));
 router.use('/admin', require('./admin'));
 router.use('/users', auth.isLoggedIn, auth.loginRequired, require('./users'));
 
-router.use('/locations', auth.isLoggedIn, auth.loginRequired, require('./locations'));
+router.use('/locations', auth.isLoggedIn, require('./locations'));
 router.use('/tools', require('./tools'));
 router.use('/categories', require('./categories'));
 
 /* Routes of domain name http://domainname.com/xyz */
   // Home page
 router.get('/', function(req, res, next) { 
-  var userObj = '';
-  if(req.user) { userObj = req.user.attributes; }
+  var userObj = req.user || null;
   res.render('index', {userInfo: userObj}); 
 });
 

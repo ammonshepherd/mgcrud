@@ -7,13 +7,7 @@ module.exports = function() {
     done(null, user);
   });
 
-  passport.deserializeUser( function(id, done) {
-    return Users.forge({id: id}).fetch()
-    .then(function(user) {
+  passport.deserializeUser( function(user, done) {
       done(null, user);
-    })
-    .catch(function(err) {
-      done(err, user);
-    });
   });
 };
