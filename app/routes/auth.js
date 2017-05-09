@@ -4,10 +4,8 @@ var router = express.Router();
 var passport = require('../auth/local');
 var auth = require('../controllers/auth');
 
-router.post('/register', auth.isLoggedIn, auth.userExists, auth.register);
+router.post('/register', auth.userExists, auth.register);
 
-router.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login', failureFlash: 'Incorrect user or pass.'}), function(req, res) {
-  res.redirect('/users/' + req.user.attributes.username);
-});
+router.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login'}));
 
 module.exports = router;

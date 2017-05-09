@@ -27,13 +27,6 @@ module.exports = {
     }
   },
 
-  loginRequired(req, res, next) {
-    if (!req.user) {
-      res.redirect('/login');
-    }  
-    return next();
-  },
-
   register(req, res, next) {
     if(req.body.password === req.body.confirmpassword) {
       // Should run some validation on these
@@ -42,21 +35,21 @@ module.exports = {
 
       bcrypt.hash(req.body.password, 10, function(err, hash) {
         return Users.forge({email: email, username: username, password: hash}).save().then(function(user) {
-          req.login(user, function(err) {
+          req.login(user.attributes, function(err) {
             if (err) { return next(err); }
-            return res.redirect('/users/' + req.user.attributes.username);
+            return res.redirect('/users/' + req.user.username);
           });
         });
       });
     } else {
+      res.render('register', {values: req.body, passes: true});
     }
   },
 
   userExists(req, res, next) {
-    console.log('check if user exists ' + req.body.username);
     return Users.where({username: req.body.username}).fetch().then(function(user) {
       if(user){
-        res.render('register', {values: req.body, taken: 'Username is taken'});
+        res.render('register', {values: req.body, taken: true});
       } else {
         next();
       }

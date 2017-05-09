@@ -16,6 +16,8 @@ block content
         label(for="username") Username
         input(type="text" id="username" name='username' value=username required)
       li
+        if passes
+          .red-text.text-darken-2 Passwords do not match
         label(for="password") Password
         input(type="password" id="password" name='password' required)
       li
