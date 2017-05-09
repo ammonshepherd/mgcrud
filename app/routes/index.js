@@ -7,11 +7,11 @@ var auth = require('../controllers/auth');
 /* Routes with individual route files */
 router.use('/auth', require('./auth'));
 router.use('/admin', require('./admin'));
-router.use('/users', auth.isLoggedIn, auth.loginRequired, require('./users'));
+router.use('/users', auth.isLoggedIn, require('./users'));
 
 router.use('/locations', auth.isLoggedIn, require('./locations'));
-router.use('/tools', require('./tools'));
-router.use('/categories', require('./categories'));
+router.use('/tools', auth.isLoggedIn, require('./tools'));
+router.use('/categories', auth.isLoggedIn, require('./categories'));
 
 /* Routes of domain name http://domainname.com/xyz */
   // Home page
