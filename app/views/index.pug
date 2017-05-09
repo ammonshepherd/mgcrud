@@ -1,10 +1,20 @@
 extends layout
 
 block content
-  h1 Makergrounds Website Backend
+  h2 Makergrounds Website Backend
   p Here you can edit the content of the database that drives the websites: http://makergrounds.virginia.edu
 
-  ul
-    li: h2: a(href='/locations/') Locations
-    li: h2: a(href="/tools/") Tools
-    li: h2: a(href="/categories/") Categories
+  ul.collection.with-header
+    li.collection-header: h2 Edit What?
+    li.collection-item.avatar 
+      i.material-icons.circle business
+      span.title: a(href='/locations/') Locations
+      p edit the locations where spaces, labs, and such are found
+    li.collection-item.avatar
+      i.material-icons.circle vpn_key
+      span.title: a(href="/tools/") Tools
+      p edit the tools associated with each location
+    li.collection-item.avatar
+      i.material-icons.circle subject
+      span.title: a(href="/categories/") Categories
+      p edit the tool categories
