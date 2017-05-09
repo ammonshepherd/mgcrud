@@ -13,11 +13,11 @@ passport.use(new LocalStrategy(function(username, password, done) {
   Users.forge({username: username}).fetch()
   .then(function(user) {
     if (!user) {
-      return done(null, false, {message: "Incorrect Username"});
+      return done(null, false);
     }
 
     if (!comparePass(password, user.attributes.password)) {
-      return done(null, false, {message: "Incorrect Password"});
+      return done(null, false);
     } else {
       return done(null, user);
     }
