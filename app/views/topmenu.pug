@@ -14,4 +14,5 @@
             li: a.bottom-nav(href="/register/") Register
         if userInfo
           .right
-            #user= 'Logged in as ' + userInfo.username
+            span.left#user= 'Logged in as ' + userInfo.username
+            i.right.material-icons: a(href='/users/' + userInfo.username) settings

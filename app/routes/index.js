@@ -5,17 +5,19 @@ var router = express.Router();
 var auth = require('../controllers/auth');
 
 /* Routes with individual route files */
+  // authentication routes
 router.use('/auth', require('./auth'));
 router.use('/admin', auth.isLoggedIn, require('./admin'));
 router.use('/users', auth.isLoggedIn, require('./users'));
 
+  // the data routes
 router.use('/locations', auth.isLoggedIn, require('./locations'));
 router.use('/tools', auth.isLoggedIn, require('./tools'));
 router.use('/categories', auth.isLoggedIn, require('./categories'));
 
 /* Routes of domain name http://domainname.com/xyz */
   // Home page
-router.get('/', function(req, res, next) { 
+router.get('/', auth.isLoggedIn, function(req, res, next) { 
   var userObj = req.user || null;
   res.render('index', {userInfo: userObj}); 
 });

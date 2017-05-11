@@ -1,15 +1,37 @@
 extends layout
 
 block content
+  if message
+    ul.card-panel.green.white-text#success-panel
+      li= message
+  if error
+    ul.card-panel.red.white-text#error-panel
+        li= error
+  if dbErr
+    ul.card-panel.red.white-text
+      li= dbErr
+
   if userInfo
     - var email = userInfo.email
     - var username = userInfo.username
-  ul.collection
-    li.collection-item.avatar
-      i.material-icons.circle perm_identity
-      span.title Username
-      p= username
-    li.collection-item.avatar
-      i.material-icons.circle email
-      span.title Email
-      p= email
+
+  section.registerform
+    h2= username
+    form(name="register" action='/users/update/' method="post" accept-charset="utf-8") 
+      ul
+        li 
+          label(for="email") Email
+          input(type="email" id="email" name='email' value=email autofocus required)
+        li
+          if passes
+            .red-text.text-darken-2 Passwords do not match
+          label(for="password") Password
+          input(type="password", id="password", name='password')
+        li
+          label(for="password") Confirm Password
+          input(type="password" id="confirmpassword" name='confirmpassword')
+        li
+          if userInfo
+            input.btn.green.waves-effect.waves-light(type="submit" value="Save")
+          else
+            input.btn.green.waves-effect.waves-light(type="submit" value="Register")
