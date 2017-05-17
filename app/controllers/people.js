@@ -12,7 +12,7 @@ module.exports = {
   edit(req, res) {
     if (req.params.id) {
       return People.forge({id: req.params.id}).fetch().then(function(person) {
-        res.render('person', {results: person.attributes, errors: false});
+        res.render('person', {results: person.attributes, title: 'People', errors: false});
       })
       .catch( function(error){console.log(error);} );
     } else {
@@ -21,13 +21,13 @@ module.exports = {
   },
   listAll(req, res) {
     return People.forge().fetchAll().then(function(people) {
-      res.render('list', {results: people.models, kind: 'people', skipFields: ['id', 'created_at', 'updated_at']});
+      res.render('list', {results: people.models, title: 'People', kind: 'people', skipFields: ['id', 'created_at', 'updated_at']});
     })
     .catch( function(error){console.log(error);} );
   },
   single(req, res) {
     return People.forge({id: req.params.id}).fetch().then(function(person) {
-      res.render('person', {results: person.attributes, errors: false});
+      res.render('person', {results: person.attributes, title: 'People', errors: false});
     });
   },
   upsert(req, res) {
@@ -72,7 +72,7 @@ module.exports = {
         });
       } else {
         return People.forge(placeID).fetch().then(function(person) {
-          res.render('person', {results: person.attributes, errors: result.array()});
+          res.render('person', {results: person.attributes, title: 'People', errors: result.array()});
         });
 
       }

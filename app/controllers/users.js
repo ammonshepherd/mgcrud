@@ -7,7 +7,7 @@ var passport = require('passport');
 module.exports = {
   single(req, res) {
     return Users.forge({username: req.params.user}).fetch().then(function(user) {
-      res.render('users', {userInfo: user.attributes});
+      res.render('users', {userInfo: user.attributes, title: 'User Information'});
     });
   },
 
@@ -20,7 +20,7 @@ module.exports = {
         // use sync rather than async
         values.password = bcrypt.hashSync(req.body.password, 10);
       } else {
-        return res.render('users', {userInfo: req.user, error: 'Passwords do not match.'});
+        return res.render('users', {userInfo: req.user, title: 'User Information', error: 'Passwords do not match.'});
       }
     }
 

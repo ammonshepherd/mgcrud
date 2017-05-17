@@ -18,22 +18,22 @@ module.exports = {
   edit(req, res) {
     if (req.params.id) {
       return Tools.forge({id: req.params.id}).fetch().then(function(tool) {
-        res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs});
+        res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs, title: 'Tools' });
       });
     } else {
-      res.render('tool', {locations: allLocs, categories: allCats });
+      res.render('tool', {locations: allLocs, categories: allCats, title: 'Tools'  });
     }
   },
   listAll(req, res) {
     var allTools = Database.Collection.extend({ model: Tools }); // make a collection so we can use withRelated
     return allTools.forge().orderBy('name', 'ASC').fetch({withRelated: ['location', 'category']}).then(function(tools) {
-      res.render('listTools', { results: tools.models });
+      res.render('tools-list', { results: tools.models, title: 'Tools' });
     })
     .catch( function(error){console.log(error);} );
   },
   single(req, res) {
     return Tools.forge({id: req.params.id}).fetch().then(function(tool) {
-      res.render('tool', {results: tool.attributes, errors: false});
+      res.render('tool', {results: tool.attributes, errors: false, title: 'Tools' });
     });
   },
   upsert(req, res) {
@@ -78,10 +78,10 @@ module.exports = {
       } else {
         if (placeID !== '') {
           return Tools.forge(toolID).fetch().then(function(tool) {
-            res.render('tool', {results: tool.attributes, errors: result.array()});
+            res.render('tool', {results: tool.attributes, title: 'Tools', errors: result.array()});
           });
         } else {
-          res.render('tool', { errors: result.array() });
+          res.render('tool', {title: 'Tools', errors: result.array() });
         }
 
       }

@@ -9,24 +9,24 @@ module.exports = {
       res.redirect('/locations/');
     })
     .catch(function(error) {
-      res.render('error', {error: error, message: 'Can not delete.'});
+      res.render('error', {error: error, message: 'Can not delete.', title: 'Locations'});
     });
   },
   edit(req, res) {
     if (req.params.id) {
       return Locations.forge({id: req.params.id}).fetch().then(function(location) {
-        res.render('location', {results: location.attributes, errors: false, message: false});
+        res.render('location', {results: location.attributes, errors: false, message: false, title: 'Locations'});
       })
       .catch( function(error){
-        res.render('error', {error: error});
+        res.render('error', {error: error, title: 'Locations'});
       });
     } else {
-      res.render('location');
+      res.render('location', {title: 'Locations'});
     }
   },
   listAll(req, res) {
     return Locations.forge().orderBy('name', 'ASC').fetchAll().then(function(locations) {
-      res.render('list', {results: locations.models, kind: 'locations', skipFields: ['id', 'phone', 'access', 'hours', 'email', 'latlong', 'created_at', 'updated_at']});
+      res.render('locations-list', {results: locations.models, kind: 'locations', title: 'Locations'});
     })
     .catch( function(error){
       res.render('error', {error: error});
@@ -34,7 +34,7 @@ module.exports = {
   },
   single(req, res) {
     return Locations.forge({id: req.params.id}).fetch().then(function(location) {
-      res.render('location', {results: location.attributes, errors: false});
+      res.render('location', {results: location.attributes, errors: false, title: 'Locations'});
     });
   },
   upsert(req, res) {
@@ -89,10 +89,10 @@ module.exports = {
       } else {
         if (placeID !== '') {
           return Locations.forge(placeID).fetch().then(function(location) {
-            res.render('location', {results: location.attributes, errors: result.array()});
+            res.render('location', {results: location.attributes, errors: result.array(), title: 'Locations'});
           });
         } else {
-          res.render('location', { errors: result.array() });
+          res.render('location', { errors: result.array(), title: 'Locations' });
         }
 
       }

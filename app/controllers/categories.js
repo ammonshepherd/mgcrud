@@ -9,16 +9,16 @@ module.exports = {
       res.redirect('/categories/');
     })
     .catch(function(error) {
-      res.render('error', {error: error, message: 'Can not delete.'});
+      res.render('error', {error: error, message: 'Can not delete.', title: 'Categories'});
     });
   },
   edit(req, res) {
     if (req.params.id) {
       return Categories.forge({id: req.params.id}).fetch().then(function(category) {
-        res.render('category', {results: category.attributes, kind: 'categories', errors: false});
+        res.render('category', {results: category.attributes, kind: 'categories', errors: false, title: 'Categories'});
       })
       .catch( function(error){
-        res.render('error', {error: error});
+        res.render('error', {error: error, title: 'Categories'});
       });
     } else {
       res.render('category');
@@ -26,7 +26,7 @@ module.exports = {
   },
   listAll(req, res) {
     return Categories.forge().orderBy('name', 'ASC').fetchAll().then(function(categories) {
-      res.render('list', {results: categories.models, kind: 'categories', skipFields: ['id', 'created_at', 'updated_at', 'location_id']});
+      res.render('list', {results: categories.models, title: 'Categories', kind: 'categories', skipFields: ['id', 'created_at', 'updated_at', 'location_id']});
     })
     .catch( function(error){
       res.render('error', {error: error});
@@ -34,7 +34,7 @@ module.exports = {
   },
   single(req, res) {
     return Categories.forge({id: req.params.id}).fetch().then(function(category) {
-      res.render('category', {results: category.attributes, errors: false});
+      res.render('category', {results: category.attributes, title: 'Categories', errors: false});
     });
   },
   upsert(req, res) {
@@ -62,15 +62,15 @@ module.exports = {
     req.getValidationResult().then(function(result) {
       if ( result.isEmpty() ) {
         return Categories.forge(categoryID).save(values, options).then(function(category) {
-          res.render('category', {results: category.attributes, message: message});
+          res.render('category', {results: category.attributes, title: 'Categories', message: message});
         });
       } else {
         if (placeID !== '') {
           return Categories.forge(categoryID).fetch().then(function(category) {
-            res.render('category', {results: category.attributes, errors: result.array()});
+            res.render('category', {results: category.attributes, title: 'Categories', errors: result.array()});
           });
         } else {
-          res.render('category', { errors: result.array() });
+          res.render('category', {title: 'Categories', errors: result.array() });
         }
       }
     });  
