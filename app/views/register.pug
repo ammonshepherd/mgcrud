@@ -1,27 +1,36 @@
-extends layout
+include head.pug
 
-block content
-  if values
-    - var email = values.email
-    - var username = values.username
-  section.registerform
-  form(name="register" action="/auth/register/" method="post" accept-charset="utf-8")
-    ul
-      li 
-        label(for="email") Email
-        input(type="email" id="email" name='email' value=email autofocus required)
-      li 
-        if taken
-          .red-text.text-darken-2= 'Please choose another username. ' + username + ' is already taken'
-        label(for="username") Username
-        input(type="text" id="username" name='username' value=username required)
-      li
-        if passes
-          .red-text.text-darken-2 Passwords do not match
-        label(for="password") Password
-        input(type="password" id="password" name='password' required)
-      li
-        label(for="password") Confirm Password
-        input(type="password" id="confirmpassword" name='confirmpassword' required)
-      li
-        input.btn.green.waves-effect.waves-light(type="submit" value="Register")
+if values
+  - var email = values.email
+  - var username = values.username
+
+body.deep-orange.darken-4
+  #register-container.row
+    .col.s4
+    .col.s4
+      #register-card.card-content.z-depth-5.grey.lighten-4
+        h2.card-title Register
+        section.registerform
+          form(name="register" action="/auth/register/" method="post" accept-charset="utf-8")
+            ul
+              li 
+                label(for="email") Email
+                input.fields(type="email" id="email" name='email' value=email autofocus required)
+              li 
+                if taken
+                  .red-text.text-darken-2= 'Please choose another username. ' + username + ' is already taken'
+                label(for="username") Username
+                input.fields(type="text" id="username" name='username' value=username required)
+              li
+                if passes
+                  .red-text.text-darken-2 Passwords do not match
+                label(for="password") Password
+                input.fields(type="password" id="password" name='password' required)
+              li
+                label(for="password") Confirm Password
+                input.fields(type="password" id="confirmpassword" name='confirmpassword' required)
+              li
+                input.btn.green.waves-effect.waves-light(type="submit" value="Register")
+        p
+          a(href='/login') Login
+    .col.s4

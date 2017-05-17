@@ -1,16 +1,25 @@
-extends layout
+include head.pug
 
-block content
-  section.loginform
-  form(name="login" action="/auth/login" method="post" accept-charset="utf-8")
-    if message
-      h2= message
-    ul
-      li 
-        label(for="username") Username
-        input(type="text" name="username" required)
-      li
-        label(for="password") Password
-        input(type="password" name="password" required)
-      li
-        input.btn.green.waves-effect.waves-light(type="submit" value="Login")
+body.brown
+  #login-container.row
+    .col.s4
+    .col.s4
+      #login-card.card-content.z-depth-5.grey.lighten-4
+        h2.card-title Login
+        section.loginform
+          form(name="login" action="/auth/login" method="post" accept-charset="utf-8")
+            if message
+              h2= message
+            ul
+              li 
+                label(for="username") Username
+                input.fields(type="text" name="username" required)
+              li
+                label(for="password") Password
+                input.fields(type="password" name="password" required)
+              li
+            .card-action
+              input.btn.green.waves-effect.waves-light(type="submit" value="Login")
+        p
+          a(href='/register') Register
+    .col.s4
