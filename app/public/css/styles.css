@@ -10,6 +10,9 @@ a:hover {
   color: #0074bb;
 }
 
+/***
+ * HEADER, SIDEBAR
+***/
 header, main, footer {
   padding-left: 300px;
 }
@@ -48,6 +51,28 @@ nav.top-nav a.page-title {
   font-size: .8em;
 }
 
+/***
+ * MAIN CONTENT
+***/
+#content-wrapper {
+  padding: 20px;
+  background-color: #ddd;
+}
+#main-content {
+  background: white;
+  margin: 20px;
+  border: 1px solid #aaa;
+  padding: 20px;
+}
+
+/* locations */
+.item-row {
+  margin-top: 20px;
+}
+.location-image {
+  margin-right: 10px;
+  max-width: 150px;
+}
 
 
 #error-panel li, #success-panel li {
@@ -56,9 +81,6 @@ nav.top-nav a.page-title {
 
 .icon-text {
   margin-left: 5px;
-}
-#main-content {
-  padding: 10px 50px;
 }
 
 #item-edit-title {

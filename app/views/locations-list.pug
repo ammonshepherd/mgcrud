@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  - var headers = Object.keys(results[0].attributes)
+
+  .row
+    #top-menu.right
+      a.waves-effect.waves-light.btn-large(href='/' + kind + '/edit/') Add
+        i.material-icons.right add_circle_outline
+  .section
+    each row in results
+      - var id = row.attributes['id']
+      .divider
+      .row.item-row
+        .col.s12.m12.l11
+          if (row.attributes['picture'] != null)
+            - var image = '/uploads/' + row.attributes['picture']
+          else 
+            - var image = '/images/no-location.jpg'
+          img.location-image.responsive-image.z-depth-3.left(src=image)
+          .name
+            h4= row.attributes['name']
+            p= row.attributes['description']
+        .col.s12.m12.l1.edit.valign-wrapper
+          a.edit(href='/' + kind + '/edit/' + row.attributes['id'])
+            i.material-icons edit
+          a.delete(href='#delete' + id) 
+            i.material-icons delete_forever
+          div(class='modal', id='delete' + id)
+            .modal-content
+              h4 Delete
+                span.delete-title #{row.attributes['name']}
+              p Are you sure you want to delete this item?
+            .modal-footer
+              a.modal-action.modal-close.btn.green.left(href='#!') Cancel
+              a.modal-action.modal-close.btn.red(href='/' + kind + '/delete/' + row.attributes['id']) Delete
+

@@ -5,7 +5,8 @@ body
     include navbar.pug
     include sidebar.pug
   main
-    .container
-      block content
-  .row
+    #content-wrapper.row
+      #main-content.row.z-depth-2
+        block content
+  footer
     include foot.pug
