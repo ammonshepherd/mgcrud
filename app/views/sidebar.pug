@@ -1,0 +1,34 @@
+// Side bar 
+ul#nav-mobile.side-nav.fixed(style='transform: translateX(0px)')
+  li.logo
+    a#logo-container.brand-logo.center(href="/")
+      img(src='/images/uva-makers-logo-non-alpha.png') 
+  li.bold
+    if userInfo
+      p#user-info.valign-wrapper
+        img.user-pic.responsive-img.circle(src='/uploads/' + userInfo.img)
+        a#user-name.dropdown-button.right(data-activates='user-actions')= userInfo.username
+        ul#user-actions.dropdown-content
+          li
+            a(href='/users/' + userInfo.username) settings
+          li
+            a(href='/logout/') logout
+  li.divider
+  li
+    span.menu-title main
+    a.valign-wrapper(href='/locations') Locations
+      i.material-icons.icon business
+  li
+    a.valign-wrapper(href='/tools') Tools
+      i.material-icons.icon vpn_key
+  li
+    a.valign-wrapper(href='/people') People
+      i.material-icons.icon recent_actors
+  li.divider
+  li
+    span.menu-title admin
+    a.valign-wrapper(href='/categories') Categories
+      i.material-icons.icon toc
+  li
+    a.valign-wrapper(href='/users') Users
+      i.material-icons.icon assignment_ind

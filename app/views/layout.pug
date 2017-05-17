@@ -1,26 +1,11 @@
-doctype html
-html
-  head
-    title= title
-    //link(type='text/css', rel='stylesheet', href='/stylesheets/materialize.min.css',  media='screen,projection')
-    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css")
+include head.pug
 
-    link(rel='stylesheet' href='http://fonts.googleapis.com/icon?family=Material+Icons')
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body.container
-    .row
-      include topmenu.pug
-    .row
-      .white#main-content
-        block content
-
-    .row
-      block footer
-        script(type='text/javascript' src='/javascripts/jquery.min.js')
-        script(type='text/javascript' src="/javascripts/materialize.min.js")
-        script(type='text/javascript').
-          $(document).ready(function() {
-            $('.modal').modal();
-          });
-
-
+body
+  header
+    include navbar.pug
+    include sidebar.pug
+  main
+    .container
+      block content
+  .row
+    include foot.pug
