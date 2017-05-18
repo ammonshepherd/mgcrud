@@ -37,12 +37,23 @@ nav.top-nav a.page-title {
 .brand-logo img {
   max-height: 70px;
 }
-#user-info {
+
+#profile {
   padding-left: 30px;
 }
-.user-pic {
+#user-pic {
+}
+#user-pic img {
   width: 70px;
   border: 4px solid #777;
+}
+#user-info {
+  margin: 0 0 0 80px;
+}
+#user-actions {
+  margin: 0 0 0 80px;
+  top: -30px;
+  position: relative;
 }
 
 .menu-title {

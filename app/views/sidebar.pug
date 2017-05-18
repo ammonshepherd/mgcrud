@@ -3,15 +3,19 @@ ul.side-nav.fixed
   li.logo
     a#logo-container.brand-logo.center(href="/")
       img(src='/images/uva-makers-logo-non-alpha.png') 
-  li.bold#user-info
-    if userInfo
-      img.user-pic.responsive-img.circle(src='/uploads/' + userInfo.img)
-      ul#user-actions
-        li= userInfo.username
-        li
-          a(href='/users/' + userInfo.username) settings
-        li
-          a(href='/logout/') logout
+  li.bold
+    #profile
+      if userInfo
+        #user-pic.left
+          img.responsive-img.circle(src='/uploads/' + userInfo.img)
+        #user-info
+          p
+            a(href='/users/' + userInfo.username)= userInfo.fullname
+        #user-actions
+          a(href='/users/' + userInfo.username)
+            i.material-icons settings
+          a(href='/logout/') 
+            i.material-icons power_settings_new
   li.divider
   li
     span.menu-title main
