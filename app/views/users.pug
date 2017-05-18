@@ -14,11 +14,15 @@ block content
   if userInfo
     - var email = userInfo.email
     - var username = userInfo.username
+    - var fullname = userInfo.fullname
 
   section.registerform
-    h2= username
+    p= username
     form(name="register" action='/users/update/' method="post" accept-charset="utf-8") 
       ul
+        li 
+          label(for="fullname") Full Name
+          input(type="text" id="fullname" name='fullname' value=fullname autofocus required)
         li 
           label(for="email") Email
           input(type="email" id="email" name='email' value=email autofocus required)

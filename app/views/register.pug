@@ -14,13 +14,16 @@ body.deep-orange.darken-4
           form(name="register" action="/auth/register/" method="post" accept-charset="utf-8")
             ul
               li 
-                label(for="email") Email
-                input.fields(type="email" id="email" name='email' value=email autofocus required)
+                label(for="fullname") Full Name
+                input.fields(type="text" id="fullname" name='fullname' value=fullname autofocus required)
               li 
                 if taken
                   .red-text.text-darken-2= 'Please choose another username. ' + username + ' is already taken'
                 label(for="username") Username
                 input.fields(type="text" id="username" name='username' value=username required)
+              li 
+                label(for="email") Email
+                input.fields(type="email" id="email" name='email' value=email autofocus required)
               li
                 if passes
                   .red-text.text-darken-2 Passwords do not match

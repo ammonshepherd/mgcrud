@@ -14,6 +14,7 @@ module.exports = {
   update(req, res) {
     var values = {
       email: req.body.email,
+      fullname: req.body.fullname,
     };
     if (req.body.password && req.body.confirmpassword) { 
       if(req.body.password === req.body.confirmpassword) {
