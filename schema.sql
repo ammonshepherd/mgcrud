@@ -13,14 +13,15 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
+DROP DATABASE IF EXISTS mgcrud;
 --
--- Name: mg-dev; Type: DATABASE; Schema: -; Owner: -
+-- Name: mgcrud; Type: DATABASE; Schema: -; Owner: -
 --
 
-CREATE DATABASE "mgcrud" WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';
+CREATE DATABASE mgcrud WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';
 
 
-\connect "mgcrud"
+\connect mgcrud
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -29,6 +30,20 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA public;
+
+
+--
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -196,6 +211,41 @@ ALTER SEQUENCE "Tools_id_seq" OWNED BY "Tools".id;
 
 
 --
+-- Name: Users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE "Users" (
+    username character varying(55) NOT NULL,
+    password text NOT NULL,
+    created_at timestamp with time zone,
+    updated_at timestamp with time zone,
+    id integer NOT NULL,
+    email text,
+    img text,
+    fullname text NOT NULL
+);
+
+
+--
+-- Name: Users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE "Users_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: Users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE "Users_id_seq" OWNED BY "Users".id;
+
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -221,6 +271,13 @@ ALTER TABLE ONLY "People" ALTER COLUMN id SET DEFAULT nextval('"People_id_seq"':
 --
 
 ALTER TABLE ONLY "Tools" ALTER COLUMN id SET DEFAULT nextval('"Tools_id_seq"'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Users" ALTER COLUMN id SET DEFAULT nextval('"Users_id_seq"'::regclass);
 
 
 --
@@ -253,6 +310,22 @@ ALTER TABLE ONLY "People"
 
 ALTER TABLE ONLY "Tools"
     ADD CONSTRAINT "Tools_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: Users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Users"
+    ADD CONSTRAINT "Users_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: users_unique_username; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Users"
+    ADD CONSTRAINT users_unique_username UNIQUE (username);
 
 
 --
