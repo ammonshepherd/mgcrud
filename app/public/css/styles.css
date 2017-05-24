@@ -137,6 +137,39 @@ nav.top-nav a.page-title {
   max-width: 80px;
 }
 
+/** user page **/
+@media only screen and (max-width : 600px) {
+  .page-title {
+    font-size: 2em !important;
+  }
+}
+#pic {
+  position: relative;
+  width: 50%;
+}
+#pic img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#pic-edit {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  opacity: 0;
+}
+#pic:hover #pic-edit {
+  opacity: 1;
+}
+
+#add-pic {
+  color: green;
+}
+#delete-pic {
+  color: red;
+}
+
 
 /****
  * LOGIN, REGISTER Pages

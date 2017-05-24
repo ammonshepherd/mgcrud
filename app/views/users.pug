@@ -15,10 +15,23 @@ block content
     - var email = userInfo.email
     - var username = userInfo.username
     - var fullname = userInfo.fullname
+    - var img = userInfo.img
 
   section.registerform
-    p= username
     form(name="register" action='/users/update/' method="post" accept-charset="utf-8") 
+      #pic
+        img.responsive-img(src='/uploads/' + img)
+        #pic-edit
+          a#add-pic.tooltipped(href='#pic-change' data-position="bottom" data-delay="20" data-tooltip="Change picture")
+            i.material-icons(title='New picture') portrait
+          a#delete-pic.tooltipped(href='#pic-delete' data-position='bottom' data-delay='20' data-tooltip='Delete picture')
+            i.material-icons(title='Delete picture') delete_forever
+          #pic-change.modal
+            .modal-content
+              h4 Select new picture
+              input.validate#loc_image(type='file' name='loc_image')
+      p username: 
+        span= username
       ul
         li 
           label(for="fullname") Full Name
