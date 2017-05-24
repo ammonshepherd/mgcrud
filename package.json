@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "schema": "pg_dump --clean --create --if-exists --schema-only --no-owner mgcrud > schema.sql"
   },
   "dependencies": {
     "bcrypt": "1.0.2",
