@@ -17,9 +17,11 @@ block content
             - var image = '/uploads/' + row.attributes['picture']
           else 
             - var image = '/images/no-location.png'
-          img.location-image.responsive-image.z-depth-3.left(src=image)
+          a.edit(href='/' + kind + '/edit/' + row.attributes['id'])
+            img.location-image.responsive-image.z-depth-3.left(src=image)
           .name
-            h4= row.attributes['name']
+            a.edit(href='/' + kind + '/edit/' + row.attributes['id'])
+              h4= row.attributes['name']
             p= row.attributes['description']
         .col.s12.m12.l1.edit.valign-wrapper
           a.edit(href='/' + kind + '/edit/' + row.attributes['id'])
