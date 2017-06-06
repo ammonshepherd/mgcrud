@@ -16,7 +16,7 @@ block content
           if (row.attributes['picture'] != null)
             - var image = '/uploads/' + row.attributes['picture']
           else 
-            - var image = '/images/no-location.jpg'
+            - var image = '/images/no-location.png'
           img.location-image.responsive-image.z-depth-3.left(src=image)
           .name
             h4= row.attributes['name']
