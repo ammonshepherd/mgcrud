@@ -1,3 +1,4 @@
+var path = require('path');
 var multer = require('multer');
 
 var storageType = multer.diskStorage({
@@ -5,7 +6,9 @@ var storageType = multer.diskStorage({
     cb(null, 'app/public/uploads/');
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    var fileParse = path.parse(file.originalname);
+    var fileName = fileParse.name + '-' + Date.now() + fileParse.ext;
+    cb(null, fileName);
   }
 });
 
