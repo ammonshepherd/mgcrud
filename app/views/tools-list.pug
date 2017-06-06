@@ -1,63 +1,42 @@
 extends layout
 
 block content
-  - var skipHeaders = ['id', 'picture', 'location_id', 'category_id', 'created_at', 'updated_at']
-  #tools-menu
-    a.valign-wrapper(href='/tools/edit/')
-      i.material-icons add_circle_outline
-      span.icon-text.valign Create
-  if results == ''
-    h2 No tools. Create one.
-  else
-    - var headers = Object.keys(results[0].attributes)
-    if (headers.includes('picture'))
-      - var hasPicture = true
-    #table-content
-      table.responsive-table.bordered
-        thead
-            tr
-              if (hasPicture)
-                th(data-field=header) picture
-              each header in headers
-                if (skipHeaders.includes(header) == false && header != 'picture')
-                  th(data-field=header)= header
-              th(data-field=header) location
-              th(data-field=header) category
-              th.edit-column Edit
+  - var headers = Object.keys(results[0].attributes)
 
-        tbody
-          each row in results
-            - var id = row.attributes['id']
-            tr
-              if (hasPicture)
-                td: img.list-image.responsive-image(src='/uploads/' + row.attributes['picture'])
-              - for ( var key in row.attributes )
-                if (skipHeaders.includes(key) == false && key != 'picture')
-                  case key
-                    when 'name'
-                      td: a(href='/tools/edit/' + row.attributes['id'])= row.attributes[key]
-                    when 'website'
-                      td: a(href='http://' + row.attributes[key])= row.attributes[key]
-                    default
-                      td= row.attributes[key]
-              if (row.relations.location.attributes.name) 
-                td= row.relations.location.attributes.name
-              else
-                td
-              if (row.relations.category.attributes.name) 
-                td= row.relations.category.attributes.name
-              else
-                td
-              td.edit-column 
-                a.edit(href='/tools/edit/' + row.attributes['id'])
-                  i.material-icons edit
-                a.delete(href='#delete' + id) 
-                  i.material-icons delete_forever
-                div(class='modal', id='delete' + id)
-                  .modal-content
-                    h4 Delete
-                      span.delete-title #{row.attributes['name']}
-                    p Are you sure you want to delete this item?
-                  .modal-footer
-                    a.modal-action.modal-close.btn.green.left(href='#!') Cancel
-                    a.modal-action.modal-close.btn.red(href='/tools/delete/' + row.attributes['id']) Delete
+  .row
+    #top-menu.right
+      a.waves-effect.waves-light.btn-large(href='/tools/edit/') Add
+        i.material-icons.right add_circle_outline
+  .section
+    each row in results
+      - var id = row.attributes['id']
+      .divider
+      .row.item-row
+        .col.s12.m12.l11
+          if (row.attributes['picture'] != null)
+            - var image = '/uploads/' + row.attributes['picture']
+          else 
+            - var image = '/images/no-tool.png'
+          a.edit(href='/tools/edit/' + row.attributes['id'])
+            img.location-image.responsive-image.z-depth-3.left(src=image)
+          .name
+            a.edit(href='/tools/edit/' + row.attributes['id'])
+              h4= row.attributes['name']
+            p= "Make: " + row.attributes['make'] 
+            p= "Model: " + row.attributes['model']
+            each place in locations
+              if (row.attributes['location_id'] == place.id)
+                p= "Location: " + place.name
+        .col.s12.m12.l1.edit.valign-wrapper
+          a.edit(href='/tools/edit/' + row.attributes['id'])
+            i.material-icons edit
+          a.delete(href='#delete' + id) 
+            i.material-icons delete_forever
+          div(class='modal', id='delete' + id)
+            .modal-content
+              h4 Delete
+                span.delete-title #{row.attributes['name']}
+              p Are you sure you want to delete this item?
+            .modal-footer
+              a.modal-action.modal-close.btn.green.left(href='#!') Cancel
+              a.modal-action.modal-close.btn.red(href='/tools/delete/' + row.attributes['id']) Delete
