@@ -37,6 +37,7 @@ block content
   if (picture)
     #location-image
       img.responsive-img(src='/uploads/' + picture)
+      input(type='hidden' name='pic_name' value=picture)
   .row#location-form
     form(action='/locations/edit/' + placeID, method='post' enctype='multipart/form-data')
       .row#form-fields
