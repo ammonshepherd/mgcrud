@@ -1,3 +1,4 @@
+var fs = require('fs');
 var Database = require('../config/db');
 var Tools = require('../models/tools');
 
@@ -11,8 +12,18 @@ module.exports = {
     res.render('tool');
   },
   delete(req, res) {
-    return Tools.forge({id: req.params.id}).destroy().then(function(model) {
-      res.redirect('/tools/');
+    Tools.forge({id: req.params.id}).fetch().then(function(tool) {
+      if(tool.attributes.picture) {
+        fs.unlink('./app/public/uploads/' + tool.attributes.picture, function(err) {
+          if (err) throw err;
+          return Tools.forge({id: req.params.id}).destroy().then(function(model) {
+            res.redirect('/tools/');
+          })
+          .catch(function(error) {
+            res.render('error', {error: error, message: 'Can not delete item.', title: 'Tools'});
+          });
+        });
+      }
     });
   },
   edit(req, res) {

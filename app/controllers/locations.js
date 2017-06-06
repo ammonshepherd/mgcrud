@@ -1,3 +1,4 @@
+var fs = require('fs');
 var Locations = require('../models/locations');
 
 module.exports = {
@@ -5,11 +6,18 @@ module.exports = {
     res.render('location');
   },
   delete(req, res) {
-    return Locations.forge({id: req.params.id}).destroy().then(function(model) {
-      res.redirect('/locations/');
-    })
-    .catch(function(error) {
-      res.render('error', {error: error, message: 'Can not delete.', title: 'Locations'});
+    Locations.forge({id: req.params.id}).fetch().then(function(location) {
+        if(location.attributes.picture) {
+          fs.unlink('./app/public/uploads/' + location.attributes.picture, function(err) {
+            if (err) throw err;
+            return Locations.forge({id: req.params.id}).destroy().then(function(model) {
+              res.redirect('/locations/');
+            })
+            .catch(function(error) {
+              res.render('error', {error: error, message: 'Can not delete.', title: 'Locations'});
+            });
+          });
+        }
     });
   },
   edit(req, res) {
