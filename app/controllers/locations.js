@@ -9,7 +9,7 @@ module.exports = {
     Locations.forge({id: req.params.id}).fetch().then(function(location) {
         if(location.attributes.picture) {
           fs.unlink('./app/public/uploads/' + location.attributes.picture, function(err) {
-            if (err) throw err;
+            if (err) console.log(err);
             return Locations.forge({id: req.params.id}).destroy().then(function(model) {
               res.redirect('/locations/');
             })
@@ -86,6 +86,13 @@ module.exports = {
 
     if (req.file) {
       values.picture = req.file.filename;
+      // Delete existing pic if there is one
+      if(req.body.pic_name) {
+        fs.unlink('./app/public/uploads/' + req.body.pic_name, function(err) {
+          if (err) console.log(err); 
+        });
+
+      }
     }
 
     // Validation results

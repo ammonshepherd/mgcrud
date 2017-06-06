@@ -15,7 +15,7 @@ module.exports = {
     Tools.forge({id: req.params.id}).fetch().then(function(tool) {
       if(tool.attributes.picture) {
         fs.unlink('./app/public/uploads/' + tool.attributes.picture, function(err) {
-          if (err) throw err;
+          if (err) console.log(err);
           return Tools.forge({id: req.params.id}).destroy().then(function(model) {
             res.redirect('/tools/');
           })
@@ -76,6 +76,12 @@ module.exports = {
 
     if (req.file) {
       values.picture = req.file.filename;
+      // Delete existing pic if there is one
+      if(req.body.pic_name) {
+        fs.unlink('./app/public/uploads/' + req.body.pic_name, function(err) {
+          if (err) console.log(err);
+        });
+      }
     } else {
       values.picture = req.body.pic_name;
     }
