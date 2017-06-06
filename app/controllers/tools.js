@@ -38,7 +38,7 @@ module.exports = {
   listAll(req, res) {
     var allTools = Database.Collection.extend({ model: Tools }); // make a collection so we can use withRelated
     return allTools.forge().orderBy('name', 'ASC').fetch({withRelated: ['location', 'category']}).then(function(tools) {
-      res.render('tools-list', { results: tools.models, title: 'Tools' });
+      res.render('tools-list', { results: tools.models, locations: allLocs, title: 'Tools' });
     })
     .catch( function(error){console.log(error);} );
   },
