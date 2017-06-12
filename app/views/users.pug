@@ -26,10 +26,20 @@ block content
             i.material-icons(title='New picture') portrait
           a#delete-pic.tooltipped(href='#pic-delete' data-position='bottom' data-delay='20' data-tooltip='Delete picture')
             i.material-icons(title='Delete picture') delete_forever
-          #pic-change.modal
-            .modal-content
-              h4 Select new picture
-              input.validate#loc_image(type='file' name='loc_image')
+        #pic-change.modal
+          .modal-content
+            h4 New Picture
+            p Select a new picture.
+            input.validate#loc_image(type='file' name='loc_image')
+          .modal-footer
+            a.modal-action.modal-close.btn.green.left(href='#!') Cancel
+        #pic-delete.modal
+          .modal-content
+            h4 Delete Picture?
+            p Are you sure you want to delete this item?
+          .modal-footer
+            a.modal-action.modal-close.btn.green.left(href='#!') Cancel
+            a.modal-action.modal-close.btn.red(href='/users/' + username + '/pic-delete') Delete
       p username: 
         span= username
       ul
