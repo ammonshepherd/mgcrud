@@ -37,7 +37,6 @@ block content
   if (picture)
     #location-image
       img.responsive-img(src='/uploads/' + picture)
-      input(type='hidden' name='pic_name' value=picture)
   .row#location-form
     form(action='/locations/edit/' + placeID, method='post' enctype='multipart/form-data')
       .row#form-fields
@@ -77,6 +76,7 @@ block content
               else 
                 span New Picture
               input.validate#loc_image(type='file' name='loc_image')
+              input(type='hidden' name='pic_name' value=picture)
             .file-path-wrapper
               input.file-path.validate(type='text')
       .row#visible-box
