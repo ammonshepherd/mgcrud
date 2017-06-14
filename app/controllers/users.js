@@ -5,6 +5,15 @@ var Users = require('../models/users');
 
 
 module.exports = {
+  list(req, res) {
+    return Users.forge().orderBy('username', 'ASC').fetchAll().then(function(users) {
+      res.render('users-list', {results: users.models, title: 'Users'});
+    })
+    .catch(function(error) {
+      res.render('error', {error: error});
+    });
+  }, 
+
   single(req, res) {
     return Users.forge({username: req.params.user}).fetch().then(function(user) {
       res.render('users', {userInfo: user.attributes, title: 'User Information'});
