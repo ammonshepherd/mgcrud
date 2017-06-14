@@ -7,10 +7,11 @@ ul.side-nav.fixed
     #profile
       if userInfo
         #user-pic.left
-          if userInfo.img
-            img.responsive-img.circle(src='/uploads/' + userInfo.img)
-          else
-            img.responsive-img.circle(src='/images/default-user.jpg')
+          a(href='/users/' + userInfo.username)
+            if userInfo.img
+              img.responsive-img.circle(src='/uploads/' + userInfo.img)
+            else
+              img.responsive-img.circle(src='/images/default-user.jpg')
         #user-info
           p
             a(href='/users/' + userInfo.username)= userInfo.fullname
