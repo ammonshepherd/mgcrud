@@ -17,48 +17,48 @@ block content
     - var fullname = userInfo.fullname
     - var img = userInfo.img
 
-  section.registerform
-    form(name="register" action='/users/update/' method="post" accept-charset="utf-8") 
-      #pic
-        img.responsive-img(src='/uploads/' + img)
-        #pic-edit
-          a#add-pic.tooltipped(href='#pic-change' data-position="bottom" data-delay="20" data-tooltip="Change picture")
-            i.material-icons(title='New picture') portrait
-          a#delete-pic.tooltipped(href='#pic-delete' data-position='bottom' data-delay='20' data-tooltip='Delete picture')
-            i.material-icons(title='Delete picture') delete_forever
-        #pic-change.modal
-          .modal-content
-            h4 New Picture
-            p Select a new picture.
-            input.validate#loc_image(type='file' name='loc_image')
-          .modal-footer
-            a.modal-action.modal-close.btn.green.left(href='#!') Cancel
-        #pic-delete.modal
-          .modal-content
-            h4 Delete Picture?
-            p Are you sure you want to delete this item?
-          .modal-footer
-            a.modal-action.modal-close.btn.green.left(href='#!') Cancel
-            a.modal-action.modal-close.btn.red(href='/users/' + username + '/pic-delete') Delete
-      p username: 
-        span= username
-      ul
-        li 
-          label(for="fullname") Full Name
-          input(type="text" id="fullname" name='fullname' value=fullname autofocus required)
-        li 
-          label(for="email") Email
-          input(type="email" id="email" name='email' value=email autofocus required)
-        li
-          if passes
-            .red-text.text-darken-2 Passwords do not match
-          label(for="password") Password
-          input(type="password", id="password", name='password')
-        li
-          label(for="password") Confirm Password
-          input(type="password" id="confirmpassword" name='confirmpassword')
-        li
-          if userInfo
-            input.btn.green.waves-effect.waves-light(type="submit" value="Save")
+  section.userform
+    form(name="user", action='/users/' + username, method="post", enctype='multipart/form-data', accept-charset="utf-8") 
+      #pic.row
+        .col.s12.m6.l4
+          if img
+            img#user-image.responsive-img(src='/uploads/' + img)
           else
-            input.btn.green.waves-effect.waves-light(type="submit" value="Register")
+            img#user-image.responsive-img(src='/images/default-user.jpg')
+
+          #changepic.input-field.file-field(data-role='fieldcontain')
+            .btn
+              span Change Picture
+              input.validate#avatar(type='file' name='avatar')
+              input(type='hidden' name='pic_name' value=img)
+            .file-path-wrapper
+              input.file-path.validate(type='text')
+          #deletepic
+            input#del_pic.filled-in(type='checkbox' name='del_pic')
+            label(for='del_pic') Delete Picture?
+        .col.s12.m6.l8
+          ul
+            li
+              label(for='username') Username (can not be changed): 
+              input(id='username' disabled value=username)
+            li 
+              label(for="fullname") Full Name
+              input(type="text" id="fullname" name='fullname' value=fullname autofocus required)
+            li 
+              label(for="email") Email
+              input(type="email" id="email" name='email' value=email autofocus required)
+            li
+              p.grey-text.text-lighten-1 (Leave blank to not change password.)
+            li
+              if passes
+                .red-text.text-darken-2 Passwords do not match
+              label(for="password") Password
+              input(type="password", id="password", name='password')
+            li
+              label(for="password") Confirm Password
+              input(type="password" id="confirmpassword" name='confirmpassword')
+            li
+              if userInfo
+                input.btn.green.waves-effect.waves-light(type="submit" value="Save")
+              else
+                input.btn.green.waves-effect.waves-light(type="submit" value="Register")
