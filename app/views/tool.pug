@@ -12,21 +12,16 @@ block content
     ul.card-panel.red.white-text
       li= dbErr
 
-  if results
-    - var action = 'edit'
-    - var toolID = results.id
-    - var toolName = results.name
-    - var make = results.make
-    - var model = results.model
-    - var picture = results.picture
-    - var quantity = results.quantity
-    - var category = results.category_id
-    - var location = results.location_id
-    h1#item-edit-title #{toolName}
-  else
-    - var action = 'add'
-    - var toolID = ''
-    h1#item-edit-title Add New Tool
+  - var action = 'edit'
+  - var toolID = results.id
+  - var toolName = results.name
+  - var make = results.make
+  - var model = results.model
+  - var picture = results.picture
+  - var quantity = results.quantity
+  - var category = results.category_id
+  - var location = results.location_id
+  h1#item-edit-title.teal-text.text-darken-2 #{toolName}
 
   .row#tool-form
     form(action='/tools/edit/' + toolID, method='post' enctype='multipart/form-data')
