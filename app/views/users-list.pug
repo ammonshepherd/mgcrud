@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  .row
+    #top-menu.right
+      a.waves-effect.waves-light.btn-large(href='/users/edit/') Add
+        i.material-icons.right add_circle_outline
+  .section
+    table.striped.highlight.responsive-table
+      thead
+        tr
+          th Username
+          th Full Name
+          th Email
+          th Edit
+      tbody
+      each row in results
+        - var id = row.attributes['id']
+        tr
+          td
+            a.edit(href='/categories/edit/' + row.attributes['id'])= row.attributes['username']
+          td
+            p= row.attributes['fullname']
+          td
+            p= row.attributes['email']
+          td 
+            a.edit(href='/categories/edit/' + row.attributes['id'])
+              i.material-icons edit
+            a.delete(href='#delete' + id) 
+              i.material-icons delete_forever
+            div(class='modal', id='delete' + id)
+              .modal-content
+                h4 Delete
+                  span.delete-title #{row.attributes['username']}
+                p Are you sure you want to delete this item?
+              .modal-footer
+                a.modal-action.modal-close.btn.green.left(href='#!') Cancel
+                a.modal-action.modal-close.btn.red(href='/categories/delete/' + row.attributes['id']) Delete
