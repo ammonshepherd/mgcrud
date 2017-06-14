@@ -41,8 +41,6 @@ nav.top-nav a.page-title {
 #profile {
   padding-left: 30px;
 }
-#user-pic {
-}
 #user-pic img {
   width: 70px;
   border: 4px solid #777;
@@ -143,33 +141,6 @@ nav.top-nav a.page-title {
     font-size: 2em !important;
   }
 }
-#pic {
-  position: relative;
-  width: 50%;
-}
-#pic img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-#pic-edit {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  opacity: 0;
-}
-#pic:hover #pic-edit {
-  opacity: 1;
-}
-
-#add-pic {
-  color: green;
-}
-#delete-pic {
-  color: red;
-}
-
 
 /****
  * LOGIN, REGISTER Pages
