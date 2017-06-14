@@ -26,7 +26,7 @@ module.exports = {
   },
   listAll(req, res) {
     return Categories.forge().orderBy('name', 'ASC').fetchAll().then(function(categories) {
-      res.render('list', {results: categories.models, title: 'Categories', kind: 'categories', skipFields: ['id', 'created_at', 'updated_at', 'location_id']});
+      res.render('cats-list', {results: categories.models, title: 'Categories'});
     })
     .catch( function(error){
       res.render('error', {error: error});
