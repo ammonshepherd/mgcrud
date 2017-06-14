@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
+var upload = require('../helpers/upload');
 
-var auth = require('../controllers/auth');
 var users = require('../controllers/users');
 
 /* GET users listing. */
 router.get('/:user', users.single);
 
-router.post('/update', users.update);
+router.post('/:user', upload.single('avatar'), users.update);
 
 module.exports = router;
