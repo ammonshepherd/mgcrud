@@ -1,7 +1,7 @@
+var fs = require('fs');
 var bcrypt = require('bcrypt');
 var Database = require('../config/db');
 var Users = require('../models/users');
-var passport = require('passport');
 
 
 module.exports = {
@@ -16,6 +16,7 @@ module.exports = {
       email: req.body.email,
       fullname: req.body.fullname,
     };
+    // Reset the password, only if the fields are filled in
     if (req.body.password && req.body.confirmpassword) { 
       if(req.body.password === req.body.confirmpassword) {
         // use sync rather than async
@@ -23,6 +24,19 @@ module.exports = {
       } else {
         return res.render('users', {userInfo: req.user, title: 'User Information', error: 'Passwords do not match.'});
       }
+    }
+    // Update the file name in the database
+    if (req.file) {
+      values.img = req.file.filename;
+    } else {
+      values.img = req.body.pic_name;
+    }
+    // Set the value in the db to null, and delete the file
+    if (req.body.del_pic == 'on') {
+      values.img = '';
+      fs.unlink('./app/public/uploads/' + req.body.pic_name, function(err) {
+        if (err) console.log(err);
+      });
     }
 
     return Users.forge({id: req.user.id}).save(values, {patch: true}).then(function(user) {
