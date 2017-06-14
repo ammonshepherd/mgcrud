@@ -15,7 +15,7 @@ module.exports = {
   edit(req, res) {
     if (req.params.id) {
       return Categories.forge({id: req.params.id}).fetch().then(function(category) {
-        res.render('category', {results: category.attributes, kind: 'categories', errors: false, title: 'Categories'});
+        res.render('category', {results: category.attributes, errors: false, title: 'Categories'});
       })
       .catch( function(error){
         res.render('error', {error: error, title: 'Categories'});
@@ -40,6 +40,7 @@ module.exports = {
   upsert(req, res) {
     var options = {};
     var categoryID = '';
+    var message = '';
     if (!req.params.id) {
       options.method = 'insert';
       message = "Successfully Created!";
