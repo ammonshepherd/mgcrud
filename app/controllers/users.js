@@ -5,6 +5,16 @@ var Users = require('../models/users');
 
 
 module.exports = {
+  edit(req, res) {
+    if (req.params.user) {
+      return Users.forge({username: req.params.user}).fetch().then(function(user) {
+        res.render('user', {results: user.attributes, title: 'User Settings' });
+      });
+    } else {
+      res.render('user', {title: 'Create User'});
+    }
+  },
+
   list(req, res) {
     return Users.forge().orderBy('username', 'ASC').fetchAll().then(function(users) {
       res.render('users-list', {results: users.models, title: 'Users'});
@@ -13,12 +23,6 @@ module.exports = {
       res.render('error', {error: error});
     });
   }, 
-
-  single(req, res) {
-    return Users.forge({username: req.params.user}).fetch().then(function(user) {
-      res.render('users', {userInfo: user.attributes, title: 'User Information'});
-    });
-  },
 
   update(req, res) {
     var values = {
@@ -31,7 +35,7 @@ module.exports = {
         // use sync rather than async
         values.password = bcrypt.hashSync(req.body.password, 10);
       } else {
-        return res.render('users', {userInfo: req.user, title: 'User Information', error: 'Passwords do not match.'});
+        return res.render('user', {userInfo: req.user, title: 'User Information', error: 'Passwords do not match.'});
       }
     }
     // Update the file name in the database
