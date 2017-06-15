@@ -8,6 +8,7 @@ var users = require('../controllers/users');
 router.get('/', users.list);
 
 router.get('/add', users.edit);
+router.post('/add', upload.single('avatar'), users.update);
 
 router.get('/:user', users.edit);
 router.post('/:user', upload.single('avatar'), users.update);
