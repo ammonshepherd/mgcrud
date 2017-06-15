@@ -25,26 +25,38 @@ module.exports = {
   }, 
 
   update(req, res) {
-    var values = {
-      email: req.body.email,
-      fullname: req.body.fullname,
-    };
+    var options = {};
+    var message = '';
+    var userID = '';
+    var values = {};
+    if (req.body.newuser) {
+      options.method = 'insert';
+      message = 'Successfully Created User';
+      values.username = req.body.username;
+    } else {
+      userID = {id: req.body.id};
+      options.method = 'update';
+      options.patch = 'true';
+      message = "Updated Successfully!";
+    }
+
     // Reset the password, only if the fields are filled in
     if (req.body.password && req.body.confirmpassword) { 
       if(req.body.password === req.body.confirmpassword) {
         // use sync rather than async
         values.password = bcrypt.hashSync(req.body.password, 10);
       } else {
-        return res.render('user', {userInfo: req.user, title: 'User Information', error: 'Passwords do not match.'});
+        return res.render('user', {results: req.body, title: 'User Information', error: 'Passwords do not match.'});
       }
     }
+
     // Update the file name in the database
     if (req.file) {
       values.img = req.file.filename;
     } else {
       values.img = req.body.pic_name;
     }
-    // Set the value in the db to null, and delete the file
+      // Set the value in the db to null, and delete the file
     if (req.body.del_pic == 'on') {
       values.img = '';
       fs.unlink('./app/public/uploads/' + req.body.pic_name, function(err) {
@@ -52,18 +64,30 @@ module.exports = {
       });
     }
 
-    return Users.forge({id: req.user.id}).save(values, {patch: true}).then(function(user) {
-      Users.forge({id: req.user.id}).fetch().then(function(user) {
-        var userObj = user.attributes;
-        // reset the session values
-        req.login(userObj, function(err) {
-          if(err) return next(err);
+    // Set remaining values
+    values.email = req.body.email;
+    values.fullname = req.body.fullname;
+
+    return Users.forge(userID).save(values, options).then(function(user) {
+      // If updating your own user account information, then reset the session informaion.
+      if (req.body.username === req.user.username) {
+        Users.forge({id: req.user.id}).fetch().then(function(user) {
+          var userObj = user.attributes;
+          // reset the session values
+          req.login(userObj, function(err) {
+            if(err) return next(err);
+          });
+          res.end();
+        }).then(function() {
+          // call this after the above.
+          res.redirect('/users/' + req.user.username);
         });
-        res.end();
-      }).then(function() {
-        // call this after the above.
-        res.redirect('/users/' + req.user.username);
-      });
+
+      // otherwise just redirect to the list of users page
+      } else {
+        res.redirect('/users/');
+      }
+
     });
 
   }
