@@ -77,7 +77,7 @@ block content
                 input.btn.green.waves-effect.waves-light(type="submit" value="Save")
               else
                 input.btn.green.waves-effect.waves-light(type="submit" value="Create")
-              unless (userInfo.username === username)
+              if (username && userInfo.username !== username)
                 p
                   a.btn.red.waves-effect.waves-light(href='#delete' + userID) Delete
                   div(class='modal', id='delete' + userID)
