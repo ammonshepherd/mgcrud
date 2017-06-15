@@ -5,6 +5,22 @@ var Users = require('../models/users');
 
 
 module.exports = {
+  delete(req, res) {
+    Users.forge({id: req.params.id}).fetch().then(function(user) {
+      if(user.attributes.img) {
+        fs.unlink('./app/public/uploads/' + user.attributes.img, function(err) {
+          if (err) console.log(err);
+        });
+      }
+      return Users.forge({id: req.params.id}).destroy().then(function(model) {
+        res.redirect('/users/');
+      })
+      .catch(function(error) {
+        res.render('error', {error: error, message: 'Can not delete users.', title: 'Users'});
+      });
+    });
+  },
+
   edit(req, res) {
     if (req.params.user) {
       return Users.forge({username: req.params.user}).fetch().then(function(user) {
