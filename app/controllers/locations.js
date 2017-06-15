@@ -7,17 +7,17 @@ module.exports = {
   },
   delete(req, res) {
     Locations.forge({id: req.params.id}).fetch().then(function(location) {
-        if(location.attributes.picture) {
-          fs.unlink('./app/public/uploads/' + location.attributes.picture, function(err) {
-            if (err) console.log(err);
-            return Locations.forge({id: req.params.id}).destroy().then(function(model) {
-              res.redirect('/locations/');
-            })
-            .catch(function(error) {
-              res.render('error', {error: error, message: 'Can not delete.', title: 'Locations'});
-            });
-          });
-        }
+      if(location.attributes.picture) {
+        fs.unlink('./app/public/uploads/' + location.attributes.picture, function(err) {
+          if (err) console.log(err);
+        });
+      }
+      return Locations.forge({id: req.params.id}).destroy().then(function(model) {
+        res.redirect('/locations/');
+      })
+      .catch(function(error) {
+        res.render('error', {error: error, message: 'Can not delete.', title: 'Locations'});
+      });
     });
   },
   edit(req, res) {

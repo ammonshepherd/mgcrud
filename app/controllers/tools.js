@@ -16,14 +16,14 @@ module.exports = {
       if(tool.attributes.picture) {
         fs.unlink('./app/public/uploads/' + tool.attributes.picture, function(err) {
           if (err) console.log(err);
-          return Tools.forge({id: req.params.id}).destroy().then(function(model) {
-            res.redirect('/tools/');
-          })
-          .catch(function(error) {
-            res.render('error', {error: error, message: 'Can not delete item.', title: 'Tools'});
-          });
         });
       }
+      return Tools.forge({id: req.params.id}).destroy().then(function(model) {
+        res.redirect('/tools/');
+      })
+      .catch(function(error) {
+        res.render('error', {error: error, message: 'Can not delete item.', title: 'Tools'});
+      });
     });
   },
   edit(req, res) {
