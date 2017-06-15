@@ -10,6 +10,8 @@ router.get('/', users.list);
 router.get('/add', users.edit);
 router.post('/add', upload.single('avatar'), users.update);
 
+router.get('/delete/:id', users.delete);
+
 router.get('/:user', users.edit);
 router.post('/:user', upload.single('avatar'), users.update);
 
