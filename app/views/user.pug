@@ -1,0 +1,70 @@
+extends layout
+
+block content
+  if message
+    ul.card-panel.green.white-text#success-panel
+      li= message
+  if error
+    ul.card-panel.red.white-text#error-panel
+        li= error
+  if dbErr
+    ul.card-panel.red.white-text
+      li= dbErr
+
+  if results
+    - var email = results.email
+    - var username = results.username
+    - var fullname = results.fullname
+    - var img = results.img
+
+  section.userform
+    form(name="user", action='/users/' + username, method="post", enctype='multipart/form-data', accept-charset="utf-8") 
+      #pic.row
+        .col.s12.m6.l4
+          if img
+            img#user-image.responsive-img(src='/uploads/' + img)
+          else
+            img#user-image.responsive-img(src='/images/default-user.jpg')
+
+          #changepic.input-field.file-field(data-role='fieldcontain')
+            .btn
+              span Change Picture
+              input.validate#avatar(type='file' name='avatar')
+              input(type='hidden' name='pic_name' value=img)
+            .file-path-wrapper
+              input.file-path.validate(type='text')
+          if username
+            #deletepic
+              input#del_pic.filled-in(type='checkbox' name='del_pic')
+              label(for='del_pic') Delete Picture?
+        .col.s12.m6.l8
+          ul
+            li
+              if username
+                label(for='username') Username (can not be changed): 
+                input(id='username' disabled value=username)
+              else
+                label(for='username') Username: 
+                input(id='username' autofocus required)
+            li 
+              label(for="fullname") Full Name
+              input(type="text" id="fullname" name='fullname' value=fullname autofocus required)
+            li 
+              label(for="email") Email
+              input(type="email" id="email" name='email' value=email autofocus required)
+            if username
+              li
+                p.grey-text.text-lighten-1 (Leave blank to not change password.)
+            li
+              if passes
+                .red-text.text-darken-2 Passwords do not match
+              label(for="password") Password
+              input(type="password", id="password", name='password')
+            li
+              label(for="password") Confirm Password
+              input(type="password" id="confirmpassword" name='confirmpassword')
+            li
+              if results
+                input.btn.green.waves-effect.waves-light(type="submit" value="Save")
+              else
+                input.btn.green.waves-effect.waves-light(type="submit" value="Create")
