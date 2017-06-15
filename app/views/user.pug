@@ -13,12 +13,19 @@ block content
 
   if results
     - var email = results.email
+    - var userID = results.id
     - var username = results.username
     - var fullname = results.fullname
     - var img = results.img
+    - var actionURL = '/users/' + username
+  else
+    - var actionURL = '/users/add'
+    - var addme = true
 
   section.userform
-    form(name="user", action='/users/' + username, method="post", enctype='multipart/form-data', accept-charset="utf-8") 
+    form(name="user", action=actionURL, method="post", enctype='multipart/form-data', accept-charset="utf-8") 
+      if addme
+        input(type='hidden', name='newuser', value='true')
       #pic.row
         .col.s12.m6.l4
           if img
@@ -43,9 +50,11 @@ block content
               if username
                 label(for='username') Username (can not be changed): 
                 input(id='username' disabled value=username)
+                input(type='hidden' name='id' value=userID)
+                input(type='hidden' name='username' value=username)
               else
                 label(for='username') Username: 
-                input(id='username' autofocus required)
+                input(id='username' name='username' autofocus required)
             li 
               label(for="fullname") Full Name
               input(type="text" id="fullname" name='fullname' value=fullname autofocus required)
