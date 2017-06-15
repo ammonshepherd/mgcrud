@@ -15,7 +15,7 @@ block content
           th Edit
       tbody
       each row in results
-        - var id = row.attributes['id']
+        - var userID = row.attributes['id']
         - var username = row.attributes['username']
         tr
           td
@@ -27,13 +27,12 @@ block content
           td 
             a.edit(href='/users/' + username)
               i.material-icons edit
-            a.delete(href='#delete' + id) 
+            a.delete(href='#delete' + userID) 
               i.material-icons delete_forever
-            div(class='modal', id='delete' + id)
+            div(class='modal', id='delete' + userID)
               .modal-content
-                h4 Delete
-                  span.delete-title #{username}
-                p Are you sure you want to delete this item?
+                h4 Delete user #{username}?
+                p Are you sure you want to delete this user?
               .modal-footer
                 a.modal-action.modal-close.btn.green.left(href='#!') Cancel
-                a.modal-action.modal-close.btn.red(href='/users/delete/' + id) Delete
+                a.modal-action.modal-close.btn.red(href='/users/delete/' + userID) Delete
