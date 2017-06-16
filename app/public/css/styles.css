@@ -31,6 +31,27 @@ nav.top-nav a.page-title {
     font-size: 48px;
 }
 
+/** top nav bar colors **/
+nav a {
+  color: #0071D5;
+}
+#Categories {
+  background-color: #dab;
+}
+#Locations {
+  background-color: #beaded;
+}
+#People {
+  background-color: #ac7;
+}
+#Tools {
+  background-color: #accede;
+}
+#Users {
+  background-color: #bed;
+}
+
+
 #logo-container {
   height: 122px;
 }
@@ -66,6 +87,27 @@ nav.top-nav a.page-title {
 #small-menu-icon {
   float: right;
 }
+
+
+/***
+ * SIDEBAR
+***/
+#Categories-icon {
+  color: #dab;
+}
+#Locations-icon {
+  color: #beaded;
+}
+#People-icon {
+  color: #ac7;
+}
+#Tools-icon {
+  color: #accede;
+}
+#Users-icon {
+  color: #bed;
+}
+
 
 /***
  * MAIN CONTENT
