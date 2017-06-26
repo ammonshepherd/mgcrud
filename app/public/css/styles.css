@@ -32,23 +32,48 @@ nav.top-nav a.page-title {
 }
 
 /** top nav bar colors **/
+.page-title {
+  color: white;
+}
 nav a {
   color: #0071D5;
 }
-#Categories {
-  background-color: #dab;
+#categories {
+  background-color: red;
 }
-#Locations {
-  background-color: #beaded;
+#locations {
+  background-color: purple;
 }
-#People {
-  background-color: #ac7;
+#makergroundsuva {
+  background-color: steelblue;
 }
-#Tools {
-  background-color: #accede;
+#people {
+  background-color: green;
 }
-#Users {
-  background-color: #bed;
+#tools {
+  background-color: blue;
+}
+#users {
+  background-color: orange;
+}
+#usersettings {
+  background-color: darkorange;
+}
+/** sidebar icon colors **/
+#categories-icon {
+  color: red;
+}
+#locations-icon {
+  color: purple;
+}
+#people-icon {
+  color: green;
+}
+#tools-icon {
+  color: blue;
+}
+#users-icon {
+  color: orange;
 }
 
 
@@ -92,21 +117,6 @@ nav a {
 /***
  * SIDEBAR
 ***/
-#Categories-icon {
-  color: #dab;
-}
-#Locations-icon {
-  color: #beaded;
-}
-#People-icon {
-  color: #ac7;
-}
-#Tools-icon {
-  color: #accede;
-}
-#Users-icon {
-  color: #bed;
-}
 
 
 /***
