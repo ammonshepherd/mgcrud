@@ -1,79 +1,101 @@
+var fs = require('fs');
+var Database = require('../config/db');
 var People = require('../models/people');
 
+var locs = require('../helpers/getLocations');
+var allLocs = locs.getLocations();
+
 module.exports = {
-  add(req, res) {
-    res.render('person');
-  },
   delete(req, res) {
-    return People.forge({id: req.params.id}).destroy().then(function(model) {
-      res.redirect('/people/');
+    People.forge({id: req.params.id}).fetch().then(function(person) {
+      if (person.attributes.picture) {
+        fs.unlink('./app/public/uploads/' + person.attributes.picture, function(err) {
+          if (err) console.log(err);
+        });
+      }
+      return People.forge({id: req.params.id}).destroy().then(function(model) {
+        res.redirect('/people/');
+      })
+      .catch(function(error) {
+        res.render('error', {error: error, message: 'Can not delete person.', title: 'People'});
+      });
     });
   },
+
   edit(req, res) {
     if (req.params.id) {
       return People.forge({id: req.params.id}).fetch().then(function(person) {
-        res.render('person', {results: person.attributes, title: 'People', errors: false});
+        res.render('person', {results: person.attributes, title: 'People', errors: false, locations: allLocs});
       })
       .catch( function(error){console.log(error);} );
     } else {
-      res.render('person');
+      res.render('person', {locations: allLocs, title: 'People'});
     }
   },
-  listAll(req, res) {
-    return People.forge().fetchAll().then(function(people) {
-      res.render('list', {results: people.models, title: 'People', kind: 'people', skipFields: ['id', 'created_at', 'updated_at']});
+
+  list(req, res) {
+    var allPeople = Database.Collection.extend({model: People}); // Make a collection so we can use withRelated
+    return allPeople.forge().orderBy('name', 'ASC').fetch({withRelated: ['location']}).then(function(people) {
+      res.render('people', {results: people.models, title: 'People', locations: allLocs});
     })
     .catch( function(error){console.log(error);} );
   },
-  single(req, res) {
-    return People.forge({id: req.params.id}).fetch().then(function(person) {
-      res.render('person', {results: person.attributes, title: 'People', errors: false});
-    });
-  },
+
   upsert(req, res) {
     var options = {};
-    var placeID = '';
-    if (!req.body.id) {
+    var message = '';
+    var personID = '';
+    var values = {};
+    if (req.body.newuser) {
       options.method = 'insert';
+      message = 'Successfully Created Person';
+      values.name = req.body.fullname;
     } else {
-      placeID = {id: req.body.id};
+      personID = {id: req.body.id};
       options.method = 'update';
       options.patch = 'true';
+      message = 'Updated Successfully!';
     }
 
     // Validate the input fields
-    req.checkBody('personName', 'The name or title of the place must not be empty.').notEmpty();
-    req.checkBody('title', 'Description must not be empty').notEmpty();
+    req.checkBody('fullname', 'The name field must not be empty.').notEmpty();
+    req.checkBody('moniker', 'Title must not be empty').notEmpty();
     req.checkBody('email', 'Email must be valid.').optional({checkFalsy: true}).isEmail();
 
+    // Update the file name in the database
+    if (req.file) {
+      values.picture = req.file.filename;
+    } else {
+      values.picture = req.body.pic_name;
+    }
+    // set the value in the db to null and delete the file
+    if (req.body.del_pic == 'on') {
+      values.picture = '';
+      fs.unlink('./app/public/uploads/' + req.body.pic_name, function(err) {
+        if (err) console.log(err);
+      });
+    }
+
     // SQL sanitizing happens in Postgres and knex level
-    var values = {
-      name: req.body.personName,
-      title: req.body.title,
-      email: req.body.email,
-      phone: req.body.phone
-    };
+    values.title = req.body.title;
+    values.email = req.body.email;
+    values.phone = req.body.phone;
+    values.location_id = req.body.location;
 
     // Validation results
     req.getValidationResult().then(function(result) {
       if ( result.isEmpty() ) {
-        return People.forge(placeID).save(values, options).then(function(ret) {
-          if (!placeID) {
-            placeID = {id: ret.id};
-          }
-          // After successful update/insert, grab the updated/new data and display the page
-          console.log('/people/edit/' + placeID.id);
-          res.redirect('/people/edit/' + placeID.id);
-          /*
-          return People.forge(placeID).fetch().then(function(person) {
-            res.render('person', {results: person.attributes, errors: false});
-          });
-          */
+        return People.forge(personID).save(values, options).then(function(person) {
+          res.render('person', {results: person.attributes, title: 'People', locations: allLocs, message: message});
         });
       } else {
-        return People.forge(placeID).fetch().then(function(person) {
-          res.render('person', {results: person.attributes, title: 'People', errors: result.array()});
-        });
+        if (personID !== '') {
+          return People.forge(personID).fetch().then(function(person) {
+            res.render('person', {results: person.attributes, title: 'People', locations: allLocs, errors: result.array()});
+          });
+        } else {
+          res.render('person', {title: 'People', locations: allLocs, errors: result.array() });
+        }
 
       }
     });  
