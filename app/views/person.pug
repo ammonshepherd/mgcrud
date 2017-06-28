@@ -1,6 +1,9 @@
 extends layout
 
 block content
+  if message
+    ul.card-panel.green.white-text#success-panel
+      li= message
   if errors
     ul.card-panel.red.white-text#error-panel
       for error in errors
@@ -9,73 +12,79 @@ block content
     ul.card-panel.red.white-text
       li= dbErr
 
+  - console.log(locations);
   if results
-    - var kind = 'edit'
-    - var placeID = results.id
-    - var placeName = results.name
-    - var description = results.description
-    - var address = results.address
-    - var access = results.access
-    - var hours = results.hours
-    - var address = results.address
-    - var latlong = results.latlong
-    - var website = results.website
+    - var personID = results.id
+    - var fullname = results.name
     - var email = results.email
     - var phone = results.phone
     - var picture = results.picture
-    h1#edit-location #{placeName}
+    - var moniker = results.title
+    - var location = results.location_id
+    - var actionURL = '/people/edit/' + personID
   else
-    - var kind = 'add'
-    - var placeID = ''
-    h1#edit-location Add new place
+    - var actionURL = '/people/add'
+    - var addme = true
 
-  #location-form
-    form(action='/locations/edit/' + placeID, method='post')
-      input(type='hidden' name='id' value=placeID)
-      div.input-field(data-role='fieldcontain')
-        label(for='placeName') Place Name
-        input.validate#placeName(type='text' placeholder='(required)' name='placeName' value=placeName)
-      div.input-field(data-role='fieldcontain')
-        label.active(for='description') Description
-        input.validate#description(type='text' placeholder='(required)' name='description' value=description)
-      div.input-field(data-role='fieldcontain')
-        label.active(for='address') Address
-        input.validate#address(type='text' name='address' value=address)
-      div.input-field(data-role='fieldcontain')
-        label(for='access') Access
-        input.validate#access(type='text' name='access' value=access)
-      div.input-field(data-role='fieldcontain')
-        label(for='hours') Hours
-        input.validate#hours(type='text' name='hours' value=hours)
-      div.input-field(data-role='fieldcontain')
-        label.active(for='latlong') Lat/Long
-        input.validate#latlong(type='text' name='latlong' value=latlong)
-      div.input-field(data-role='fieldcontain')
-        label.active(for='website') Website
-        input.validate#website(type='text' name='website' value=website)
-      div.input-field(data-role='fieldcontain')
-        label.active(for='email') Email
-        input.validate#email(type='text' name='email' value=email)
-      div.input-field(data-role='fieldcontain')
-        label.active(for='phone') Phone
-        input.validate#phone(type='text' name='phone' value=phone)
+  h1#item-edit-title.teal-text.text-darken-2 #{fullname}
 
-      div.input-field.file-field(data-role='fieldcontain')
-        .btn
-          span Add Picture
-          input.validate#print_file(type='file' name='print_file')
-        .file-path-wrapper
-          input.file-path.validate(type='text')
+  section#person-form
+    form(action=actionURL, method='post' enctype='multipart/form-data')
+      if results
+        input(type='hidden' name='id' value=personID)
+      if addme
+        input(type='hidden' name='newuser' value='true')
+      .row#form-fields
+        .col.s12.m6.l8
+          div.input-field(data-role='fieldcontain')
+            label(for='fullname') Full Name
+            input.validate#fullname(type='text' placeholder='(required)' name='fullname' value=fullname required autofocus)
+          div.input-field(data-role='fieldcontain')
+            label(for='moniker') Title
+            input.validate#moniker(type='text' name='moniker' value=moniker)
+          div.input-field(data-role='fieldcontain')
+            label(for='email') Email
+            input.validate#email(type='text' placeholder='(required)' name='email' value=email required)
+          div.input-field(data-role='fieldcontain')
+            label(for='phone') Phone
+            input.validate#phone(type='text' name='phone' value=phone)
+          div(data-role='fieldcontain')
+            label(for='location') Location
+            select.browser-default(name='location')
+              each locOption in locations
+                if (location == locOption.id)
+                  option(value=locOption.id, selected)= locOption.name
+                else
+                  option(value=locOption.id)= locOption.name
+        .col.s12.m6.l4
+          if results
+            img#avatar.responsive-img(src='/uploads/' + picture)
+          else
+            img#avatar.responsive-img(src='/images/default-user.jpg')
 
-      div.input-field(data-role='fieldcontain')
-        input.validate.btn.waves-effect.waves-light.green#submit(type='submit' name='submit' value='Save')
-        - if (kind == 'edit')
-          a.modal-action.modal-close.btn.red(href='#delete-' + placeID) Delete
-          div(class='modal', id='delete-' + placeID)
-            .modal-content
-              h4 Delete 
-                span.delete-title= placeName
-              p Are you sure you want to delete this item?
-            .modal-footer
-              a.modal-action.modal-close.btn.green.left(href='#!') Cancel
-              a.modal-action.modal-close.btn.red(href='/locations/delete/' + placeID) Delete
+          #changepic.input-field.file-field(data-role='fieldcontain')
+            .btn
+              span Add Picture
+              input.validate#avatar(type='file' name='avatar')
+              input(type='hidden' name='pic_name' value=picture)
+            .file-path-wrapper
+              input.file-path.validate(type='text')
+          if results
+            #deletepic
+              input#del-pic.filled-in(type='checkbox' name='del_pic')
+              label(for='del_pic') Delete Picture?
+      .row#form-buttons
+        .col.s12.m6
+          if results
+            input.btn.waves-effect.waves-light.green.left(type='submit' name='submit' value='Save')
+          else
+            input.btn.waves-effect.waves-light.green.left(type='submit' name='submit' value='Create')
+          if results
+            a.modal-action.modal-close.btn.red(href='#delete-' + personID) Delete
+            .modal(id='delete-' + personID)
+              .modal-content
+                h4 Delete #{fullname}?
+                p Are you sure you want to delete this person?
+              .modal-footer
+                a.modal-action.modal-close.btn.green.left(href='#!') Cancel
+                a.modal-action.modal-close.btn.red(href='/people/delete/' + personID) Delete
