@@ -13,13 +13,14 @@ block content
       - var email = row.attributes['email']
       .divider
       .row.item-row
-        .col.s12.m12.l11
+        .col.s12.m5.l4
           if pict != null
             - var image = '/uploads/' + pict
           else 
             - var image = '/images/default-user.jpg'
           a.edit(href='/people/edit/' + personID)
             img.responsive-img.z-depth-1.left.list-image(src='/uploads/' + pict)
+        .col.s12.m5.l6
           .name
             a.edit(href='/people/edit/' + personID)
               h4= fullname
@@ -29,7 +30,7 @@ block content
             each place in locations
               if (row.attributes['location_id'] == place.id)
                 p= "Location: " + place.name
-        .col.s12.m12.l1.edit.valign-wrapper
+        .col.s12.m2.l2.edit.valign-wrapper
           a.edit(href='/people/edit/' + personID)
             i.material-icons edit
           a.delete(href='#delete' + personID) 

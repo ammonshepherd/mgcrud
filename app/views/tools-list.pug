@@ -12,14 +12,15 @@ block content
       - var id = row.attributes['id']
       .divider
       .row.item-row
-        .col.s12.m12.l11
+        .col.s12.m5.l4
           if (row.attributes['picture'] != null)
             - var image = '/uploads/' + row.attributes['picture']
           else 
             - var image = '/images/no-tool.png'
           a.edit(href='/tools/edit/' + row.attributes['id'])
             img.list-image.responsive-image.z-depth-1.left(src=image)
-          .name
+        .col.s12.m5.l6
+          .name.left
             a.edit(href='/tools/edit/' + row.attributes['id'])
               h4= row.attributes['name']
             p= "Make: " + row.attributes['make'] 
@@ -27,7 +28,7 @@ block content
             each place in locations
               if (row.attributes['location_id'] == place.id)
                 p= "Location: " + place.name
-        .col.s12.m12.l1.edit.valign-wrapper
+        .col.s12.m2.l2.edit.valign-wrapper
           a.edit(href='/tools/edit/' + row.attributes['id'])
             i.material-icons edit
           a.delete(href='#delete' + id) 

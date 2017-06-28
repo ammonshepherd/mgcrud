@@ -12,18 +12,19 @@ block content
       - var id = row.attributes['id']
       .divider
       .row.item-row
-        .col.s12.m12.l11
+        .col.s12.m5.l4
           if (row.attributes['picture'] != null)
             - var image = '/uploads/' + row.attributes['picture']
           else 
             - var image = '/images/no-location.png'
           a.edit(href='/' + kind + '/edit/' + row.attributes['id'])
             img.list-image.responsive-image.z-depth-3.left(src=image)
+        .col.s12.m5.l6
           .name
             a.edit(href='/' + kind + '/edit/' + row.attributes['id'])
               h4= row.attributes['name']
             p= row.attributes['description']
-        .col.s12.m12.l1.edit.valign-wrapper
+        .col.s12.m2.l2.edit.valign-wrapper
           a.edit(href='/' + kind + '/edit/' + row.attributes['id'])
             i.material-icons edit
           a.delete(href='#delete' + id) 
