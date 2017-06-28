@@ -18,7 +18,7 @@ block content
           else 
             - var image = '/images/no-location.png'
           a.edit(href='/' + kind + '/edit/' + row.attributes['id'])
-            img.location-image.responsive-image.z-depth-3.left(src=image)
+            img.list-image.responsive-image.z-depth-3.left(src=image)
           .name
             a.edit(href='/' + kind + '/edit/' + row.attributes['id'])
               h4= row.attributes['name']
