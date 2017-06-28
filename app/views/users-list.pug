@@ -6,33 +6,34 @@ block content
       a.waves-effect.waves-light.btn-large(href='/users/add') Add
         i.material-icons.right add_circle_outline
   .section
-    table.striped.highlight.responsive-table
-      thead
-        tr
-          th Username
-          th Full Name
-          th Email
-          th Edit
-      tbody
-      each row in results
-        - var userID = row.attributes['id']
-        - var username = row.attributes['username']
-        tr
-          td
-            a.edit(href='/users/' + username)= username
-          td
-            p= row.attributes['fullname']
-          td
-            p= row.attributes['email']
-          td 
+    each row in results
+      - var userID = row.attributes['id']
+      - var username = row.attributes['username']
+      - var pict = row.attributes['img']
+      - var email = row.attributes['email']
+      .divider
+      .row.item-row
+        .col.s12.m12.l11
+          if pict != null
+            - var image = '/uploads/' + pict
+          else 
+            - var image = '/images/default-user.jpg'
+          a.edit(href='/users/' + username)
+            img.responsive-img.z-depth-2.left.list-image.circle(src='/uploads/' + pict)
+          .name
             a.edit(href='/users/' + username)
-              i.material-icons edit
-            a.delete(href='#delete' + userID) 
-              i.material-icons delete_forever
-            div(class='modal', id='delete' + userID)
-              .modal-content
-                h4 Delete user #{username}?
-                p Are you sure you want to delete this user?
-              .modal-footer
-                a.modal-action.modal-close.btn.green.left(href='#!') Cancel
-                a.modal-action.modal-close.btn.red(href='/users/delete/' + userID) Delete
+              h4= username
+            p 
+              a.edit(href='mailto:' + email)= email
+        .col.s12.m12.l1.edit.valign-wrapper
+          a.edit(href='/users/' + username)
+            i.material-icons edit
+          a.delete(href='#delete' + userID) 
+            i.material-icons delete_forever
+          .modal(id='delete' + userID)
+            .modal-content
+              h4 Delete user #{username}?
+              p Are you sure you want to delete this user?
+            .modal-footer
+              a.modal-action.modal-close.btn.green.left(href='#!') Cancel
+              a.modal-action.modal-close.btn.red(href='/users/delete/' + userID) Delete
