@@ -5,7 +5,7 @@ require('./locations');
 var People = Database.Model.extend({
   tableName: 'People',
   hasTimestamps: true,
-  locations: function() {
+  location: function() {
     return this.belongsTo('Locations', 'location_id');
   }
 });
