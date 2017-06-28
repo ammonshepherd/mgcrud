@@ -35,6 +35,9 @@ nav.top-nav a.page-title {
 .page-title {
   color: white;
 }
+#nav-bg-color {
+  background-color: steelblue;
+}
 nav a {
   color: #0071D5;
 }
@@ -51,7 +54,7 @@ nav a {
   background-color: green;
 }
 #tools {
-  background-color: blue;
+  background-color: dodgerblue;
 }
 #users {
   background-color: orange;
@@ -70,7 +73,7 @@ nav a {
   color: green;
 }
 #tools-icon {
-  color: blue;
+  color: dodgerblue;
 }
 #users-icon {
   color: orange;
@@ -137,11 +140,6 @@ nav a {
 .item-row {
   margin-top: 20px;
 }
-.location-image {
-  margin-right: 10px;
-  max-width: 150px;
-}
-
 
 #error-panel li, #success-panel li {
   padding: 5px 10px;
@@ -179,7 +177,8 @@ nav a {
 }
 
 .list-image {
-  max-width: 80px;
+  margin: 0 25px 0 0;
+  max-width: 150px !important;
 }
 
 /** user page **/
