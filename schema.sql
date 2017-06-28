@@ -148,8 +148,8 @@ CREATE TABLE "People" (
     phone character varying(255),
     picture character varying(255),
     title character varying(255),
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
     location_id integer
 );
 
