@@ -11,9 +11,7 @@ var passport = require('passport');
 
 require('dotenv').config();
 
-
 var app = express();
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
