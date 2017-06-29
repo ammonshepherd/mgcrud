@@ -12,21 +12,22 @@ block content
     ul.card-panel.red.white-text
       li= dbErr
 
-  - var action = 'edit'
-  - var placeID = results.id
-  - var placeName = results.name
-  - var description = results.description
-  - var address = results.address
-  - var access = results.access
-  - var hours = results.hours
-  - var address = results.address
-  - var latlong = results.latlong
-  - var website = results.website
-  - var email = results.email
-  - var phone = results.phone
-  - var picture = results.picture
-  if results.visible
-    - var visibleness = 'checked'
+  if results
+    - var action = 'edit'
+    - var placeID = results.id
+    - var placeName = results.name
+    - var description = results.description
+    - var address = results.address
+    - var access = results.access
+    - var hours = results.hours
+    - var address = results.address
+    - var latlong = results.latlong
+    - var website = results.website
+    - var email = results.email
+    - var phone = results.phone
+    - var picture = results.picture
+    if results.visible
+      - var visibleness = 'checked'
   h1#item-edit-title.deep-orange-text.text-lighten-2 #{placeName}
 
   if (picture)
