@@ -1,4 +1,4 @@
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var Database = require('../config/db');
 var Users = require('../models/users');
 var passport = require('../auth/local');
