@@ -14,10 +14,10 @@ block content
       .divider
       .row.item-row
         .col.s12.m5.l4
-          if pict == null
-            - var image = '/images/default-user.jpg'
-          else 
+          if pict
             - var image = '/uploads/' + pict
+          else 
+            - var image = '/images/default-user.jpg'
           a.edit(href='/users/' + username)
             img.responsive-img.z-depth-2.left.list-image.circle(src=image)
         .col.s12.m5.m6
