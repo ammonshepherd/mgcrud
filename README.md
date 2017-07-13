@@ -1,6 +1,6 @@
-# CRUD backend for the makergrounds.virginia.edu website
+* CRUD backend for the makergrounds.virginia.edu website
 
-# Development
+# DEVELOPMENT
 
 ## PostgreSQL
 
@@ -39,9 +39,35 @@ The manual: https://www.postgresql.org/docs/9.5/static/backup-dump.html
   - `git clone https://github.com/mossiso/mgcrud.git`
 
 - Install dependencies
+  - `cd mgcrud` Change into the newly created folder
   - `npm install`
+
+- Create an environment file
+  - In a text editor make a new file named `.env` and add the following to it
+  ```
+  DB_HOST='127.0.0.1|localhost|some.domain.name.com'
+  DB_USER='pguser'
+  DB_PASS='Super Secure Password!'
+  DB_BASE='database'
+  NODE_ENV='development|production'
+  ```
+  - DB_HOST = the IP address, localhost, or domain name of the PostgreSQL
+    server. 
+  - DB_USER = the name of the PostgreSQL account
+  - DB_PASS = the password for the user
+  - DB_BASE = the name of the database
+  - NODE_ENV = set to 'development' when developing, and 'production' on the
+    production server.
+
+  - Make the uploads directory
+  - `mkdir app/public/uploads`
 
 - Run
   - `npm start`
+  - View the site in your browser at http://locahost:3000
 
 
+# PRODUCTION
+
+- Change the .env file 
+  - NODE_ENV='production'
