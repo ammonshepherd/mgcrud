@@ -9,7 +9,7 @@ var allLocs = locs.getLocations();
 
 module.exports = {
   add(req, res) {
-    res.render('tool');
+    res.render('tool', {title: 'Tools'});
   },
   delete(req, res) {
     Tools.forge({id: req.params.id}).fetch().then(function(tool) {
@@ -64,6 +64,12 @@ module.exports = {
     // Validate the input fields
     req.checkBody('toolName', 'The name or title of the tool must not be empty.').notEmpty();
 
+    var visibleness = '';
+    if ( req.body.visible ) {
+      visibleness = true;
+    } else {
+      visibleness = false;
+    }
     // SQL sanitizing happens in Postgres and knex level
     var values = {
       name: req.body.toolName,
@@ -72,6 +78,8 @@ module.exports = {
       category_id: req.body.category,
       location_id: req.body.location,
       quantity: req.body.quantity,
+      training: req.body.training,
+      visible: visibleness
     };
 
     if (req.file) {
@@ -90,7 +98,7 @@ module.exports = {
     req.getValidationResult().then(function(result) {
       if ( result.isEmpty() ) {
         return Tools.forge(toolID).save(values, options).then(function(tool) {
-          res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs, message: message});
+          res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs, message: message, title: 'Tools'});
         });
       } else {
         if (placeID !== '') {
