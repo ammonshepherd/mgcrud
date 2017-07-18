@@ -190,8 +190,9 @@ CREATE TABLE "Tools" (
     location_id integer,
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone NOT NULL,
-    quantity character varying(50),
-    category_id integer
+    training character varying(255),
+    category_id integer,
+    visible boolean
 );
 
 
