@@ -19,15 +19,17 @@ block content
     - var make = results.make
     - var model = results.model
     - var picture = results.picture
-    - var quantity = results.quantity
+    - var training = results.training
     - var category = results.category_id
     - var location = results.location_id
+    if results.visible
+      - var visibleness = 'checked'
   h1#item-edit-title.teal-text.text-darken-2 #{toolName}
 
   .row#tool-form
     form(action='/tools/edit/' + toolID, method='post' enctype='multipart/form-data')
       .row#form-fields
-        .col.s12.m6
+        .col.s12.m6.l8
           div.input-field(data-role='fieldcontain')
             label(for='toolName') Tool Name
             input.validate#toolName(type='text' placeholder='(required)' name='toolName' value=toolName)
@@ -38,8 +40,8 @@ block content
             label.active(for='model') Model
             input.validate#model(type='text' name='model' value=model)
           div.input-field(data-role='fieldcontain')
-            label.active(for='quantity') Quantity
-            input.validate#quantity(type='text' name='quantity' value=quantity)
+            label.active(for='training') Training
+            input.validate#training(type='text' placeholder='included with access to space' name='training' value=training)
           div(data-role='fieldcontain')
             label(for='location') Location
             select.browser-default(name='location')
@@ -56,6 +58,10 @@ block content
                   option(value=catOption.id, selected)= catOption.name
                 else
                   option(value=catOption.id)= catOption.name
+        .col.s12.m6.l4
+          if (picture)
+            img.responsive-img(src='/uploads/' + picture)
+            input(type='hidden' name='pic_name' value=picture)
           div.input-field.file-field(data-role='fieldcontain')
             .btn
               if (action == 'edit')
@@ -65,10 +71,12 @@ block content
               input.validate#tool_image(type='file' name='tool_image')
             .file-path-wrapper
               input.file-path.validate(type='text')
-        .col.s12.m6
-          if (picture)
-            img.responsive-img(src='/uploads/' + picture)
-            input(type='hidden' name='pic_name' value=picture)
+      .row#visible-box
+        .col
+          div.input-field(data-role='fieldcontain')
+            input#isVisible(type='checkbox' name='visible' checked=visibleness)
+            label(for='isVisible') Visible (check to make the tool visible on the website)
+      .row
       .row#form-buttons
         .col.s12.m6
           input.validate.btn.waves-effect.waves-light.green.left#submit(type='submit' name='submit' value='Save')
