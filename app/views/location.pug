@@ -30,9 +30,6 @@ block content
       - var visibleness = 'checked'
   h1#item-edit-title.deep-orange-text.text-lighten-2 #{placeName}
 
-  if (picture)
-    #location-image
-      img.responsive-img(src='/uploads/' + picture)
   .row#location-form
     form(action='/locations/edit/' + placeID, method='post' enctype='multipart/form-data')
       .row#form-fields
@@ -42,20 +39,17 @@ block content
             input.validate#placeName(type='text' placeholder='(required)' name='placeName' value=placeName)
           div.input-field(data-role='fieldcontain')
             label.active(for='description') Description
-            input.validate#description(type='text' placeholder='(required)' name='description' value=description)
+            textarea.materialize-textarea.validate#description(placeholder='(required)' name='description')
+              = description
           div.input-field(data-role='fieldcontain')
             label.active(for='address') Address
             input.validate#address(type='text' name='address' value=address)
           div.input-field(data-role='fieldcontain')
-            label(for='access') Access
+            label(for='access') Access (what does it take to get in and use tools)
             input.validate#access(type='text' name='access' value=access)
           div.input-field(data-role='fieldcontain')
             label(for='hours') Hours
             input.validate#hours(type='text' name='hours' value=hours)
-        .col.s12.m6
-          div.input-field(data-role='fieldcontain')
-            label.active(for='latlong') Lat/Long
-            input.validate#latlong(type='text' name='latlong' value=latlong)
           div.input-field(data-role='fieldcontain')
             label.active(for='website') Website
             input.validate#website(type='text' name='website' value=website)
@@ -65,6 +59,10 @@ block content
           div.input-field(data-role='fieldcontain')
             label.active(for='phone') Phone
             input.validate#phone(type='text' name='phone' value=phone)
+        .col.s12.m6
+          if (picture)
+            #location-image
+              img.responsive-img(src='/uploads/' + picture)
           div.input-field.file-field(data-role='fieldcontain')
             .btn
               if (action == 'add')
@@ -75,6 +73,9 @@ block content
               input(type='hidden' name='pic_name' value=picture)
             .file-path-wrapper
               input.file-path.validate(type='text')
+          div.input-field(data-role='fieldcontain')
+            label.active(for='latlong') Lat/Long
+            input.validate#latlong(type='text' name='latlong' value=latlong)
       .row#visible-box
         .col.s5
           div.input-field(data-role='fieldcontain')
