@@ -18,7 +18,11 @@ block content
     - var email = results.email
     - var phone = results.phone
     - var picture = results.picture
-    - var moniker = results.title
+    - var moniker = results.moniker
+    - var bio = results.bio
+    - var website = results.website
+    - var hours = results.office_hours
+    - var office = results.office_address
     - var location = results.location_id
     - var actionURL = '/people/edit/' + personID
   else
@@ -41,37 +45,58 @@ block content
           div.input-field(data-role='fieldcontain')
             label(for='moniker') Title
             input.validate#moniker(type='text' name='moniker' value=moniker)
+          .row
+            .col.s12.m6.l6
+              div.input-field(data-role='fieldcontain')
+                label(for='email') Email
+                input.validate#email(type='text' placeholder='(required)' name='email' value=email required)
+            .col.s12.m6.l6
+              div.input-field(data-role='fieldcontain')
+                label(for='phone') Phone
+                input.validate#phone(type='text' name='phone' value=phone)
+          .row
+            .col.s12.m6.l6
+              div.input-field(data-role='fieldcontain')
+                label(for='hours') Office Hours
+                input.validate#hours(type='text' name='hours' value=hours)
+            .col.s12.m6.l6
+              div.input-field(data-role='fieldcontain')
+                label(for='office') Office Location
+                input.validate#office(type='text' name='office' value=office)
           div.input-field(data-role='fieldcontain')
-            label(for='email') Email
-            input.validate#email(type='text' placeholder='(required)' name='email' value=email required)
+            label(for='website') Website
+            input.validate#website(type='text' name='website' value=website)
           div.input-field(data-role='fieldcontain')
-            label(for='phone') Phone
-            input.validate#phone(type='text' name='phone' value=phone)
-          div(data-role='fieldcontain')
-            label(for='location') Location
-            select.browser-default(name='location')
-              each locOption in locations
-                if (location == locOption.id)
-                  option(value=locOption.id, selected)= locOption.name
-                else
-                  option(value=locOption.id)= locOption.name
+            label(for='bio') Bio
+            textarea.materialize-textarea.validate#bio(name='bio')
+              = bio
         .col.s12.m6.l4
-          if results
-            img#avatar.responsive-img(src='/uploads/' + picture)
-          else
-            img#avatar.responsive-img(src='/images/default-user.jpg')
+          .row
+            if results
+              img#avatar.responsive-img(src='/uploads/' + picture)
+            else
+              img#avatar.responsive-img(src='/images/default-user.jpg')
 
-          #changepic.input-field.file-field(data-role='fieldcontain')
-            .btn
-              span Add Picture
-              input.validate#avatar(type='file' name='avatar')
-              input(type='hidden' name='pic_name' value=picture)
-            .file-path-wrapper
-              input.file-path.validate(type='text')
-          if results
-            #deletepic
-              input#del-pic.filled-in(type='checkbox' name='del_pic')
-              label(for='del_pic') Delete Picture?
+            #changepic.input-field.file-field(data-role='fieldcontain')
+              .btn
+                span Add Picture
+                input.validate#avatar(type='file' name='avatar')
+                input(type='hidden' name='pic_name' value=picture)
+              .file-path-wrapper
+                input.file-path.validate(type='text')
+            if results
+              #deletepic
+                input#del-pic.filled-in(type='checkbox' name='del_pic')
+                label(for='del_pic') Delete Picture?
+          .row
+            div(data-role='fieldcontain')
+              label(for='location') Location
+              select.browser-default(name='location')
+                each locOption in locations
+                  if (location == locOption.id)
+                    option(value=locOption.id, selected)= locOption.name
+                  else
+                    option(value=locOption.id)= locOption.name
       .row#form-buttons
         .col.s12.m6
           if results

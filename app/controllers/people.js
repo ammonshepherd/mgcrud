@@ -49,7 +49,6 @@ module.exports = {
     if (req.body.newuser) {
       options.method = 'insert';
       message = 'Successfully Created Person';
-      values.name = req.body.fullname;
     } else {
       personID = {id: req.body.id};
       options.method = 'update';
@@ -77,10 +76,15 @@ module.exports = {
     }
 
     // SQL sanitizing happens in Postgres and knex level
-    values.title = req.body.title;
-    values.email = req.body.email;
-    values.phone = req.body.phone;
-    values.location_id = req.body.location;
+    values.bio            = req.body.bio;
+    values.email          = req.body.email;
+    values.location_id    = req.body.location;
+    values.moniker          = req.body.moniker;
+    values.name           = req.body.fullname;
+    values.office_address = req.body.office;
+    values.office_hours   = req.body.hours;
+    values.phone          = req.body.phone;
+    values.website        = req.body.website;
 
     // Validation results
     req.getValidationResult().then(function(result) {

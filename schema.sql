@@ -147,10 +147,14 @@ CREATE TABLE "People" (
     email character varying(255),
     phone character varying(255),
     picture character varying(255),
-    title character varying(255),
+    moniker character varying(255),
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone NOT NULL,
-    location_id integer
+    location_id integer,
+    office_hours character varying(255),
+    office_address character varying(255),
+    bio text,
+    website character varying(255)
 );
 
 

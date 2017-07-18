@@ -24,7 +24,7 @@ block content
           .name
             a.edit(href='/people/edit/' + personID)
               h4= fullname
-            p= row.attributes['title']
+            p= row.attributes['moniker']
             p 
               a.edit(href='mailto:' + email)= email
             each place in locations
