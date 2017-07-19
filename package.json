@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "schema": "pg_dump --clean --create --if-exists --schema-only --no-owner mgcrud > schema.sql"
+    "schema": "scripty"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
@@ -28,5 +28,8 @@
     "pg-hstore": "2.3.2",
     "pug": "2.0.0-beta.12",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "scripty": "1.7.1"
   }
 }
