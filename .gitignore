@@ -32,6 +32,9 @@ npm-debug.log
 # Uploads directory
 app/public/uploads
 
+# storing stuff that doesn't need to be shared
+data
+
 .DS_Store
 .env
 .jshintrc
