@@ -14,12 +14,12 @@ block content
       .divider
       .row.item-row
         .col.s12.m5.l4
-          if pict != null
+          if pict 
             - var image = '/uploads/' + pict
           else 
-            - var image = '/images/default-user.jpg'
+            - var image = '/images/no-person.png'
           a.edit(href='/people/edit/' + personID)
-            img.responsive-img.z-depth-1.left.list-image(src='/uploads/' + pict)
+            img.responsive-img.z-depth-1.left.list-image(src=image)
         .col.s12.m5.l6
           .name
             a.edit(href='/people/edit/' + personID)

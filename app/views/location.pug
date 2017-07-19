@@ -63,6 +63,9 @@ block content
           if (picture)
             #location-image
               img.responsive-img(src='/uploads/' + picture)
+          else 
+            #location-image
+              img.responsive-img(src='/images/no-location.png')
           div.input-field.file-field(data-role='fieldcontain')
             .btn
               if (action == 'add')

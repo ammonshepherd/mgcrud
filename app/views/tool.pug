@@ -59,9 +59,11 @@ block content
                 else
                   option(value=catOption.id)= catOption.name
         .col.s12.m6.l4
-          if (picture)
+          if picture
             img.responsive-img(src='/uploads/' + picture)
             input(type='hidden' name='pic_name' value=picture)
+          else
+            img.responsive-img(src='/images/no-tool.png')
           div.input-field.file-field(data-role='fieldcontain')
             .btn
               if (action == 'edit')

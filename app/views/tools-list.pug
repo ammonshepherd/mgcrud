@@ -11,7 +11,7 @@ block content
       .divider
       .row.item-row
         .col.s12.m5.l4
-          if (row.attributes['picture'] != null)
+          if row.attributes['picture']
             - var image = '/uploads/' + row.attributes['picture']
           else 
             - var image = '/images/no-tool.png'
