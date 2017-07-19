@@ -16,6 +16,19 @@
 
 The database schema is located in the `schema.sql` file. 
 
+Change `databaseName` in the `schema.sql` file to the name of your database.
+```
+DROP DATABASE IF EXISTS databaseName;
+--
+-- Name: databaseName; Type: DATABASE; Schema: -; Owner: -
+--
+
+CREATE DATABASE databaseName WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';
+
+\connect databaseName
+```
+
+
 To load this file into your PostgreSQL database (after it has been started)
 - `psql < schema.sql`
 
