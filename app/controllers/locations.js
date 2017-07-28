@@ -3,7 +3,7 @@ var Locations = require('../models/locations');
 
 module.exports = {
   add(req, res) {
-    res.render('location');
+    res.render('location', {title: 'Locations'});
   },
   delete(req, res) {
     Locations.forge({id: req.params.id}).fetch().then(function(location) {
@@ -99,7 +99,7 @@ module.exports = {
     req.getValidationResult().then(function(result) {
       if ( result.isEmpty() ) {
         return Locations.forge(placeID).save(values, options).then(function(location) {
-          res.render('location', {results: location.attributes, message: message});
+          res.render('location', {results: location.attributes, title: 'Locations', message: message});
         });
       } else {
         if (placeID !== '') {
