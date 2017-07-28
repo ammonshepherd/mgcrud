@@ -139,7 +139,9 @@ nav a {
 /* locations */
 .item-row {
   margin-top: 20px;
+  font-size: 2em;
 }
+
 
 #error-panel li, #success-panel li {
   padding: 5px 10px;
@@ -181,6 +183,15 @@ nav a {
   max-width: 150px !important;
 }
 
+/* categories */
+.row-num {
+  font-size: 1.2em;
+  margin-right: 10px;
+  color: #999;
+}
+.cat-name {
+  font-size: 1.5em;
+}
 /** person page **/
 #avatar {
   width: 100%;

@@ -6,14 +6,16 @@ block content
       a.waves-effect.waves-light.btn-large(href='/categories/edit/') Add
         i.material-icons.right add_circle_outline
   .section
+    - var num = 1
     each row in results
       - var id = row.attributes['id']
       .divider
       .row.item-row
-        .col.s12.m12.l11
+        .col.s12.m10.l11
+          span.row-num= num++ +')'
           a.edit(href='/categories/edit/' + row.attributes['id'])
-            h4= row.attributes['name']
-        .col.s12.m12.l1.edit.valign-wrapper
+            span.cat-name= row.attributes['name']
+        .col.s12.m2.l1.edit.valign-wrapper
           a.edit(href='/categories/edit/' + row.attributes['id'])
             i.material-icons edit
           a.delete(href='#delete' + id) 
