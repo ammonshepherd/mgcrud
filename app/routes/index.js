@@ -16,6 +16,9 @@ router.use('/locations', auth.isLoggedIn, require('./locations'));
 router.use('/people', auth.isLoggedIn, require('./people'));
 router.use('/tools', auth.isLoggedIn, require('./tools'));
 
+ // api routes
+router.use('/api', auth.isLoggedIn, require('./api'));
+
 /* Routes of domain name http://domainname.com/xyz */
   // Home page
 router.get('/', auth.isLoggedIn, function(req, res, next) { 
