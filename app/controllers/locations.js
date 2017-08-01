@@ -72,16 +72,17 @@ module.exports = {
     }
     // SQL sanitizing happens in Postgres and knex level
     var values = {
-      name: req.body.placeName,
-      description: req.body.description,
-      address: req.body.address,
       access: req.body.access,
+      address: req.body.address,
+      description: req.body.description,
+      email: req.body.email,
       hours: req.body.hours,
       latlong: req.body.latlong,
-      website: req.body.website,
-      email: req.body.email,
+      name: req.body.placeName,
       phone: req.body.phone,
-      visible: visibleness
+      slug: req.body.slug,
+      visible: visibleness,
+      website: req.body.website
     };
 
     if (req.file) {
@@ -93,6 +94,8 @@ module.exports = {
         });
 
       }
+    } else {
+      values.picture = req.body.pic_name;
     }
 
     // Validation results

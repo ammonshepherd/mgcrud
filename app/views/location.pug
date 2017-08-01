@@ -13,19 +13,19 @@ block content
       li= dbErr
 
   if results
-    - var action = 'edit'
-    - var placeID = results.id
-    - var placeName = results.name
-    - var description = results.description
-    - var address = results.address
     - var access = results.access
-    - var hours = results.hours
+    - var action = 'edit'
     - var address = results.address
-    - var latlong = results.latlong
-    - var website = results.website
+    - var description = results.description
     - var email = results.email
+    - var hours = results.hours
+    - var latlong = results.latlong
     - var phone = results.phone
     - var picture = results.picture
+    - var placeID = results.id
+    - var placeName = results.name
+    - var slug = results.slug
+    - var website = results.website
     if results.visible
       - var visibleness = 'checked'
   h1#item-edit-title.deep-orange-text.text-lighten-2 #{placeName}
@@ -68,7 +68,7 @@ block content
               img.responsive-img(src='/images/no-location.png')
           div.input-field.file-field(data-role='fieldcontain')
             .btn
-              if (action == 'add')
+              if (action == 'edit')
                 span Add Picture
               else 
                 span New Picture
@@ -79,6 +79,9 @@ block content
           div.input-field(data-role='fieldcontain')
             label.active(for='latlong') Lat/Long
             input.validate#latlong(type='text' name='latlong' value=latlong)
+          div.input-field(data-role='fieldcontain')
+            label.active(for='slug') Slug (for URL - makergrounds.virginia.edu/slug-value-here)
+            input.validate#slug(type='text' name='slug' value=slug)
       .row#visible-box
         .col.s5
           div.input-field(data-role='fieldcontain')
