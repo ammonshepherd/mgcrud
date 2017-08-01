@@ -80,8 +80,10 @@ block content
             label.active(for='latlong') Lat/Long
             input.validate#latlong(type='text' name='latlong' value=latlong)
           div.input-field(data-role='fieldcontain')
-            label.active(for='slug') Slug (for URL - makergrounds.virginia.edu/slug-value-here)
-            input.validate#slug(type='text' name='slug' value=slug)
+            label.active.valign-wrapper(for='slug') Slug (for URL = makergrounds.virginia.edu/slug-value-here)
+              a.tooltipped(data-position='top' data-tooltip='The "slug" can only contain lowercase letters, numbers, and dashes.')
+                i.material-icons help
+            input.validate#slug(type='text' pattern='[a-z0-9-]+' name='slug' value=slug)
       .row#visible-box
         .col.s5
           div.input-field(data-role='fieldcontain')

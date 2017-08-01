@@ -114,7 +114,8 @@ CREATE TABLE "Locations" (
     picture character varying(255),
     visible boolean DEFAULT true,
     created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL
+    updated_at timestamp with time zone NOT NULL,
+    slug character varying(255) NOT NULL
 );
 
 
