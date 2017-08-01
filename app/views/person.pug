@@ -49,7 +49,7 @@ block content
             .col.s12.m6.l6
               div.input-field(data-role='fieldcontain')
                 label(for='email') Email
-                input.validate#email(type='text' placeholder='(required)' name='email' value=email required)
+                input.validate#email(type='email' placeholder='(required)' name='email' value=email required)
             .col.s12.m6.l6
               div.input-field(data-role='fieldcontain')
                 label(for='phone') Phone
@@ -65,7 +65,7 @@ block content
                 input.validate#office(type='text' name='office' value=office)
           div.input-field(data-role='fieldcontain')
             label(for='website') Website
-            input.validate#website(type='text' name='website' value=website)
+            input.validate#website(type='url' name='website' value=website)
           div.input-field(data-role='fieldcontain')
             label(for='bio') Bio
             textarea.materialize-textarea.validate#bio(name='bio')
