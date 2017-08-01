@@ -8,6 +8,7 @@ var storageType = multer.diskStorage({
   filename: function (req, file, cb) {
     var fileParse = path.parse(file.originalname);
     var fileName = fileParse.name + '-' + Date.now() + fileParse.ext;
+    fileName = fileName.replace(/\W+/g, '_');
     cb(null, fileName);
   }
 });
