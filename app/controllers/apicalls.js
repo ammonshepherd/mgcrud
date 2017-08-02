@@ -13,7 +13,7 @@ module.exports = {
   //Grab all the info for the main page location's section and each location page
   // return the data as a json file
   locations(req, res) {
-    return Locations.forge().orderBy('name', 'ASC').fetchAll({withRelated: ['people','tools']}).then(function(locations) {
+    return Locations.forge().orderBy('name', 'ASC').where('visible', 'true').fetchAll({withRelated: ['people','tools']}).then(function(locations) {
       res.setHeader('Content-Type', 'application/json');
       //res.json(locations);
       // send it in pretty format
