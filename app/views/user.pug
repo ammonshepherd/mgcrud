@@ -12,12 +12,12 @@ block content
       li= dbErr
 
   if results
+    - var actionURL = '/users/' + username
     - var email = results.email
-    - var userID = results.id
-    - var username = results.username
     - var fullname = results.fullname
     - var img = results.img
-    - var actionURL = '/users/' + username
+    - var userID = results.id
+    - var username = results.username
   else
     - var actionURL = '/users/add'
     - var addme = true
@@ -35,12 +35,15 @@ block content
 
           #changepic.input-field.file-field(data-role='fieldcontain')
             .btn
-              span Change Picture
+              if img
+                span Change Picture
+              else
+                span Add Picture
               input.validate#avatar(type='file' name='avatar')
               input(type='hidden' name='pic_name' value=img)
             .file-path-wrapper
               input.file-path.validate(type='text')
-          if username
+          if img
             #deletepic
               input#del_pic.filled-in(type='checkbox' name='del_pic')
               label(for='del_pic') Delete Picture?

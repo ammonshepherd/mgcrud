@@ -7,6 +7,8 @@ var locs = require('../helpers/getLocations');
 var allCats = cats.getCategories();
 var allLocs = locs.getLocations();
 
+var picHelper = require('../helpers/pictureUploads');
+
 module.exports = {
   add(req, res) {
     res.render('tool', {title: 'Tools'});
@@ -82,17 +84,7 @@ module.exports = {
       visible: visibleness
     };
 
-    if (req.file) {
-      values.picture = req.file.filename;
-      // Delete existing pic if there is one
-      if(req.body.pic_name) {
-        fs.unlink('./app/public/uploads/' + req.body.pic_name, function(err) {
-          if (err) console.log(err);
-        });
-      }
-    } else {
-      values.picture = req.body.pic_name;
-    }
+    values.picture = picHelper.handlePicture(req.file, req.body.pic_name, req.body.del_pic);
 
     // Validation results
     req.getValidationResult().then(function(result) {

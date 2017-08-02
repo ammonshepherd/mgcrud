@@ -5,6 +5,8 @@ var People = require('../models/people');
 var locs = require('../helpers/getLocations');
 var allLocs = locs.getLocations();
 
+var picHelper = require('../helpers/pictureUploads');
+
 module.exports = {
   delete(req, res) {
     People.forge({id: req.params.id}).fetch().then(function(person) {
@@ -61,19 +63,7 @@ module.exports = {
     req.checkBody('moniker', 'Title must not be empty').notEmpty();
     req.checkBody('email', 'Email must be valid.').optional({checkFalsy: true}).isEmail();
 
-    // Update the file name in the database
-    if (req.file) {
-      values.picture = req.file.filename;
-    } else {
-      values.picture = req.body.pic_name;
-    }
-    // set the value in the db to null and delete the file
-    if (req.body.del_pic == 'on') {
-      values.picture = '';
-      fs.unlink('./app/public/uploads/' + req.body.pic_name, function(err) {
-        if (err) console.log(err);
-      });
-    }
+    values.picture = picHelper.handlePicture(req.file, req.body.pic_name, req.body.del_pic);
 
     // SQL sanitizing happens in Postgres and knex level
     values.bio            = req.body.bio;

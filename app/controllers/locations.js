@@ -1,6 +1,8 @@
 var fs = require('fs');
 var Locations = require('../models/locations');
 
+var picHelper = require('../helpers/pictureUploads');
+
 module.exports = {
   add(req, res) {
     res.render('location', {title: 'Locations'});
@@ -85,18 +87,7 @@ module.exports = {
       website: req.body.website
     };
 
-    if (req.file) {
-      values.picture = req.file.filename;
-      // Delete existing pic if there is one
-      if(req.body.pic_name) {
-        fs.unlink('./app/public/uploads/' + req.body.pic_name, function(err) {
-          if (err) console.log(err); 
-        });
-
-      }
-    } else {
-      values.picture = req.body.pic_name;
-    }
+    values.picture = picHelper.handlePicture(req.file, req.body.pic_name, req.body.del_pic);
 
     // Validation results
     req.getValidationResult().then(function(result) {

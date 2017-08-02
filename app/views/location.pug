@@ -68,14 +68,18 @@ block content
               img.responsive-img(src='/images/no-location.png')
           div.input-field.file-field(data-role='fieldcontain')
             .btn
-              if (action == 'edit')
-                span Add Picture
+              if picture
+                span Change Picture
               else 
-                span New Picture
+                span Add Picture
               input.validate#loc_image(type='file' name='loc_image')
               input(type='hidden' name='pic_name' value=picture)
             .file-path-wrapper
               input.file-path.validate(type='text')
+            if picture
+              #deletepic
+                input#del_pic.filled-in(type='checkbox' name='del_pic')
+                label(for='del_pic') Delete Picture?
           div.input-field(data-role='fieldcontain')
             label.active(for='latlong') Lat/Long
             input.validate#latlong(type='text' name='latlong' value=latlong)

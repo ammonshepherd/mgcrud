@@ -64,15 +64,19 @@ block content
             input(type='hidden' name='pic_name' value=picture)
           else
             img.responsive-img(src='/images/no-tool.png')
-          div.input-field.file-field(data-role='fieldcontain')
+          .input-field.file-field(data-role='fieldcontain')
             .btn
-              if (action == 'edit')
+              if picture
                 span Change Picture
               else 
                 span Add Picture
               input.validate#tool_image(type='file' name='tool_image')
             .file-path-wrapper
               input.file-path.validate(type='text')
+            if picture
+              #deletepic
+                input#del_pic.filled-in(type='checkbox' name='del_pic')
+                label(for='del_pic') Delete Picture?
       .row#visible-box
         .col
           div.input-field(data-role='fieldcontain')

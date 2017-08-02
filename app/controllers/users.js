@@ -3,6 +3,7 @@ var bcrypt = require('bcryptjs');
 var Database = require('../config/db');
 var Users = require('../models/users');
 
+var picHelper = require('../helpers/pictureUploads');
 
 module.exports = {
   delete(req, res) {
@@ -66,23 +67,10 @@ module.exports = {
       }
     }
 
-    // Update the file name in the database
-    if (req.file) {
-      values.img = req.file.filename;
-    } else {
-      values.img = req.body.pic_name;
-    }
-      // Set the value in the db to null, and delete the file
-    if (req.body.del_pic == 'on') {
-      values.img = '';
-      fs.unlink('./app/public/uploads/' + req.body.pic_name, function(err) {
-        if (err) console.log(err);
-      });
-    }
-
     // Set remaining values
     values.email = req.body.email;
     values.fullname = req.body.fullname;
+    values.img = picHelper.handlePicture(req.file, req.body.pic_name, req.body.del_pic);
 
     return Users.forge(userID).save(values, options).then(function(user) {
       // If updating your own user account information, then reset the session informaion.
