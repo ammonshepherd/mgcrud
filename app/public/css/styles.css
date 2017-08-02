@@ -140,6 +140,9 @@ nav a {
 .item-row {
   margin-top: 20px;
 }
+#visible-box {
+  margin-bottom: 50px;
+}
 
 
 #error-panel li, #success-panel li {
