@@ -35,6 +35,11 @@ block content
       .row#form-fields
         .col.s12.m6
           div.input-field(data-role='fieldcontain')
+            label.active.valign-wrapper(for='slug') Slug (for URL = http://makergrounds.virginia.edu/#{slug})
+              a.tooltipped(data-position='top' data-tooltip='The "slug" can only contain lowercase letters, numbers, and dashes.')
+                i.material-icons help
+            input.validate#slug(type='text' pattern='[a-z0-9-]+' name='slug' value=slug)
+          div.input-field(data-role='fieldcontain')
             label(for='placeName') Place Name
             input.validate#placeName(type='text' placeholder='(required)' name='placeName' value=placeName)
           div.input-field(data-role='fieldcontain')
@@ -44,6 +49,15 @@ block content
           div.input-field(data-role='fieldcontain')
             label.active(for='address') Address
             input.validate#address(type='text' name='address' value=address)
+          .row
+            .col.s12.m6
+              div.input-field(data-role='fieldcontain')
+                label.active(for='latitude') Latitude
+                input.validate#latitude(type='text' name='latitude' value=latitude)
+            .col.s12.m6
+              div.input-field(data-role='fieldcontain')
+                label.active(for='longitude') Longitude
+                input.validate#longitude(type='text' name='longitude' value=longitude)
           div.input-field(data-role='fieldcontain')
             label(for='access') Access (what does it take to get in and use tools)
             input.validate#access(type='text' name='access' value=access)
@@ -80,14 +94,6 @@ block content
               #deletepic
                 input#del_pic.filled-in(type='checkbox' name='del_pic')
                 label(for='del_pic') Delete Picture?
-          div.input-field(data-role='fieldcontain')
-            label.active(for='latlong') Lat/Long
-            input.validate#latlong(type='text' name='latlong' value=latlong)
-          div.input-field(data-role='fieldcontain')
-            label.active.valign-wrapper(for='slug') Slug (for URL = makergrounds.virginia.edu/slug-value-here)
-              a.tooltipped(data-position='top' data-tooltip='The "slug" can only contain lowercase letters, numbers, and dashes.')
-                i.material-icons help
-            input.validate#slug(type='text' pattern='[a-z0-9-]+' name='slug' value=slug)
       .row#visible-box
         .col.s5
           div.input-field(data-role='fieldcontain')

@@ -13,15 +13,15 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
-DROP DATABASE IF EXISTS mgcrud;
+DROP DATABASE IF EXISTS databaseName;
 --
--- Name: mgcrud; Type: DATABASE; Schema: -; Owner: -
+-- Name: databaseName; Type: DATABASE; Schema: -; Owner: -
 --
 
-CREATE DATABASE mgcrud WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';
+CREATE DATABASE databaseName WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';
 
 
-\connect mgcrud
+\connect databaseName
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -107,7 +107,7 @@ CREATE TABLE "Locations" (
     access text,
     hours character varying(255),
     address character varying(255),
-    latlong character varying(255),
+    latitude character varying(255),
     website character varying(255),
     email character varying(255),
     phone character varying(255),
@@ -115,7 +115,8 @@ CREATE TABLE "Locations" (
     visible boolean DEFAULT true,
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone NOT NULL,
-    slug character varying(255) NOT NULL
+    slug character varying(255),
+    longitude character varying(255)
 );
 
 

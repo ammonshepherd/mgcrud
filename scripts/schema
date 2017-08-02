@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
 pg_dump --clean --create --if-exists --schema-only --no-owner $1 > schema.sql
+
+sed -i '' -e "s/$1/databaseName/g" schema.sql
