@@ -157,7 +157,8 @@ CREATE TABLE "People" (
     office_address character varying(255),
     bio text,
     website character varying(255),
-    department character varying(255)
+    department character varying(255),
+    visible boolean
 );
 
 

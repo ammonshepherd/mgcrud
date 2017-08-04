@@ -13,7 +13,6 @@ block content
       li= dbErr
 
   if results
-    - var actionURL = '/people/edit/' + personID
     - var bio = results.bio
     - var department = results.department
     - var email = results.email
@@ -22,22 +21,22 @@ block content
     - var location = results.location_id
     - var moniker = results.moniker
     - var office = results.office_address
+    - var paction = 'edit'
     - var personID = results.id
     - var phone = results.phone
     - var picture = results.picture
     - var website = results.website
+    if results.visible
+      - var visibleness = 'checked'
   else
-    - var actionURL = '/people/add'
     - var addme = true
+    - var paction = 'add'
+    - var personID = ''
 
   h1#item-edit-title.teal-text.text-darken-2 #{fullname}
 
   section#person-form
-    form(action=actionURL, method='post' enctype='multipart/form-data')
-      if results
-        input(type='hidden' name='id' value=personID)
-      if addme
-        input(type='hidden' name='newuser' value='true')
+    form(action='/people/' + paction + '/' + personID, method='post' enctype='multipart/form-data')
       .row#form-fields
         .col.s12.m6.l8
           div.input-field(data-role='fieldcontain')
@@ -45,7 +44,7 @@ block content
             input.validate#fullname(type='text' placeholder='(required)' name='fullname' value=fullname required autofocus)
           div.input-field(data-role='fieldcontain')
             label(for='moniker') Title
-            input.validate#moniker(type='text' name='moniker' value=moniker)
+            input.validate#moniker(type='text' name='moniker' placeholder='(required)' value=moniker required)
           .row
             .col.s12.m6.l6
               div.input-field(data-role='fieldcontain')
@@ -101,6 +100,11 @@ block content
               #deletepic
                 input#del_pic.filled-in(type='checkbox' name='del_pic')
                 label(for='del_pic') Delete Picture?
+      .row#visible-box
+        .col.s5
+          div.input-field(data-role='fieldcontain')
+            input#isVisible(type='checkbox' name='visible' checked=visibleness)
+            label(for='isVisible') Visible
       .row#form-buttons
         .col.s12.m6
           if results

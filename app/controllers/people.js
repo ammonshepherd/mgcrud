@@ -47,12 +47,11 @@ module.exports = {
     var options = {};
     var message = '';
     var personID = '';
-    var values = {};
-    if (req.body.newuser) {
+    if (!req.params.id) {
       options.method = 'insert';
       message = 'Successfully Created Person';
     } else {
-      personID = {id: req.body.id};
+      personID = {id: req.params.id};
       options.method = 'update';
       options.patch = 'true';
       message = 'Updated Successfully!';
@@ -63,19 +62,28 @@ module.exports = {
     req.checkBody('moniker', 'Title must not be empty').notEmpty();
     req.checkBody('email', 'Email must be valid.').optional({checkFalsy: true}).isEmail();
 
-    values.picture = picHelper.handlePicture(req.file, req.body.pic_name, req.body.del_pic);
-
+    var visibleness = '';
+    if (req.body.visible) {
+      visibleness = true;
+    } else {
+      visibleness = false;
+    }
     // SQL sanitizing happens in Postgres and knex level
-    values.bio            = req.body.bio;
-    values.department     = req.body.department;
-    values.email          = req.body.email;
-    values.location_id    = req.body.location;
-    values.moniker        = req.body.moniker;
-    values.name           = req.body.fullname;
-    values.office_address = req.body.office;
-    values.office_hours   = req.body.hours;
-    values.phone          = req.body.phone;
-    values.website        = req.body.website;
+    var values = {
+      bio: req.body.bio,
+      department: req.body.department,
+      email: req.body.email,
+      location_id: req.body.location,
+      moniker: req.body.moniker,
+      name: req.body.fullname,
+      office_address: req.body.office,
+      office_hours: req.body.hours,
+      phone: req.body.phone,
+      visible: visibleness,
+      website: req.body.website
+    };
+
+    values.picture = picHelper.handlePicture(req.file, req.body.pic_name, req.body.del_pic);
 
     // Validation results
     req.getValidationResult().then(function(result) {
