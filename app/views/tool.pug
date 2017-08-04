@@ -84,11 +84,11 @@ block content
             label(for='isVisible') Visible (Check to make visible on makergrounds webpage)
       .row
       .row#form-buttons
-        .col.s12.m6
+        .col.s6
           input.validate.btn.waves-effect.waves-light.green.left#submit(type='submit' name='submit' value='Save')
-          if (action == 'edit')
+        if (action == 'edit')
+          .col.s6
             a.modal-action.modal-close.btn.waves-effect.waves-light.red(href='#delete-' + toolID) Delete
-
             div(class='modal', id='delete-' + toolID)
               .modal-content
                 h4 Delete 

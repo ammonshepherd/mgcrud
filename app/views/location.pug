@@ -95,14 +95,15 @@ block content
                 input#del_pic.filled-in(type='checkbox' name='del_pic')
                 label(for='del_pic') Delete Picture?
       .row#visible-box
-        .col.s5
+        .col
           div.input-field(data-role='fieldcontain')
             input#isVisible(type='checkbox' name='visible' checked=visibleness)
             label(for='isVisible') Visible (Check to make visible on makergrounds webpage)
       .row#form-buttons
-        .col.s5
+        .col.s6
           input.validate.btn.waves-effect.waves-light.green.left#submit(type='submit' name='submit' value='Save')
-          if (action == 'edit')
+        if (action == 'edit')
+          .col.s6
             a.modal-action.modal-close.btn.waves-effect.waves-light.red(href='#delete-' + placeID) Delete
             div(class='modal', id='delete-' + placeID)
               .modal-content
