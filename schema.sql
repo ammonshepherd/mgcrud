@@ -156,7 +156,8 @@ CREATE TABLE "People" (
     office_hours character varying(255),
     office_address character varying(255),
     bio text,
-    website character varying(255)
+    website character varying(255),
+    department character varying(255)
 );
 
 

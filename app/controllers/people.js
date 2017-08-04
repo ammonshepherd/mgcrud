@@ -67,9 +67,10 @@ module.exports = {
 
     // SQL sanitizing happens in Postgres and knex level
     values.bio            = req.body.bio;
+    values.department     = req.body.department;
     values.email          = req.body.email;
     values.location_id    = req.body.location;
-    values.moniker          = req.body.moniker;
+    values.moniker        = req.body.moniker;
     values.name           = req.body.fullname;
     values.office_address = req.body.office;
     values.office_hours   = req.body.hours;
