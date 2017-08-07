@@ -2,10 +2,10 @@ extends layout
 
 block content
   if message
-    ul.card-panel.green.white-text#success-panel
+    ul.card-panel.green.white-text#message-panel
       li= message
   if errors
-    ul.card-panel.red.white-text#error-panel
+    ul.card-panel.red.white-text#message-panel
       for error in errors
         li= error.msg
   if dbErr
@@ -35,7 +35,7 @@ block content
             input.validate#toolName(type='text' placeholder='(required)' name='toolName' value=toolName)
           div.input-field(data-role='fieldcontain')
             label.active(for='make') Make
-            input.validate#make(type='text' placeholder='(required)' name='make' value=make)
+            input.validate#make(type='text' placeholder='' name='make' value=make)
           div.input-field(data-role='fieldcontain')
             label.active(for='model') Model
             input.validate#model(type='text' name='model' value=model)

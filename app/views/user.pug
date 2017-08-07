@@ -1,29 +1,26 @@
 extends layout
 
 block content
-  if message
-    ul.card-panel.green.white-text#success-panel
-      li= message
+  if userInfo.message
+    ul.card-panel.green.white-text#message-panel
+      li= userInfo.message
   if error
-    ul.card-panel.red.white-text#error-panel
+    ul.card-panel.red.white-text#message-panel
         li= error
-  if dbErr
-    ul.card-panel.red.white-text
-      li= dbErr
 
   if results
-    - var actionURL = '/users/' + username
     - var email = results.email
     - var fullname = results.fullname
     - var img = results.img
     - var userID = results.id
     - var username = results.username
+    - var urlAction = username
   else
-    - var actionURL = '/users/add'
     - var addme = true
+    - var urlAction = 'add'
 
   section.userform
-    form(name="user", action=actionURL, method="post", enctype='multipart/form-data', accept-charset="utf-8") 
+    form(name="user", action='/users/' + urlAction, method="post", enctype='multipart/form-data', accept-charset="utf-8") 
       if addme
         input(type='hidden', name='newuser', value='true')
       #pic.row

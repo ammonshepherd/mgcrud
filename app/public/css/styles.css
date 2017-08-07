@@ -145,7 +145,7 @@ nav a {
 }
 
 
-#error-panel li, #success-panel li {
+#message-panel li {
   padding: 5px 10px;
 }
 

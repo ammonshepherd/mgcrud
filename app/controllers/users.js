@@ -33,6 +33,7 @@ module.exports = {
   },
 
   list(req, res) {
+    res.locals.userInfo.message = '';
     return Users.forge().orderBy('username', 'ASC').fetchAll().then(function(users) {
       res.render('users-list', {results: users.models, title: 'Users'});
     })
@@ -77,6 +78,7 @@ module.exports = {
       if (req.body.username === req.user.username) {
         Users.forge({id: req.user.id}).fetch().then(function(user) {
           var userObj = user.attributes;
+          userObj.message = message;
           // reset the session values
           req.login(userObj, function(err) {
             if(err) return next(err);
