@@ -79,7 +79,6 @@ module.exports = {
       model: req.body.model,
       category_id: req.body.category,
       location_id: req.body.location,
-      quantity: req.body.quantity,
       training: req.body.training,
       visible: visibleness
     };
