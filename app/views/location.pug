@@ -43,7 +43,7 @@ block content
             label.active.valign-wrapper(for='slug') Slug (for URL = http://makergrounds.virginia.edu/#{slug})
               a.tooltipped(data-position='top' data-tooltip='The "slug" can only contain lowercase letters, numbers, and dashes.')
                 i.material-icons help
-            input.validate#slug(type='text' pattern='[a-z0-9-]+' name='slug' value=slug)
+            input.validate#slug(type='text' pattern='[a-z0-9-]+' name='slug' value=slug autofocus)
           div.input-field(data-role='fieldcontain')
             label(for='placeName') Place Name
             input.validate#placeName(type='text' placeholder='(required)' name='placeName' value=placeName)
