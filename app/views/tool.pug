@@ -24,8 +24,13 @@ block content
     - var location = results.location_id
     if results.visible
       - var visibleness = 'checked'
-  h1#item-edit-title.teal-text.text-darken-2 #{toolName}
 
+    - var header = toolName
+  else 
+    - var toolID = ''
+    - var header = 'Add new tool'
+
+  h1#item-edit-title #{header}
   .row#tool-form
     form(action='/tools/edit/' + toolID, method='post' enctype='multipart/form-data')
       .row#form-fields

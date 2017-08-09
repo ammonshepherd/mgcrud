@@ -13,15 +13,14 @@ block content
       li= dbErr
 
   if results
-    - var action = 'edit'
     - var categoryID = results.id
     - var categoryName = results.name
-    h1#item-edit-title #{categoryName}
+    - var header = categoryName
   else
-    - var action = 'add'
     - var categoryID = ''
-    h1#item-edit-title Add New Category
+    - var header = 'Add new category'
 
+  h1#item-edit-title #{header}
   .row#category-form
     form(action='/categories/edit/' + categoryID, method='post')
       .row#form-fields
@@ -32,7 +31,7 @@ block content
       .row#form-buttons
         .col.s5
           input.validate.btn.waves-effect.waves-light.green.left#submit(type='submit' name='submit' value='Save')
-          - if (action == 'edit')
+          if results
             a.modal-action.modal-close.btn.waves-effect.waves-light.red(href='#delete-' + categoryID) Delete
             div(class='modal', id='delete-' + categoryID)
               .modal-content

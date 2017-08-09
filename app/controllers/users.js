@@ -25,10 +25,10 @@ module.exports = {
   edit(req, res) {
     if (req.params.user) {
       return Users.forge({username: req.params.user}).fetch().then(function(user) {
-        res.render('user', {results: user.attributes, title: 'User Settings' });
+        res.render('user', {results: user.attributes, title: 'Users' });
       });
     } else {
-      res.render('user', {title: 'Create User'});
+      res.render('user', {title: 'Users'});
     }
   },
 
@@ -38,7 +38,7 @@ module.exports = {
       res.render('users-list', {results: users.models, title: 'Users'});
     })
     .catch(function(error) {
-      res.render('error', {error: error});
+      res.render('error', {title: 'Users', error: error});
     });
   }, 
 
@@ -64,7 +64,7 @@ module.exports = {
         // use sync rather than async
         values.password = bcrypt.hashSync(req.body.password, 10);
       } else {
-        return res.render('user', {results: req.body, title: 'User Information', error: 'Passwords do not match.'});
+        return res.render('user', {results: req.body, title: 'Users', error: 'Passwords do not match.'});
       }
     }
 

@@ -15,10 +15,14 @@ block content
     - var userID = results.id
     - var username = results.username
     - var urlAction = username
+
+    - var header = username
   else
     - var addme = true
     - var urlAction = 'add'
+    - var header = 'Add new user'
 
+  h1#item-edit-title #{header}
   section.userform
     form(name="user", action='/users/' + urlAction, method="post", enctype='multipart/form-data', accept-charset="utf-8") 
       if addme

@@ -2,7 +2,7 @@ var Categories = require('../models/categories');
 
 module.exports = {
   add(req, res) {
-    res.render('category');
+    res.render('category', {title: 'Categories'});
   },
   delete(req, res) {
     return Categories.forge({id: req.params.id}).destroy().then(function(model) {
@@ -21,7 +21,7 @@ module.exports = {
         res.render('error', {error: error, title: 'Categories'});
       });
     } else {
-      res.render('category');
+      res.render('category', {title: 'Categories'});
     }
   },
   listAll(req, res) {
@@ -29,7 +29,7 @@ module.exports = {
       res.render('cats-list', {results: categories.models, title: 'Categories'});
     })
     .catch( function(error){
-      res.render('error', {error: error});
+      res.render('error', {title: 'Categories', error: error});
     });
   },
   single(req, res) {

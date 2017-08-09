@@ -28,13 +28,15 @@ block content
     - var website = results.website
     if results.visible
       - var visibleness = 'checked'
+
+    - var header = fullname
   else
     - var addme = true
     - var paction = 'add'
     - var personID = ''
+    - var header = 'Add new person'
 
-  h1#item-edit-title.teal-text.text-darken-2 #{fullname}
-
+  h1#item-edit-title #{header}
   section#person-form
     form(action='/people/' + paction + '/' + personID, method='post' enctype='multipart/form-data')
       .row#form-fields

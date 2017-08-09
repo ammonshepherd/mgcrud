@@ -135,6 +135,9 @@ nav a {
   border: 1px solid #aaa;
   padding: 20px;
 }
+#item-edit-title {
+  color: #00796b;
+}
 
 /* locations */
 .item-row {

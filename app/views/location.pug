@@ -28,8 +28,13 @@ block content
     - var website = results.website
     if results.visible
       - var visibleness = 'checked'
-  h1#item-edit-title.deep-orange-text.text-lighten-2 #{placeName}
 
+    - var header = placeName
+  else
+    - var placeID = ''
+    - var header = 'Add new location'
+
+  h1#item-edit-title #{header}
   .row#location-form
     form(action='/locations/edit/' + placeID, method='post' enctype='multipart/form-data')
       .row#form-fields
