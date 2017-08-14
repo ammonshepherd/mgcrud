@@ -23,7 +23,7 @@ module.exports = {
 
   // Get all of the people
   people(req, res) {
-    return People.forge().orderBy('name', 'ASC').fetchAll({withRelated: ['location']}).then(function(people) {
+    return People.forge().orderBy('name', 'ASC').where('visible', 'true').fetchAll({withRelated: ['location']}).then(function(people) {
       res.setHeader('Content-Type', 'application/json');
       //res.json(people);
       // send it in pretty format
@@ -33,9 +33,39 @@ module.exports = {
 
   // Get all the categories and the tools associated
   categories(req, res) {
-    return Categories.forge().orderBy('name', 'ASC').fetchAll({withRelated: ['tools']}).then(function(categories) {
+    return Categories.forge().orderBy('name', 'ASC').fetchAll({withRelated: ['tools', 'tools.location']}).then(function(categories) {
+      var categoryLocations = [];
+      Object.keys(categories.models).forEach(function (catKey) {
+        var cat = {};
+        var catName = categories.models[catKey].attributes.name;
+        cat.name = catName;
+        cat.slug = catName.replace(/[\W]+/g, '-').toLowerCase();
+        cat.icon = '';
+        //cat.icon = categories.models[catKey].attributes.icon;
+        var toolsObj = categories.models[catKey].relations.tools.models;
+        var locObj = categories.models[catKey].relations.tools.models;
+        var all_locations = [];
+        var uniqu_locations;
+
+        Object.keys(toolsObj).forEach(function(toolKey) {
+          var tools = toolsObj[toolKey].attributes;
+          if (tools.visible === true) {
+            Object.keys(locObj).forEach(function(locKey) {
+              all_locations.push(locObj[locKey].relations.location.attributes.name);
+            });
+          }
+          // Just get unique location ids
+          // https://stackoverflow.com/questions/9229645/remove-duplicates-from-javascript-array
+          uniq_locations = all_locations.reduce(function(a,b){
+            if (a.indexOf(b) < 0 ) a.push(b);
+            return a;
+          },[]);
+          cat.locations = uniq_locations;
+        });
+        categoryLocations.push(cat);
+      });
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(categories, null, 3));
+      res.send(JSON.stringify(categoryLocations, null, 3));
     });
   }
 };

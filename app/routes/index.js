@@ -17,7 +17,7 @@ router.use('/people', auth.isLoggedIn, require('./people'));
 router.use('/tools', auth.isLoggedIn, require('./tools'));
 
  // api routes
-router.use('/api', auth.isLoggedIn, require('./api'));
+router.use('/api', require('./api'));
 
 /* Routes of domain name http://domainname.com/xyz */
   // Home page
