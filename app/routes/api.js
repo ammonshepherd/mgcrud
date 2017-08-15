@@ -12,7 +12,8 @@ router.get('/locations', apiCalls.locations );
 // Get all the people from the database
 router.get('/people', apiCalls.people );
 
-router.get('/categories', apiCalls.categories);
+router.get('/categories-locations', apiCalls.categories);
 
+router.get('/tools', apiCalls.tools );
 
 module.exports = router;

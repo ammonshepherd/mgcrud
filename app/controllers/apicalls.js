@@ -10,27 +10,6 @@ var allLocs = locs.getLocations();
 
 
 module.exports = {
-  //Grab all the info for the main page location's section and each location page
-  // return the data as a json file
-  locations(req, res) {
-    return Locations.forge().orderBy('name', 'ASC').where('visible', 'true').fetchAll({withRelated: ['people','tools']}).then(function(locations) {
-      res.setHeader('Content-Type', 'application/json');
-      //res.json(locations);
-      // send it in pretty format
-      res.send(JSON.stringify(locations, null, 3));
-    });
-  },
-
-  // Get all of the people
-  people(req, res) {
-    return People.forge().orderBy('name', 'ASC').where('visible', 'true').fetchAll({withRelated: ['location']}).then(function(people) {
-      res.setHeader('Content-Type', 'application/json');
-      //res.json(people);
-      // send it in pretty format
-      res.send(JSON.stringify(people, null, 3));
-    });
-  },
-
   // Get all the categories and the tools associated
   categories(req, res) {
     return Categories.forge().orderBy('name', 'ASC').fetchAll({withRelated: ['tools', 'tools.location']}).then(function(categories) {
@@ -66,6 +45,34 @@ module.exports = {
       });
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(categoryLocations, null, 3));
+    });
+  },
+
+  //Grab all the info for the main page location's section and each location page
+  // return the data as a json file
+  locations(req, res) {
+    return Locations.forge().orderBy('name', 'ASC').where('visible', 'true').fetchAll({withRelated: ['people','tools']}).then(function(locations) {
+      res.setHeader('Content-Type', 'application/json');
+      //res.json(locations);
+      // send it in pretty format
+      res.send(JSON.stringify(locations, null, 3));
+    });
+  },
+
+  // Get all of the people
+  people(req, res) {
+    return People.forge().orderBy('name', 'ASC').where('visible', 'true').fetchAll({withRelated: ['location']}).then(function(people) {
+      res.setHeader('Content-Type', 'application/json');
+      //res.json(people);
+      // send it in pretty format
+      res.send(JSON.stringify(people, null, 3));
+    });
+  },
+
+  tools(req, res) {
+    return Tools.forge().orderBy('name', 'ASC').where('visible', 'true').fetchAll().then(function(tools) {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(tools, null, 3));
     });
   }
 };
