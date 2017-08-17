@@ -55,7 +55,64 @@ module.exports = {
       res.setHeader('Content-Type', 'application/json');
       //res.json(locations);
       // send it in pretty format
-      res.send(JSON.stringify(locations, null, 3));
+      //res.send(JSON.stringify(locations, null, 3));
+      
+      var locationsArray = [];
+      Object.keys(locations.models).forEach(function (locKey) {
+        var loc = {};
+        var locObj = locations.models[locKey].attributes;
+        var locName = locObj.name;
+        loc.name = locName;
+        loc.slug = locObj.slug;
+        loc.description = locObj.description;
+        loc.access = locObj.access;
+        loc.hours = locObj.hours;
+        loc.address = locObj.address;
+        loc.website = locObj.website;
+        loc.email = locObj.email;
+        loc.phone = locObj.phone;
+        loc.latitude = locObj.latitude;
+        loc.longitude = locObj.longitude;
+        loc.picture = locObj.picture;
+        loc.updated_at = locObj.updated_at;
+
+        var toolsArray = [];
+        var toolsObj = locations.models[locKey].relations.tools.models;
+        Object.keys(toolsObj).forEach(function(toolKey) {
+          var tool = toolsObj[toolKey].attributes;
+          if (tool.visible === true) {
+            var t = {};
+            t.name = tool.name;
+            t.make = tool.make;
+            t.model = tool.model;
+            t.slug = tool.name.replace(/[\W]+/g, '-').toLowerCase();
+            t.picture = tool.picture;
+            t.training = tool.training;
+            toolsArray.push(t);
+          }
+        });
+        loc.tools = toolsArray;
+
+        var peopleArray = [];
+        var peopleObj = locations.models[locKey].relations.people.models;
+        Object.keys(peopleObj).forEach(function(personKey) {
+          var person = peopleObj[personKey].attributes;
+          if (person.visible === true) {
+            var p = {};
+            p.name = person.name;
+            p.moniker = person.moniker;
+            p.department = person.department;
+            p.slug = person.name.replace(/[\W]+/g, '-').toLowerCase();
+            p.picture = person.picture;
+            p.email = person.email;
+            peopleArray.push(p);
+          }
+        });
+        loc.people = peopleArray;
+        locationsArray.push(loc);
+      });
+      //jlocations = JSON.stringify(locations, null, 3);
+      res.send(JSON.stringify(locationsArray, null, 3));
     });
   },
 
