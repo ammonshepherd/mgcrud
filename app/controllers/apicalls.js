@@ -70,9 +70,24 @@ module.exports = {
   },
 
   tools(req, res) {
-    return Tools.forge().orderBy('name', 'ASC').where('visible', 'true').fetchAll().then(function(tools) {
+    return Tools.forge().orderBy('name', 'ASC').where('visible', 'true').fetchAll({withRelated: ['location']}).then(function(tools) {
+      var allTools = [];
+      Object.keys(tools.models).forEach(function (toolKey) {
+        var toolObj = tools.models[toolKey].attributes;
+        var tool = {};
+        tool.name = toolObj.name;
+        tool.slug = toolObj.name.replace(/[\W]+/g, '-').toLowerCase();
+        tool.make = toolObj.make;
+        tool.model = toolObj.model;
+        tool.training = toolObj.training;
+        tool.picture = toolObj.picture;
+        tool.location = tools.models[toolKey].relations.location.attributes.slug;
+
+        allTools.push(tool);
+      });
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(tools, null, 3));
+      res.send(JSON.stringify(allTools, null, 3));
+
     });
   }
 };
