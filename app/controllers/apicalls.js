@@ -119,10 +119,28 @@ module.exports = {
   // Get all of the people
   people(req, res) {
     return People.forge().orderBy('name', 'ASC').where('visible', 'true').fetchAll({withRelated: ['location']}).then(function(people) {
+      var peopleArray = [];
+      Object.keys(people.models).forEach(function (personKey) {
+        var personObj = people.models[personKey].attributes;
+        var person = {};
+        person.name = personObj.name;
+        person.slug = personObj.name.replace(/[\W]+/g, '-').toLowerCase();
+        person.moniker = personObj.moniker;
+        person.department = personObj.department;
+        person.picture = personObj.picture;
+        person.email = personObj.email;
+        person.phone = personObj.phone;
+        person.website = personObj.website;
+        person.office_hours = personObj.office_hours;
+        person.office_address = personObj.office_address;
+        person.bio = personObj.bio;
+        person.location_name = people.models[personKey].relations.location.attributes.name;
+        person.location_slug = people.models[personKey].relations.location.attributes.slug;
+
+        peopleArray.push(person);
+      });
       res.setHeader('Content-Type', 'application/json');
-      //res.json(people);
-      // send it in pretty format
-      res.send(JSON.stringify(people, null, 3));
+      res.send(JSON.stringify(peopleArray, null, 3));
     });
   },
 
