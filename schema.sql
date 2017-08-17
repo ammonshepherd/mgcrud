@@ -71,7 +71,7 @@ SET default_with_oids = false;
 
 CREATE TABLE "Categories" (
     id integer NOT NULL,
-    name text NOT NULL,
+    name character varying(255) NOT NULL,
     created_at timestamp with time zone,
     updated_at timestamp with time zone
 );
@@ -102,21 +102,21 @@ ALTER SEQUENCE "Categories_id_seq" OWNED BY "Categories".id;
 
 CREATE TABLE "Locations" (
     id integer NOT NULL,
-    name character varying(255),
+    name character varying(255) NOT NULL,
     description text,
     access text,
     hours character varying(255),
     address character varying(255),
-    latitude character varying(255),
     website character varying(255),
     email character varying(255),
     phone character varying(255),
-    picture character varying(255),
-    visible boolean DEFAULT true,
-    created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
     slug character varying(255),
-    longitude character varying(255)
+    latitude character varying(255),
+    longitude character varying(255),
+    picture character varying(255),
+    visible boolean,
+    created_at timestamp with time zone,
+    updated_at timestamp with time zone
 );
 
 
@@ -145,20 +145,20 @@ ALTER SEQUENCE "Locations_id_seq" OWNED BY "Locations".id;
 
 CREATE TABLE "People" (
     id integer NOT NULL,
-    name character varying(255),
+    name character varying(255) NOT NULL,
+    moniker character varying(255),
+    department character varying(255),
     email character varying(255),
     phone character varying(255),
+    website character varying(255),
     picture character varying(255),
-    moniker character varying(255),
-    created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
-    location_id integer,
     office_hours character varying(255),
     office_address character varying(255),
     bio text,
-    website character varying(255),
-    department character varying(255),
-    visible boolean
+    visible boolean,
+    location_id integer,
+    created_at timestamp with time zone,
+    updated_at timestamp with time zone
 );
 
 
@@ -187,16 +187,16 @@ ALTER SEQUENCE "People_id_seq" OWNED BY "People".id;
 
 CREATE TABLE "Tools" (
     id integer NOT NULL,
-    name character varying(255),
+    name character varying(255) NOT NULL,
     make character varying(255),
     model character varying(255),
     picture character varying(255),
-    location_id integer,
-    created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
     training character varying(255),
+    visible boolean,
+    location_id integer,
     category_id integer,
-    visible boolean
+    created_at timestamp with time zone,
+    updated_at timestamp with time zone
 );
 
 
@@ -224,14 +224,14 @@ ALTER SEQUENCE "Tools_id_seq" OWNED BY "Tools".id;
 --
 
 CREATE TABLE "Users" (
-    username character varying(55) NOT NULL,
-    password text NOT NULL,
-    created_at timestamp with time zone,
-    updated_at timestamp with time zone,
     id integer NOT NULL,
-    email text,
-    img text,
-    fullname text NOT NULL
+    username character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    email character varying(255),
+    img character varying(255),
+    fullname character varying(255) NOT NULL,
+    created_at timestamp with time zone,
+    updated_at timestamp with time zone
 );
 
 
@@ -252,6 +252,46 @@ CREATE SEQUENCE "Users_id_seq"
 --
 
 ALTER SEQUENCE "Users_id_seq" OWNED BY "Users".id;
+
+
+--
+-- Name: knex_migrations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE knex_migrations (
+    id integer NOT NULL,
+    name character varying(255),
+    batch integer,
+    migration_time timestamp with time zone
+);
+
+
+--
+-- Name: knex_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE knex_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: knex_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE knex_migrations_id_seq OWNED BY knex_migrations.id;
+
+
+--
+-- Name: knex_migrations_lock; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE knex_migrations_lock (
+    is_locked integer
+);
 
 
 --
@@ -287,6 +327,13 @@ ALTER TABLE ONLY "Tools" ALTER COLUMN id SET DEFAULT nextval('"Tools_id_seq"'::r
 --
 
 ALTER TABLE ONLY "Users" ALTER COLUMN id SET DEFAULT nextval('"Users_id_seq"'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY knex_migrations ALTER COLUMN id SET DEFAULT nextval('knex_migrations_id_seq'::regclass);
 
 
 --
@@ -330,35 +377,43 @@ ALTER TABLE ONLY "Users"
 
 
 --
--- Name: users_unique_username; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: knex_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY knex_migrations
+    ADD CONSTRAINT knex_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_username_unique; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY "Users"
-    ADD CONSTRAINT users_unique_username UNIQUE (username);
+    ADD CONSTRAINT users_username_unique UNIQUE (username);
 
 
 --
--- Name: category_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY "Tools"
-    ADD CONSTRAINT category_id FOREIGN KEY (category_id) REFERENCES "Categories"(id);
-
-
---
--- Name: location_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY "Tools"
-    ADD CONSTRAINT location_id FOREIGN KEY (location_id) REFERENCES "Locations"(id);
-
-
---
--- Name: location_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: people_location_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY "People"
-    ADD CONSTRAINT location_id FOREIGN KEY (location_id) REFERENCES "Locations"(id);
+    ADD CONSTRAINT people_location_id_foreign FOREIGN KEY (location_id) REFERENCES "Locations"(id);
+
+
+--
+-- Name: tools_category_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Tools"
+    ADD CONSTRAINT tools_category_id_foreign FOREIGN KEY (category_id) REFERENCES "Categories"(id);
+
+
+--
+-- Name: tools_location_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Tools"
+    ADD CONSTRAINT tools_location_id_foreign FOREIGN KEY (location_id) REFERENCES "Locations"(id);
 
 
 --
