@@ -156,7 +156,8 @@ module.exports = {
         tool.model = toolObj.model;
         tool.training = toolObj.training;
         tool.picture = toolObj.picture;
-        tool.location = tools.models[toolKey].relations.location.attributes.slug;
+        tool.location_name = tools.models[toolKey].relations.location.attributes.name;
+        tool.location_slug = tools.models[toolKey].relations.location.attributes.slug;
 
         allTools.push(tool);
       });
