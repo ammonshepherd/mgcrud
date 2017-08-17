@@ -20,6 +20,8 @@ This app uses PostgreSQL as a database backend.
     - Also install the graphical client, pgAdmin 4: https://www.pgadmin.org/download/
 The manual: https://www.postgresql.org/docs/9.5/static/backup-dump.html
 
+- Once installed, create an empty database (referred to later as `databaseName`).
+
 ### NodeJS
 
 - Install Node and npm
@@ -43,7 +45,7 @@ The manual: https://www.postgresql.org/docs/9.5/static/backup-dump.html
   DB_HOST='127.0.0.1|localhost|some.domain.name.com'
   DB_USER='pguser'
   DB_PASS='Super Secure Password!'
-  DB_BASE='database'
+  DB_BASE='databaseName'
   NODE_ENV='development|production'
   ```
   - DB_HOST = the IP address, localhost, or domain name of the PostgreSQL
@@ -57,23 +59,10 @@ The manual: https://www.postgresql.org/docs/9.5/static/backup-dump.html
 - Make the uploads directory
   - `mkdir app/public/uploads`
 
-- Edit the schema file
-  - Change `databaseName` in the `schema.sql` file to the name of your database.
-  ```
-  DROP DATABASE IF EXISTS databaseName;
-  --
-  -- Name: databaseName; Type: DATABASE; Schema: -; Owner: -
-  --
-
-  CREATE DATABASE databaseName WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';
-
-  \connect databaseName
-  ```
-
-- Load Schema into Database
-  - On the command line, in the same directory as the schema.sql file (the
-    project's root folder) run:
-    - `psql < schema.sql`
+- Run the database migration
+  - Change into the hidden .knex directory
+    - `cd .knex`
+  - `knex migrate:latest`
 
 - Run
   - `npm start`
@@ -81,7 +70,13 @@ The manual: https://www.postgresql.org/docs/9.5/static/backup-dump.html
 
 
 ## Notes on the Schema file
-The database schema is located in the `schema.sql` file. 
+The database schema is located in the `schema.sql` file. This file is supplied
+in case the knex migration capability is not desired.
+
+- Edit the 'databaseName' in the schema.sql file. Change it to the name of your
+  database you wish to use.
+  - ***Note: this will delete the database, then recreate it. Your PostgreSQL user
+  must have access to delete and create the database.***
 
 - Load Schema into Database 
   - Load this file into your PostgreSQL database (after it has been started)
