@@ -6,16 +6,21 @@ block content
       a.waves-effect.waves-light.btn-large(href='/categories/edit/') Add
         i.material-icons.right add_circle_outline
   .section
-    - var num = 1
     each row in results
       - var id = row.attributes['id']
       .divider
       .row.item-row
-        .col.s12.m10.l11
-          span.row-num= num++ +')'
+        .col.s12.m5.l4
+          if row.attributes['icon']
+            a.edit(href='/categories/edit/' + row.attributes['id'])
+              img.list-image.responsive-image.z-depth-3.left(src='/uploads/' + row.attributes['icon'])
+          else
+            a.edit(href='/categories/edit/' + row.attributes['id'])
+              i.material-icons.z-depth-3.left(style='font-size: 10em;') loupe
+        .col.s12.m5.l6
           a.edit(href='/categories/edit/' + row.attributes['id'])
             span.cat-name= row.attributes['name']
-        .col.s12.m2.l1.edit.valign-wrapper
+        .col.s12.m2.l2.edit.valign-wrapper
           a.edit(href='/categories/edit/' + row.attributes['id'])
             i.material-icons edit
           a.delete(href='#delete' + id) 

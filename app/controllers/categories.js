@@ -1,4 +1,5 @@
 var Categories = require('../models/categories');
+var picHelper = require('../helpers/pictureUploads');
 
 module.exports = {
   add(req, res) {
@@ -58,6 +59,9 @@ module.exports = {
     var values = {
       name: req.body.categoryName,
     };
+
+    console.log(req.file);
+    values.icon = picHelper.handlePicture(req.file, req.body.icon_name, req.body.del_icon);
 
     // Validation results
     req.getValidationResult().then(function(result) {

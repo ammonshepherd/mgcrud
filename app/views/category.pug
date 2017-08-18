@@ -16,18 +16,39 @@ block content
     - var categoryID = results.id
     - var categoryName = results.name
     - var header = categoryName
+    - var icon = results.icon
   else
     - var categoryID = ''
     - var header = 'Add new category'
 
   h1#item-edit-title #{header}
   .row#category-form
-    form(action='/categories/edit/' + categoryID, method='post')
+    form(action='/categories/edit/' + categoryID, method='post' enctype='multipart/form-data')
       .row#form-fields
         .col.s12.m6
           div.input-field(data-role='fieldcontain')
             label(for='categoryName') Category Name
             input.validate#categoryName(type='text' placeholder='(required)' name='categoryName' value=categoryName autofocus)
+        .col.s12.m6
+          if icon
+            object(type="image/svg+xml" data='/uploads/' + icon)
+              Your browser does not support SVG
+            input(type='hidden' name='icon_name' value=icon)
+          else
+            i.material-icons(style='font-size: 10em') loupe
+          .input-field.file-field(data-role='fieldcontain')
+            .btn
+              if icon
+                span Change Icon
+              else 
+                span Add Icon
+              input.validate#icon_image(type='file' name='icon_image')
+            .file-path-wrapper
+              input.file-path.validate(type='text')
+            if icon
+              #deleteicon
+                input#del_icon.filled-in(type='checkbox' name='del_icon')
+                label(for='del_icon') Delete Icon?
       .row#form-buttons
         .col.s5
           input.validate.btn.waves-effect.waves-light.green.left#submit(type='submit' name='submit' value='Save')
