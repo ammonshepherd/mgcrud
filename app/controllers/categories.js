@@ -60,7 +60,6 @@ module.exports = {
       name: req.body.categoryName,
     };
 
-    console.log(req.file);
     values.icon = picHelper.handlePicture(req.file, req.body.icon_name, req.body.del_icon);
 
     // Validation results
