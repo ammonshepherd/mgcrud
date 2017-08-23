@@ -16,6 +16,7 @@
     "express": "4.14.1",
     "express-session": "1.15.2",
     "express-validator": "3.1.2",
+    "jimp": "0.2.28",
     "jquery": "3.2.1",
     "knex": "0.13.0",
     "materialize-css": "0.98.2",

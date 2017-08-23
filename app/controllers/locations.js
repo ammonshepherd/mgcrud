@@ -1,4 +1,5 @@
 var fs = require('fs');
+var jimp = require('jimp');
 var Locations = require('../models/locations');
 
 var picHelper = require('../helpers/pictureUploads');
@@ -89,6 +90,13 @@ module.exports = {
     };
 
     values.picture = picHelper.handlePicture(req.file, req.body.pic_name, req.body.del_pic);
+    // resize the image to 650x350
+    if (values.picture) {
+      jimp.read('./app/public/uploads/' + values.picture, function(err, pict) {
+        if(err) throw err;
+        pict.cover(650,350).write('./app/public/uploads/' + values.picture);
+      });
+    }
 
     // Validation results
     req.getValidationResult().then(function(result) {

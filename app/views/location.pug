@@ -79,6 +79,8 @@ block content
             label.active(for='phone') Phone
             input.validate#phone(type='text' name='phone' value=phone)
         .col.s12.m6
+          .card-panel.amber.lighten-3 
+            p Ideal picture size is 650x350 pixels. It will be cropped to this size.
           if (picture)
             #location-image
               img.responsive-img(src='/uploads/' + picture)
