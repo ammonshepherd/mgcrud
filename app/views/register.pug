@@ -2,6 +2,7 @@ include head.pug
 
 if values
   - var email = values.email
+  - var fullname = values.fullname
   - var username = values.username
 
 body.deep-orange.darken-4
@@ -17,11 +18,13 @@ body.deep-orange.darken-4
                 label(for="fullname") Full Name
                 input.fields(type="text" id="fullname" name='fullname' value=fullname autofocus required)
               li 
-                if taken
+                if userTaken
                   .red-text.text-darken-2= 'Please choose another username. ' + username + ' is already taken'
                 label(for="username") Username
                 input.fields(type="text" id="username" name='username' value=username required)
               li 
+                if emailTaken
+                  .red-text.text-darken-2= 'Please choose a different email address. \n' + email + ' is already in use.'
                 label(for="email") Email
                 input.fields(type="email" id="email" name='email' value=email autofocus required)
               li

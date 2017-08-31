@@ -94,6 +94,10 @@ module.exports = {
         res.redirect('/users/');
       }
 
+    })
+    .catch(function(error) {
+      console.log(error);
+      res.render('user', {results: req.body, title: 'Users', error: 'Username or email already taken.'});
     });
 
   }
