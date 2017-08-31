@@ -2,11 +2,6 @@ var fs = require('fs');
 var Database = require('../config/db');
 var Tools = require('../models/tools');
 
-var cats = require('../helpers/getCategories');
-var locs = require('../helpers/getLocations');
-var allCats = cats.getCategories();
-var allLocs = locs.getLocations();
-
 var picHelper = require('../helpers/pictureUploads');
 
 module.exports = {
@@ -29,6 +24,11 @@ module.exports = {
     });
   },
   edit(req, res) {
+    var cats = require('../helpers/getCategories');
+    var locs = require('../helpers/getLocations');
+    var allCats = cats.getCategories();
+    var allLocs = locs.getLocations();
+
     if (req.params.id) {
       return Tools.forge({id: req.params.id}).fetch().then(function(tool) {
         res.render('tool', {results: tool.attributes, categories: allCats, locations: allLocs, title: 'Tools' });
@@ -38,6 +38,8 @@ module.exports = {
     }
   },
   listAll(req, res) {
+    var locs = require('../helpers/getLocations');
+    var allLocs = locs.getLocations();
     var allTools = Database.Collection.extend({ model: Tools }); // make a collection so we can use withRelated
     return allTools.forge().orderBy('name', 'ASC').fetch({withRelated: ['location', 'category']}).then(function(tools) {
       res.render('tools-list', { results: tools.models, locations: allLocs, title: 'Tools' });
@@ -50,6 +52,11 @@ module.exports = {
     });
   },
   upsert(req, res) {
+    var cats = require('../helpers/getCategories');
+    var locs = require('../helpers/getLocations');
+    var allCats = cats.getCategories();
+    var allLocs = locs.getLocations();
+
     var options = {};
     var toolID = '';
     var message = '';
