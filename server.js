@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./app/routes/index');
 var expressValidator = require('express-validator');
-
+var mailer = require('nodemailer');
 var passport = require('passport');
 
 require('dotenv').config();

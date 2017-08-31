@@ -25,8 +25,6 @@ block content
   h1#item-edit-title #{header}
   section.userform
     form(name="user", action='/users/' + urlAction, method="post", enctype='multipart/form-data', accept-charset="utf-8") 
-      if addme
-        input(type='hidden', name='newuser', value='true')
       #pic.row
         .col.s12.m6.l4
           if img
@@ -51,21 +49,28 @@ block content
         .col.s12.m6.l8
           ul
             li
-              if username
-                label(for='username') Username (can not be changed): 
-                input(id='username' disabled value=username)
-                input(type='hidden' name='id' value=userID)
-                input(type='hidden' name='username' value=username)
-              else
+              if addme
+                input(type='hidden', name='newuser', value='true')
+              if error
                 label(for='username') Username: 
-                input(id='username' name='username' autofocus required)
+                input(id='username' name='username' value=username autofocus required)
+                input(type='hidden', name='newuser', value='true')
+              else 
+                if username
+                  label(for='username') Username (can not be changed): 
+                  input(id='username' disabled value=username)
+                  input(type='hidden' name='id' value=userID)
+                  input(type='hidden' name='username' value=username)
+                else
+                  label(for='username') Username: 
+                  input(id='username' name='username' autofocus required)
             li 
               label(for="fullname") Full Name
               input(type="text" id="fullname" name='fullname' value=fullname autofocus required)
             li 
               label(for="email") Email
               input(type="email" id="email" name='email' value=email autofocus required)
-            if username
+            if username & !error
               li
                 p.grey-text.text-lighten-1 (Leave blank to not change password.)
             li
@@ -79,11 +84,11 @@ block content
             li
               .row#form-buttons
                 .col.s12.m6
-                  if results
+                  if results && !error
                     input.left.btn.green.waves-effect.waves-light(type="submit" value="Save")
                   else
                     input.left.btn.green.waves-effect.waves-light(type="submit" value="Create")
-                  if (username && userInfo.username !== username)
+                  if (username && userInfo.username !== username && !error)
                     a.btn.red.waves-effect.waves-light(href='#delete' + userID) Delete
                     .modal(id='delete' + userID)
                       .modal-content

@@ -1,0 +1,21 @@
+include head.pug
+
+body.brown
+  #login-container.row
+    .col.s4
+    .col.s4
+      #login-card.card-content.z-depth-5.grey.lighten-4
+        h2.card-title Reset Password
+        p Enter the username or email.
+        section.loginform
+          form(name="login" action="/auth/reset" method="post" accept-charset="utf-8")
+            if message
+              .card-panel.green.accent-1= message
+            if error
+              .card-panel.red.accent-1= error
+            ul
+              li 
+                input.fields(type="text" name="username" required autofocus)
+              li
+            .card-action
+              input.btn.green.waves-effect.waves-light(type="submit" value="Reset")

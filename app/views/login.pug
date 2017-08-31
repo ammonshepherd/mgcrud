@@ -9,7 +9,9 @@ body.brown
         section.loginform
           form(name="login" action="/auth/login" method="post" accept-charset="utf-8")
             if message
-              h2= message
+              .card-panel.green.accent-1= message
+            if error
+              .card-panel.red.accent-1= error
             ul
               li 
                 label(for="username") Username
@@ -22,4 +24,8 @@ body.brown
               input.btn.green.waves-effect.waves-light(type="submit" value="Login")
         p
           a(href='/register') Register
+          |
+          | |
+          |
+          a(href='/auth/reset') Forgot Password?
     .col.s4
