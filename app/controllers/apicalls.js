@@ -11,7 +11,7 @@ var allLocs = locs.getLocations();
 
 module.exports = {
   // Get all the categories and the tools associated
-  categories(req, res) {
+  categoriesLocations(req, res) {
     return Categories.forge().orderBy('name', 'ASC').fetchAll({withRelated: ['tools', 'tools.location']}).then(function(categories) {
       var categoryLocations = [];
       Object.keys(categories.models).forEach(function (catKey) {
@@ -19,7 +19,7 @@ module.exports = {
         var catName = categories.models[catKey].attributes.name;
         cat.name = catName;
         cat.slug = catName.replace(/[\W]+/g, '-').toLowerCase();
-        cat.icon = '';
+        cat.icon = categories.models[catKey].attributes.icon;
         //cat.icon = categories.models[catKey].attributes.icon;
         var toolsObj = categories.models[catKey].relations.tools.models;
         var locObj = categories.models[catKey].relations.tools.models;
