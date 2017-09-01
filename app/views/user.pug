@@ -70,17 +70,23 @@ block content
             li 
               label(for="email") Email
               input(type="email" id="email" name='email' value=email autofocus required)
-            if username & !error
+            if username && !error
               li
-                p.grey-text.text-lighten-1 (Leave blank to not change password.)
+                p.grey-text.text-lighten-1 (Leave blank to keep password.)
             li
               if passes
                 .red-text.text-darken-2 Passwords do not match
               label(for="password") Password
-              input(type="password", id="password", name='password')
+              if error || addme
+                input(type="password", id="password", name='password' required)
+              else
+                input(type="password", id="password", name='password')
             li
               label(for="password") Confirm Password
-              input(type="password" id="confirmpassword" name='confirmpassword')
+              if error || addme
+                input(type="password" id="confirmpassword" name='confirmpassword' required)
+              else
+                input(type="password" id="confirmpassword" name='confirmpassword')
             li
               .row#form-buttons
                 .col.s12.m6

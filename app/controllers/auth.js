@@ -80,7 +80,7 @@ module.exports = {
             if(error) {
               return res.render('reset', {message: 'Problem sending message to ' + user.attributes.email, error: error});
             } else {
-              return res.render('login', {message: 'Email with new password has been sent to ' + user.attributes.email});
+              return res.render('login', {message: 'An email with new password was sent to ' + user.attributes.email});
             }
           });
 
