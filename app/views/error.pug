@@ -2,15 +2,16 @@ include head.pug
 
 body.red
   #login-container.row
-    .col.s4
-    .col.s4
+    .col.s2
+    .col.s8
       #login-card.card-content.z-depth-5.grey.lighten-4
         block content
-          p= message
           #error-action
-              a(href='/') Start Over
+            p An error occured. Please 
+              a(href='/') start over.
+            pre= message
           #error-details.card-panel.red.lighten-3
             h3 Error Details
             p= error.detail
             pre #{error.stack}
-    .col.s4
+    .col.s2
