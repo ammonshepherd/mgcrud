@@ -15,7 +15,6 @@ router.get('/reset', function(req, res, next) {
 router.post('/reset', auth.resetPass);
 
 router.get('*', function(req, res, next) {
-  console.log('here');
     res.redirect('/login');
 });
 
