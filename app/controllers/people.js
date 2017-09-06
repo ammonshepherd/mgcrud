@@ -4,7 +4,6 @@ var People = require('../models/people');
 
 var locs = require('../helpers/getLocations');
 var allLocs = locs.getLocations();
-
 var picHelper = require('../helpers/pictureUploads');
 
 module.exports = {
