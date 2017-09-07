@@ -134,6 +134,7 @@ module.exports = {
         person.office_hours = personObj.office_hours;
         person.office_address = personObj.office_address;
         person.bio = personObj.bio;
+        person.location_id = people.models[personKey].relations.location.attributes.id;
         person.location_name = people.models[personKey].relations.location.attributes.name;
         person.location_slug = people.models[personKey].relations.location.attributes.slug;
 
