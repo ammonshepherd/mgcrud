@@ -3,16 +3,17 @@ var router = express.Router();
 var upload = require('../helpers/upload');
 
 var users = require('../controllers/users');
+var auth = require('../controllers/auth');
 
 /* GET users listing. */
-router.get('/', users.list);
+router.get('/', auth.adminRequired, users.list);
 
-router.get('/add', users.edit);
-router.post('/add', upload.single('avatar'), users.update);
+router.get('/add', auth.adminRequired, users.edit);
+router.post('/add', auth.adminRequired, upload.single('avatar'), users.update);
 
-router.get('/delete/:id', users.delete);
+router.get('/delete/:id', auth.adminRequired, users.delete);
 
-router.get('/:user', users.edit);
-router.post('/:user', upload.single('avatar'), users.update);
+router.get('/:user', auth.adminOrSelf, users.edit);
+router.post('/:user', auth.adminOrSelf, upload.single('avatar'), users.update);
 
 module.exports = router;

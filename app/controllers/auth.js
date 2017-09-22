@@ -7,18 +7,27 @@ var mailer = require('../helpers/mailer');
 
 module.exports = {
 
-  adminRequired(req, res, next) {
+  adminOrSelf(req, res, next) {
     if (!req.user) {
-      res.status(401);
+      res.sendStatus(403);
     }
-    return Users.forge({username: req.user.username}).then(function(user) {
-      if (!user.admin) {
-        res.status(401);
+    if (req.user.username !== req.params.user) {
+      if (req.user.admin === true) {
         return next();
       }
-    })
-    .catch( function(err) {
-    });
+      return res.render('index', {error: 'You are not allowed to access this page.', title: 'Makergrounds @ UVA'});
+    } else {
+      return next();
+    }
+
+  },
+
+  adminRequired(req, res, next) {
+    if (!req.user || req.user.admin !== true) {
+      return res.render('index', {error: 'You are not allowed to access this page.', title: 'Makergrounds @ UVA'});
+    } else {
+      return next();
+    }
   },
 
   emailExists(req, res, next) {
@@ -68,7 +77,7 @@ module.exports = {
       bcrypt.hash(buf, 10, function(err, hash) {
         return Users.forge({id: user.attributes.id}).save({password: hash}, {patch: true}).then(function(resetuser) {
           if (err) { return next(err); }
-          var message = 'Your password has been reset to: ' + buf + '\n\n Please log in to http://sfm.lib.virginia.edu to reset the password.'
+          var message = 'Your password has been reset to: ' + buf + '\n\n Please log in to http://sfm.lib.virginia.edu to reset the password.';
           var mailOptions = {
             from: 'makergrounds@virginia.edu',
             to: user.attributes.email,
@@ -92,7 +101,6 @@ module.exports = {
   },
 
   userExists(req, res, next) {
-    console.log(req.body);
     return Users.where({username: req.body.username}).fetch().then(function(user) {
       if(user){
         res.render('register', {values: req.body, userTaken: true});

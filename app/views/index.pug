@@ -1,6 +1,10 @@
 extends layout
 
 block content
+  if error
+    ul.card-panel.red.white-text#message-panel
+        li= error
+
   h2 Makergrounds Website Backend
   p Here you can edit the content of the database that drives the websites: http://makergrounds.virginia.edu
 

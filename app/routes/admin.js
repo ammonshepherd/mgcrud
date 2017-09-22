@@ -3,7 +3,7 @@ var router = express.Router();
 
 var auth = require('../controllers/auth');
 
-router.get('/', auth.adminRequired, function(res, req, next) {
+router.get('/', auth.adminRequired, function(req, res, next) {
   res.send('admin page');
 } );
 

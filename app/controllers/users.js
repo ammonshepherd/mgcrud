@@ -68,6 +68,11 @@ module.exports = {
       }
     }
 
+    if (req.body.admin) {
+      values.admin = true;
+    } else {
+      values.admin = false;
+    }
     // Set remaining values
     values.email = req.body.email;
     values.fullname = req.body.fullname;
@@ -89,14 +94,13 @@ module.exports = {
           res.redirect('/users/' + req.user.username);
         });
 
-      // otherwise just redirect to the list of users page
+      // otherwise user page
       } else {
-        res.redirect('/users/');
+        res.render('user', {results: user.attributes, senduser: req.body.username, title: 'Users', message: message});
       }
 
     })
     .catch(function(error) {
-      console.log(error);
       res.render('user', {results: req.body, title: 'Users', error: 'Username or email already taken.'});
     });
 

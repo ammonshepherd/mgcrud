@@ -32,10 +32,11 @@ ul.side-nav.fixed
     a(href='/people') People
       i.material-icons(id='people-icon') recent_actors
   li.divider
-  li
-    span.menu-title admin
-    a(href='/categories') Categories
-      i.material-icons(id='categories-icon') toc
-  li
-    a(href='/users') Users
-      i.material-icons(id='users-icon') assignment_ind
+  if userInfo.admin
+    li
+      span.menu-title admin
+      a(href='/categories') Categories
+        i.material-icons(id='categories-icon') toc
+    li
+      a(href='/users') Users
+        i.material-icons(id='users-icon') assignment_ind
