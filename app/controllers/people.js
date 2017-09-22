@@ -2,6 +2,8 @@ var fs = require('fs');
 var Database = require('../config/db');
 var People = require('../models/people');
 
+var locs = require('../helpers/getLocations');
+var allLocs = locs.getLocations();
 var picHelper = require('../helpers/pictureUploads');
 
 module.exports = {
@@ -22,9 +24,6 @@ module.exports = {
   },
 
   edit(req, res) {
-    var locs = require('../helpers/getLocations');
-    var allLocs = locs.getLocations();
-
     if (req.params.id) {
       return People.forge({id: req.params.id}).fetch().then(function(person) {
         res.render('person', {results: person.attributes, title: 'People', errors: false, locations: allLocs});
@@ -36,9 +35,6 @@ module.exports = {
   },
 
   list(req, res) {
-    var locs = require('../helpers/getLocations');
-    var allLocs = locs.getLocations();
-
     var allPeople = Database.Collection.extend({model: People}); // Make a collection so we can use withRelated
     return allPeople.forge().orderBy('name', 'ASC').fetch({withRelated: ['location']}).then(function(people) {
       res.render('people', {results: people.models, title: 'People', locations: allLocs});
@@ -47,9 +43,6 @@ module.exports = {
   },
 
   upsert(req, res) {
-    var locs = require('../helpers/getLocations');
-    var allLocs = locs.getLocations();
-
     var options = {};
     var message = '';
     var personID = '';
