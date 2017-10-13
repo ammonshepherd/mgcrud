@@ -5,11 +5,18 @@ block content
     #top-menu.right
       a.waves-effect.waves-light.btn-large(href='/tools/edit/') Add
         i.material-icons.right add_circle_outline
+  .row
+    #search-menu.left
+      label Filter by Location (multiple selections possible)
+      select#tool-search(multiple)
+        option(value='all' selected) Show All
+        each place in locations
+          option(value='location-' + place.id)= place.name
   .section
     each row in results
       - var id = row.attributes['id']
-      .divider
-      .row.item-row
+      .row.item-row(class='location-' + row.attributes['location_id'])
+        .divider.tool-divider
         .col.s12.m5.l4
           if row.attributes['picture']
             - var image = '/uploads/' + row.attributes['picture']
