@@ -24,19 +24,32 @@ ul.side-nav.fixed
   li
     span.menu-title main
     a(href='/locations') Locations
-      i.material-icons(id='locations-icon') business
+      i.material-icons#locations-icon location_city
   li
     a(href='/tools') Tools
-      i.material-icons(id='tools-icon') format_paint
+      i.material-icons#tools-icon format_paint
   li
     a(href='/people') People
-      i.material-icons(id='people-icon') recent_actors
+      i.material-icons#people-icon recent_actors
   li.divider
   if userInfo.admin
     li
       span.menu-title admin
       a(href='/categories') Categories
-        i.material-icons(id='categories-icon') toc
+        i.material-icons#categories-icon toc
     li
       a(href='/users') Users
-        i.material-icons(id='users-icon') assignment_ind
+        i.material-icons#users-icon assignment_ind
+    li
+      span.menu-title API Links
+      a(href='/api/locations') Locations
+        i.material-icons.api-icon developer_mode
+    li
+      a(href='/api/tools') Tools
+        i.material-icons.api-icon developer_mode
+    li
+      a(href='/api/people') People
+        i.material-icons.api-icon developer_mode
+    li
+      a(href='/api/categories-locations') Categories &amp; Locations
+        i.material-icons.api-icon developer_mode
