@@ -96,3 +96,5 @@ directory to call it with `npm run`. See https://github.com/testdouble/scripty
 
 - Change the .env file 
   - NODE_ENV='production'
+- Start app
+  - `forever start bin/www`
